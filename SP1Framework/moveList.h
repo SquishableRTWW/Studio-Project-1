@@ -8,6 +8,7 @@ private:
 public:
 	moveList(void); //Default constructor.
 	moveList(string element);
+	~moveList(void);
 
 };
 

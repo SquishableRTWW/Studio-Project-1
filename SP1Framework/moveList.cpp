@@ -49,3 +49,7 @@ moveList::moveList(string element)
 		}
 	}
 }
+moveList::~moveList(void)
+{
+
+}
