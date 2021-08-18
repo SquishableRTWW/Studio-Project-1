@@ -5,6 +5,7 @@ class monster
 {
 private:
 	moveList move;
+	string element;
 	int level;
 	int health;
 	int attack;
@@ -17,6 +18,8 @@ public:
 	void setAttack(int i);
 	void setDefence(int i);
 	void setSpeed(int i);
+	void setLevel();
+	void setKills();
 	void upKill();
 	void upLevel();
 	int getHealth(void);
@@ -25,5 +28,6 @@ public:
 	int getSpeed(void);
 	int getKills(void);
 	int getLevel(void);
+	~monster(void);
 };
 

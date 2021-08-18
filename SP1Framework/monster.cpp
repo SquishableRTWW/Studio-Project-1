@@ -5,6 +5,7 @@
 
 monster::monster(void)
 {
+	element = "NULL";
 	level = (rand() % 4) + 2;
 	health = 10;
 	attack = 5;
@@ -27,6 +28,14 @@ void monster::setDefence(int i)
 void monster::setSpeed(int i)
 {
 	this->speed += i;
+}
+void monster::setLevel()
+{
+	this->level = (rand() % 4) + 2;
+}
+void monster::setKills()
+{
+	this->kills = 0;
 }
 void monster::upKill(void)
 {
@@ -59,4 +68,8 @@ int monster::getKills(void)
 int monster::getLevel(void)
 {
 	return level;
+}
+monster::~monster(void)
+{
+
 }
