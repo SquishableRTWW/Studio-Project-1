@@ -27,6 +27,10 @@ void oris::levelUp(void)
 	{
 		setMove(2);
 	}
+	if (getLevel() == 14)
+	{
+		setMove(3);
+	}
 }
 void oris::setMove(int i)
 {
