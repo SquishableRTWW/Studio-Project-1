@@ -9,9 +9,7 @@ moveList::moveList(void)
 	{
 		moves[i] = "None";
 	}
-	string waterMoveList[4] = { "water gun", "drown", "waterfall", "hydro pump" };
-	string earthMoveList[4] = { "rock throw", "bulk up", "landslide", "earthquake" };
-	string natureMoveList[4] = { "leaf blade", "entangle", "power whip", "frenzy plant" };
+	damage[0] = 10; damage[1] = 0; damage[2] = 20; damage[3] = 40;
 }
 void moveList::setMoveWithName(string move,int position)
 {
@@ -20,6 +18,10 @@ void moveList::setMoveWithName(string move,int position)
 string moveList::getMove(int i)
 {
 	return moves[i];
+}
+int moveList::getMoveDamage(int i)
+{
+	return damage[i];
 }
 moveList::~moveList(void)
 {
