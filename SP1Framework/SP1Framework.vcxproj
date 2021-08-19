@@ -87,6 +87,7 @@
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="moveList.cpp" />
     <ClCompile Include="oris.cpp" />
+    <ClCompile Include="smeltor.cpp" />
     <ClCompile Include="typhis.cpp" />
     <ClCompile Include="vitalus.cpp" />
   </ItemGroup>
@@ -99,6 +100,7 @@
     <ClInclude Include="monster.h" />
     <ClInclude Include="moveList.h" />
     <ClInclude Include="oris.h" />
+    <ClInclude Include="smeltor.h" />
     <ClInclude Include="typhis.h" />
     <ClInclude Include="vitalus.h" />
   </ItemGroup>

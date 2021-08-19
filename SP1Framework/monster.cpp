@@ -28,6 +28,14 @@ void monster::setOGBossStats(void)
 	this->speed = 14;
 	this->level = 14;
 }
+void monster::setOGBoss2Stats(void)
+{
+	this->health = 27;
+	this->attack = 10;
+	this->defence = 12;
+	this->speed = 8;
+	this->level = 25;
+}
 void monster::setHealth(int i)
 {
 	this->health += i;

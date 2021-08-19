@@ -16,6 +16,7 @@ public:
 	monster(void);
 	void setOGStats(void);
 	void setOGBossStats(void);
+	void setOGBoss2Stats(void);
 	void setHealth(int i);
 	void setAttack(int i);
 	void setDefence(int i);

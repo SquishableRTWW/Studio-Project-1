@@ -3,7 +3,7 @@ using namespace std;
 
 atax::atax(void)
 {
-	element = "NULL";
+	element = "water";
 	setOGBossStats();
 	for (int i = 0; i < getLevel(); i++)
 	{
@@ -17,7 +17,7 @@ atax::atax(void)
 }
 void atax::setMove(int i)
 {
-	string boss1MoveList[4] = { "shadow ball", "engulf", "jumpscare", "dark void" };
+	string boss1MoveList[4] = { "aqua tail", "scald", "water spout", "flash flood" };
 	moves.setMoveWithName(boss1MoveList[i], i);
 }
 atax::~atax(void)
