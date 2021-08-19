@@ -7,7 +7,8 @@ private:
 	string moves[4];
 public:
 	moveList(void); //Default constructor.
-	moveList(string element);
+	void setMoveWithName(string move,int position);
+	string getMove(int i);
 	~moveList(void);
 
 };

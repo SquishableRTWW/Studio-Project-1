@@ -1,5 +1,4 @@
 #include "ignis.h"
-#include "moveList.h"
 #include "monster.h"
 using namespace std;
 
@@ -12,6 +11,10 @@ ignis::ignis(void)
 	{
 		setHealth(2); setAttack(2); setDefence(1); setSpeed(1);
 	}
+	for (int i = 0; i < 2; i++)
+	{
+		setMove(i);
+	}
 }
 void ignis::levelUp(void)
 {
@@ -21,4 +24,13 @@ void ignis::levelUp(void)
 		upLevel();
 		setHealth(2); setAttack(2); setDefence(1); setSpeed(1);
 	}
+	if (getLevel() == 8)
+	{
+		setMove(2);
+	}
+}
+void ignis::setMove(int i)
+{
+	string fireMoveList[4] = { "flamethrower", "enrage", "scorch", "blast burn" };
+	moves.setMoveWithName(fireMoveList[i], i);
 }
