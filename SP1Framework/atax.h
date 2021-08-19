@@ -7,6 +7,7 @@ private:
 	moveList moves;
 public:
 	atax(void); //Default constructor.
+	void setMove(int i);
 	~atax(void);
 };
 
