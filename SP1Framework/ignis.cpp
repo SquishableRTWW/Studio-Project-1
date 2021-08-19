@@ -1,5 +1,4 @@
 #include "ignis.h"
-#include "monster.h"
 using namespace std;
 
 ignis::ignis(void)
@@ -33,4 +32,8 @@ void ignis::setMove(int i)
 {
 	string fireMoveList[4] = { "flamethrower", "enrage", "scorch", "blast burn" };
 	moves.setMoveWithName(fireMoveList[i], i);
+}
+ignis::~ignis(void)
+{
+
 }

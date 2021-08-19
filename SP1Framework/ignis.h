@@ -1,7 +1,5 @@
 #pragma once
 #include "monster.h"
-#include "moveList.h"
-#include <string>
 using namespace std;
 class ignis : public monster
 {
@@ -12,5 +10,6 @@ public:
 	ignis(void); //Default constructor
 	void levelUp();
 	void setMove(int i);
+	~ignis(void);
 };
 
