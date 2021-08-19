@@ -69,6 +69,10 @@ int monster::getLevel(void)
 {
 	return level;
 }
+string monster::getElement(void)
+{
+	return element;
+}
 monster::~monster(void)
 {
 

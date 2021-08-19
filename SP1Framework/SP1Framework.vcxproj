@@ -87,6 +87,7 @@
     <ClCompile Include="moveList.cpp" />
     <ClCompile Include="oris.cpp" />
     <ClCompile Include="typhis.cpp" />
+    <ClCompile Include="vitalus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\console.h" />
@@ -97,6 +98,7 @@
     <ClInclude Include="moveList.h" />
     <ClInclude Include="oris.h" />
     <ClInclude Include="typhis.h" />
+    <ClInclude Include="vitalus.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -28,6 +28,7 @@ public:
 	int getSpeed(void);
 	int getKills(void);
 	int getLevel(void);
+	string getElement(void);
 	~monster(void);
 };
 
