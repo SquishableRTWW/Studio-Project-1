@@ -51,6 +51,9 @@
     <ClCompile Include="vitalus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="atax.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\console.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="vitalus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="atax.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

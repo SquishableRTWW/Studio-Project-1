@@ -6,6 +6,7 @@ oris::oris(void)
 	element = "earth";
 	setLevel();
 	setKills();
+	setOGStats();
 	for (int i = 0; i < getLevel(); i++)
 	{
 		setHealth(2); setAttack(1); setDefence(2); setSpeed(1);

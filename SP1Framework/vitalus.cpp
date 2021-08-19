@@ -6,6 +6,7 @@ vitalus::vitalus(void)
 	element = "nature";
 	setLevel();
 	setKills();
+	setOGStats();
 	for (int i = 0; i < getLevel(); i++)
 	{
 		setHealth(2); setAttack(1); setDefence(1); setSpeed(2);
