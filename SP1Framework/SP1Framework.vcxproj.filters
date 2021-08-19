@@ -45,6 +45,9 @@
     <ClCompile Include="typhis.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="oris.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\console.h">
@@ -66,6 +69,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="typhis.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oris.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

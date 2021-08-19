@@ -85,6 +85,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="moveList.cpp" />
+    <ClCompile Include="oris.cpp" />
     <ClCompile Include="typhis.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +95,7 @@
     <ClInclude Include="ignis.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="moveList.h" />
+    <ClInclude Include="oris.h" />
     <ClInclude Include="typhis.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
