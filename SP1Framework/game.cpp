@@ -32,7 +32,7 @@ void init( void )
     // Set precision for floating point output
     g_dElapsedTime = 0.0;    
 
-    // sets the initial state for the game
+    // sets the initial state for the game (which is the start screen).
     g_eGameState = S_SPLASHSCREEN;
 
     g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2;
@@ -312,17 +312,17 @@ void renderSplashScreen()  // renders the splash screen
         for (int j = 0; j < 80; j++)
         {
             c.Y = i; c.X = j;
-            g_Console.writeToBuffer(c, ' ', 0x2B);
+            g_Console.writeToBuffer(c, ' ', 0xA0);
         }
     }
     c.X = 27;
-    c.Y = 7;
-    g_Console.writeToBuffer(c, "'Ele-beast Hunters.'", 0x04);
-    c.Y = 11;
+    c.Y = 9;
+    g_Console.writeToBuffer(c, "'Ele-beast Hunters.'", 0xA4);
+    c.Y = 13;
     c.X = 26; 
-    g_Console.writeToBuffer(c, "1. Press 'Enter' to start", 0x03);
+    g_Console.writeToBuffer(c, "Press 'Enter' to start", 0xA0);
     c.Y += 1;
-    g_Console.writeToBuffer(c, "2. Press 'Esc' to quit", 0x03);
+    g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0xA0);
 }
 
 void renderGame()
