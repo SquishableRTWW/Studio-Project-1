@@ -84,6 +84,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="hunter.cpp" />
     <ClCompile Include="ignis.cpp" />
+    <ClCompile Include="lavarous.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="moveList.cpp" />
@@ -99,6 +100,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="hunter.h" />
     <ClInclude Include="ignis.h" />
+    <ClInclude Include="lavarous.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="moveList.h" />
     <ClInclude Include="oris.h" />
