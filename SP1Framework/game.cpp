@@ -11,7 +11,6 @@
 double  g_dElapsedTime;
 bool testing = false;
 double  g_dDeltaTime;
-ignis ig;
 SKeyEvent g_skKeyEvent[K_COUNT + 2];
 SMouseEvent g_mouseEvent;
 
@@ -239,7 +238,7 @@ void menuScreenWait()
     if (g_skKeyEvent[K_F].keyReleased)
         g_eGameState = S_GAME;
     if (g_skKeyEvent[K_ESCAPE].keyReleased)
-        g_eGameState = S_GAME;
+        g_bQuitGame = true;
 }
 
 void moveCharacter()
@@ -372,26 +371,27 @@ void renderMenu()
         for (int j = 0; j < 80; j++)
         {
             c.X = j; c.Y = i;
-            g_Console.writeToBuffer(c, " ", 0xC2);
+                g_Console.writeToBuffer(c, " ", 0xC2);
         }
     }
     c.X = 1; c.Y = 1;
-    g_Console.writeToBuffer(c, "This is the menu", 0xC7);
+    g_Console.writeToBuffer(c, "This is the pause menu", 0xC0);
     c.Y += 2;
-    string level1 = to_string(ig.getLevel()); string hp1 = to_string(ig.getHealth()); string atk1 = to_string(ig.getAttack());
-    g_Console.writeToBuffer(c, "Ele-beast 1:  Lv:    HP:     Atk:     Def:    Spd: ", 0xC0); c.X += 17;
-    g_Console.writeToBuffer(c, level1, 0xC0);
+    g_Console.writeToBuffer(c, ("Ele-beast 1:      Lv:   HP:   Atk:   Def:  Spd: "), 0xC0);
     c.Y += 2;
-    g_Console.writeToBuffer(c, "Ele-beast 2: ", 0xC0);
+    g_Console.writeToBuffer(c, "Ele-beast 2:      Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0);
     c.Y += 2;
-    g_Console.writeToBuffer(c, "Ele-beast 3: ", 0xC0);
+    g_Console.writeToBuffer(c, "Ele-beast 3:      Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0);
     c.Y += 2;
-    g_Console.writeToBuffer(c, "Ele-beast 4: ", 0xC0);
+    g_Console.writeToBuffer(c, "Ele-beast 4:      Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0);
     c.Y += 2;
-    g_Console.writeToBuffer(c, "Ele-beast 5: ", 0xC0);
+    g_Console.writeToBuffer(c, "Ele-beast 5:      Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0);
     c.Y += 2;
-    g_Console.writeToBuffer(c, "Ele-beast 6: ", 0xC0);
-    c.Y += 2;
+    g_Console.writeToBuffer(c, "Ele-beast 6:      Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0);
+    c.Y += 3; c.X += 28;
+    g_Console.writeToBuffer(c, "Press F to EXIT PAUSE MENU.", 0xC0);
+    c.Y++;
+    g_Console.writeToBuffer(c, "Press 'esc' to EXIT the GAME.", 0xC0);
 }
 
 void renderCharacter()
