@@ -374,6 +374,8 @@ void renderMenu()
             g_Console.writeToBuffer(c, " ", 0xC2);
         }
     }
+    c.X = 39; c.Y = 13;
+    g_Console.writeToBuffer(c, "This is the menu", 0xC7);
 }
 
 void renderCharacter()
