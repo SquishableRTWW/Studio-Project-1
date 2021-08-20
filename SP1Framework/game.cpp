@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <sstream>
 #include "ignis.h"
+#include <stdlib.h>
 
 double  g_dElapsedTime;
 bool testing = false;
@@ -215,6 +216,11 @@ void update(double dt)
         case S_GAME: updateGame(); // gameplay logic when we are in the game
             break;
         case S_MENU: menuScreenWait(); //game logic for menu screen
+            break;
+        case S_ENCOUNTERSPLASHSCREEN: encounterScreenWait();
+            break;
+        /*case S_ENCOUNTER: updateGame();
+            break;*/
     }
 }
 
@@ -226,6 +232,12 @@ void splashScreenWait()    // waits for user input in splash screen
         g_eGameState = S_GAME;
     if (g_skKeyEvent[K_F].keyReleased)
         g_eGameState = S_SPLASHSCREEN;
+}
+
+void encounterScreenWait()
+{
+    Sleep(2000);
+    g_eGameState = S_ENCOUNTER;
 }
 
 void updateGame()       // gameplay logic
@@ -272,6 +284,10 @@ void moveCharacter()
         g_sChar.m_bActive = !g_sChar.m_bActive;
     }
 
+    if (g_sChar.m_cLocation.X > 29 && g_sChar.m_cLocation.X < 40 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 10)
+    {
+        g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+    }
 
 }
 void processUserInput()
@@ -301,6 +317,10 @@ void render()
     case S_GAME: renderGame();
         break;
     case S_MENU: renderMenu();
+        break;
+    case S_ENCOUNTERSPLASHSCREEN: renderEncounterSplashScreen();
+        break;
+    case S_ENCOUNTER: renderEncounter();
         break;
     }
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
@@ -363,14 +383,105 @@ void renderMap()
     };
 
     COORD c;
-    for (int i = 0; i < 12; ++i)
+    for (int i = 0; i < 80; i++)
     {
-        c.X = 5 * i;
-        c.Y = i + 1;
-        colour(colors[i]);
-        g_Console.writeToBuffer(c, " °±²Û", colors[i]);
+        c.X = i;
+        for (int j = 0; j < 25; j++)
+        {
+            c.Y = j;
+            colour(colors[11]);
+            g_Console.writeToBuffer(c, " ", colors[11]);
+        }
+    }
+
+    //Grasspatch test
+    for (int i = 30; i < 40; i++)
+    {
+        c.X = i;
+        for (int j = 5; j < 10; j++)
+        {
+            c.Y = j;
+            colour(colors[1]);
+            g_Console.writeToBuffer(c, " ", colors[1]);
+        }
     }
 }
+
+void renderEncounter()
+{
+    const WORD colors[] = {
+        0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
+        0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6
+    };
+
+    COORD c;
+
+    for (int i = 0; i < 80; i++)
+    {
+        c.X = i;
+        for (int j = 0; j < 16; j++)
+        {
+            c.Y = j;
+            colour(colors[11]);
+            g_Console.writeToBuffer(c, " ", colors[11]);
+        }
+    }
+
+
+
+    for (int i = 0; i < 80; i++)
+    {
+        c.X = i;
+        c.Y = 16;
+        colour(colors[5]);
+        g_Console.writeToBuffer(c, " ", colors[5]);
+    }
+
+    for (int i = 0; i < 80; i++)
+    {
+        c.X = i;
+        for (int j = 17; j < 25; j++)
+        {
+            c.Y = j;
+            colour(colors[11]);
+            g_Console.writeToBuffer(c, " ", colors[10]);
+        }
+
+    }
+
+    c.X = 56;
+    c.Y = 19;                          //Background - Text
+    g_Console.writeToBuffer(c, "Attack", 0x51);
+    c.X = 66;
+    c.Y = 19;
+    g_Console.writeToBuffer(c, "Catch");
+    c.X = 55;
+    c.Y = c.Y + 2;
+    g_Console.writeToBuffer(c, "EleBeast");
+    c.X = 67;
+    c.Y = c.Y;
+    g_Console.writeToBuffer(c, "Run");
+
+    for (int i = 50; i < 51; i++)
+    {
+        c.X = i;
+        for (int j = 17; j < 25; j++)
+        {
+            c.Y = j;
+            colour(colors[5]);
+            g_Console.writeToBuffer(c, " ", colors[5]);
+        }
+    }
+}
+
+void renderEncounterSplashScreen()
+{
+    COORD c;
+    c.X = g_Console.getConsoleSize().X / 2;
+    c.Y = g_Console.getConsoleSize().Y / 2;
+    g_Console.writeToBuffer(c, "Wild Elebeasts Appears!");
+}
+
 
 void renderMenu()
 {
