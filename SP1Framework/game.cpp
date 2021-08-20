@@ -105,6 +105,8 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
     case S_GAME: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
         break;
     case S_MENU: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event
+        break;
+    case S_ENCOUNTER: gameplayKBHandler(keyboardEvent);
     }
 }
 
@@ -132,7 +134,10 @@ void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
         break;
     case S_GAME: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
         break;
+    case S_ENCOUNTER: gameplayMouseHandler(mouseEvent);
+        break;
     }
+    
 }
 
 //--------------------------------------------------------------
@@ -219,8 +224,8 @@ void update(double dt)
             break;
         case S_ENCOUNTERSPLASHSCREEN: encounterScreenWait();
             break;
-        /*case S_ENCOUNTER: updateGame();
-            break;*/
+        case S_ENCOUNTER: updateEncounter();
+            break;
     }
 }
 
@@ -255,10 +260,52 @@ void menuScreenWait()
         g_bQuitGame = true;
 }
 
+void updateEncounter()
+{
+    processUserInput();
+    moveSelection();
+}
+
+void moveSelection()
+{
+    // Updating the location of the character based on the key release
+    // providing a beep sound whenver we shift the character
+    COORD c;
+    c.X = 20;
+    c.Y = 20;
+    if (g_skKeyEvent[K_UP].keyReleased && g_sChar.m_cLocation.Y > 0)
+    {
+        //Beep(1440, 30);
+        g_sChar.m_cLocation.Y--;
+    }
+    if (g_skKeyEvent[K_LEFT].keyReleased && g_sChar.m_cLocation.X > 0)
+    {
+        //Beep(1440, 30);
+        g_sChar.m_cLocation.X--;
+    }
+    if (g_skKeyEvent[K_DOWN].keyReleased && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
+    {
+        //Beep(1440, 30);
+        g_sChar.m_cLocation.Y++;
+    }
+    if (g_skKeyEvent[K_RIGHT].keyReleased && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1)
+    {
+        //Beep(1440, 30);
+        g_sChar.m_cLocation.X++;
+    }
+    if (g_skKeyEvent[K_Q].keyReleased)
+    {
+        g_sChar.m_bActive = !g_sChar.m_bActive;
+    }
+
+}
+
+
 void moveCharacter()
 {    
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
+
     if (g_skKeyEvent[K_UP].keyReleased && g_sChar.m_cLocation.Y > 0)
     {
         //Beep(1440, 30);
