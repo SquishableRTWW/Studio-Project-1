@@ -224,6 +224,8 @@ void splashScreenWait()    // waits for user input in splash screen
     processUserInput();
     if (g_skKeyEvent[K_ENTER].keyReleased) // wait for user to press 'Enter' to go on to game screen.
         g_eGameState = S_GAME;
+    if (g_skKeyEvent[K_F].keyReleased)
+        g_eGameState = S_SPLASHSCREEN;
 }
 
 void updateGame()       // gameplay logic
@@ -326,17 +328,24 @@ void renderSplashScreen()  // renders the splash screen
         for (int j = 0; j < 80; j++)
         {
             c.Y = i; c.X = j;
-            g_Console.writeToBuffer(c, ' ', 0xA0);
+            if ((c.X % 2 == 0 && c.Y % 2 == 0) || (c.X % 2 != 0 && c.Y % 2 != 0))
+            {
+                g_Console.writeToBuffer(c, " ", 0xB0);
+            }
+            else
+            {
+                g_Console.writeToBuffer(c, ' ', 0xA0);
+            }
         }
     }
     c.X = 27;
     c.Y = 9;
-    g_Console.writeToBuffer(c, "'Ele-beast Hunters.'", 0xA4);
+    g_Console.writeToBuffer(c, "'Ele-beast Hunters.'  ", 0xA4);
     c.Y = 13;
-    c.X = 26;
-    g_Console.writeToBuffer(c, "Press 'Enter' to start", 0xA0);
+    c.X = 25;
+    g_Console.writeToBuffer(c, " Press 'Enter' to start", 0xA0);
     c.Y += 1;
-    g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0xA0);
+    g_Console.writeToBuffer(c, " Press 'Esc' to quit    ", 0xA0);
 }
 
 void renderGame()
@@ -391,7 +400,7 @@ void renderMenu()
     c.Y += 3; c.X += 28;
     g_Console.writeToBuffer(c, "Press F to EXIT PAUSE MENU.", 0xC0);
     c.Y++;
-    g_Console.writeToBuffer(c, "Press 'esc' to EXIT the GAME.", 0xC0);
+    g_Console.writeToBuffer(c, "Press 'ESC' to EXIT the GAME.", 0xC0);
 }
 
 void renderCharacter()
