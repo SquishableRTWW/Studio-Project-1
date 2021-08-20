@@ -4,6 +4,7 @@ using namespace std;
 atax::atax(void)
 {
 	element = "water";
+	setName("atax");
 	setOGBossStats();
 	for (int i = 0; i < getLevel(); i++)
 	{

@@ -4,6 +4,7 @@ using namespace std;
 lavarous::lavarous(void)
 {
 	element = "fire";
+	setName("lavarous");
 	setLevel();
 	setKills();
 	setOGStats();

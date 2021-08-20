@@ -4,6 +4,7 @@ using namespace std;
 azure::azure(void)
 {
 	element = "water";
+	setName("azure");
 	setLevel();
 	setKills();
 	setOGStats();

@@ -4,6 +4,7 @@ using namespace std;
 ignis::ignis(void)
 {
 	element = "fire";
+	setName("ignis");
 	setLevel();
 	setKills();
 	setOGStats();

@@ -6,6 +6,7 @@ class monster
 private:
 	moveList move;
 	string element;
+	string name;
 	int level;
 	int health;
 	int attack;
@@ -14,6 +15,7 @@ private:
 	int kills;
 public:
 	monster(void);
+	void setName(string name);
 	void setOGStats(void);
 	void setOGBossStats(void);
 	void setOGBoss2Stats(void);
@@ -21,10 +23,11 @@ public:
 	void setAttack(int i);
 	void setDefence(int i);
 	void setSpeed(int i);
-	void setLevel();
-	void setKills();
-	void upKill();
-	void upLevel();
+	void setLevel(void);
+	void setKills(void);
+	void upKill(void);
+	void upLevel(void);
+	string getName(void);
 	int getHealth(void);
 	int getAttack(void);
 	int getDefence(void);

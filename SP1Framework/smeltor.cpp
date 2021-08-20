@@ -4,6 +4,7 @@ using namespace std;
 smeltor::smeltor(void)
 {
 	element = "earth";
+	setName("smeltor");
 	setOGBoss2Stats();
 	for (int i = 0; i < getLevel(); i++)
 	{

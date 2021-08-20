@@ -4,6 +4,7 @@ using namespace std;
 thornhull::thornhull(void)
 {
 	element = "nature";
+	setName("thornhull");
 	setLevel();
 	setKills();
 	setOGStats();

@@ -6,12 +6,17 @@
 monster::monster(void)
 {
 	element = "NULL";
+	name = "NULL";
 	level = (rand() % 4) + 2;
 	health = 10;
 	attack = 5;
 	defence = 3;
 	speed = 10;
 	kills = 0;
+}
+void monster::setName(string name)
+{
+	this->name = name;
 }
 void monster::setOGStats(void)
 {
@@ -67,6 +72,10 @@ void monster::upKill(void)
 void monster::upLevel(void)
 {
 	level++;
+}
+string monster::getName(void)
+{
+	return name;
 }
 int monster::getHealth(void)
 {

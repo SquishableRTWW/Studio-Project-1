@@ -4,6 +4,7 @@ using namespace std;
 typhis::typhis(void)
 {
 	element = "water";
+	setName("typhis");
 	setLevel();
 	setKills();
 	setOGStats();

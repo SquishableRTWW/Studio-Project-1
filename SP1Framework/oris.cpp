@@ -4,6 +4,7 @@ using namespace std;
 oris::oris(void)
 {
 	element = "earth";
+	setName("oris");
 	setLevel();
 	setKills();
 	setOGStats();

@@ -4,6 +4,7 @@ using namespace std;
 vitalus::vitalus(void)
 {
 	element = "nature";
+	setName("vitalus");
 	setLevel();
 	setKills();
 	setOGStats();
