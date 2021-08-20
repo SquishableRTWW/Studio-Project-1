@@ -317,7 +317,6 @@ void renderSplashScreen()  // renders the splash screen
     }
     c.X = 27;
     c.Y = 7;
-    colour(0x2B);
     g_Console.writeToBuffer(c, "'Ele-beast Hunters.'", 0x04);
     c.Y = 11;
     c.X = 26; 
