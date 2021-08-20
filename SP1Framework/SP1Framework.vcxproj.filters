@@ -66,6 +66,9 @@
     <ClCompile Include="azure.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="thornhull.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\console.h">
@@ -108,6 +111,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="azure.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="thornhull.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
