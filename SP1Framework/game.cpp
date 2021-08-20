@@ -377,7 +377,7 @@ void renderMenu()
     c.X = 1; c.Y = 1;
     g_Console.writeToBuffer(c, "This is the pause menu", 0xC0);
     c.Y += 2;
-    g_Console.writeToBuffer(c, ("Ele-beast 1:      Lv:   HP:   Atk:   Def:  Spd: "), 0xC0);
+    g_Console.writeToBuffer(c, "Ele-beast 1:      Lv:   HP:   Atk:   Def:  Spd: ", 0xC0);
     c.Y += 2;
     g_Console.writeToBuffer(c, "Ele-beast 2:      Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0);
     c.Y += 2;
