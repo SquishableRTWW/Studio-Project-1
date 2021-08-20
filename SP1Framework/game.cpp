@@ -306,6 +306,14 @@ void renderToScreen()
 void renderSplashScreen()  // renders the splash screen
 {
     COORD c = g_Console.getConsoleSize();
+    for (int i = 0; i < 25; i++)
+    {
+        for (int j = 0; j < 80; j++)
+        {
+            c.Y = i; c.X = j;
+            g_Console.writeToBuffer(c, ' ', 0x2B);
+        }
+    }
     c.Y /= 2;
     c.X = c.X / 2 - 9;
     g_Console.writeToBuffer(c, "1. Press 'F' to start", 0x03);
