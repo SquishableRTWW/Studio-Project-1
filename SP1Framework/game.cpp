@@ -10,7 +10,7 @@
 double  g_dElapsedTime;
 bool testing = false;
 double  g_dDeltaTime;
-SKeyEvent g_skKeyEvent[K_COUNT + 1];
+SKeyEvent g_skKeyEvent[K_COUNT + 2];
 SMouseEvent g_mouseEvent;
 
 // Game specific variables here
@@ -152,6 +152,7 @@ void gameplayKBHandler(const KEY_EVENT_RECORD& keyboardEvent)
     case 0x53: key = K_DOWN; break;
     case 0x41: key = K_LEFT; break; 
     case 0x44: key = K_RIGHT; break; 
+    case VK_RETURN: key = K_ENTER; break;
     case 0x51: key = K_Q; break;
     case 0x46: key = K_F; break;
     case VK_ESCAPE: key = K_ESCAPE; break; 
@@ -218,7 +219,7 @@ void update(double dt)
 
 void splashScreenWait()    // waits for user input in splash screen
 {
-    if (g_skKeyEvent[K_F].keyReleased) // wait for user to press 'F' to go on to game screen.
+    if (g_skKeyEvent[K_ENTER].keyReleased) // wait for user to press 'Enter' to go on to game screen.
         g_eGameState = S_GAME;
 }
 
@@ -307,13 +308,10 @@ void renderSplashScreen()  // renders the splash screen
     COORD c = g_Console.getConsoleSize();
     c.Y /= 3;
     c.X = c.X / 2 - 9;
-    g_Console.writeToBuffer(c, "1. Press 'F' to start", 0x03);
+    g_Console.writeToBuffer(c, "1. Press 'Enter' to start the game!", 0x03);
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 - 9;
-    g_Console.writeToBuffer(c, "2. Press 'Esc' to quit", 0x09);
-    c.Y += 1;
-    c.X = g_Console.getConsoleSize().X / 2 - 9;
-    g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0x09);
+    g_Console.writeToBuffer(c, "2. Press 'Esc' to quit.", 0x09);
 }
 
 void renderGame()
@@ -393,6 +391,8 @@ void renderInputEvents()
         case K_Q: key = "Q";
             break;
         case K_F: key = "F";
+            break;
+        case K_ENTER: key = "Enter";
             break;
         default: continue;
         }
