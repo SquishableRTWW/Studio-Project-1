@@ -21,17 +21,17 @@ string hunter::getname()
 
 void hunter::choosestarter(int s)
 {
-	if (s == 1)
+	switch (s)
 	{
+	case 1:
 		party[0] = ignis();
-	}
-	else if (s == 2)
-	{
+		break;
+	case 2:
 		party[0] = typhis();
-	}
-	else if (s == 3)
-	{
+		break;
+	case 3:
 		party[0] = vitalus();
+		break;
 	}
 }
 
@@ -39,9 +39,17 @@ void hunter::addparty(int m)
 {
 	for (int i = 1; i < 6; i++)
 	{
-		if (m == 1)
+		switch (m)
 		{
+		case 1:
 			party[i] = oris();
+			break;
+		case 2:
+			party[i] = lavarous();
+			break;
+		case 3:
+			party[i] = azure();
+			break;
 		}
 	}
 }

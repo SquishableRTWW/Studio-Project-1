@@ -5,6 +5,10 @@
 #include "typhis.h"
 #include "vitalus.h"
 #include "oris.h"
+#include "lavarous.h"
+#include "azure.h"
+
+
 
 class hunter
 {
