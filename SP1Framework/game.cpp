@@ -445,13 +445,13 @@ void renderInputEvents()
         ss.str("");
         switch (i)
         {
-        case K_UP: key = "UP";
+        case K_UP: key = "W";
             break;
-        case K_DOWN: key = "DOWN";
+        case K_DOWN: key = "S";
             break;
-        case K_LEFT: key = "LEFT";
+        case K_LEFT: key = "A";
             break;
-        case K_RIGHT: key = "RIGHT";
+        case K_RIGHT: key = "D";
             break;
         case K_Q: key = "Q";
             break;
