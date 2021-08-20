@@ -317,14 +317,13 @@ void renderSplashScreen()  // renders the splash screen
     }
     c.X = 27;
     c.Y = 7;
-    g_Console.setConsoleFont(0, 25, L"Consolas");
-    g_Console.writeToBuffer(c, "'Ele-beast Hunters.'");
-    g_Console.setConsoleFont(0, 16, L"Consolas");
+    colour(0x2B);
+    g_Console.writeToBuffer(c, "'Ele-beast Hunters.'", 0x04);
     c.Y = 11;
     c.X = 26; 
     g_Console.writeToBuffer(c, "1. Press 'Enter' to start", 0x03);
     c.Y += 1;
-    g_Console.writeToBuffer(c, "2. Press 'Esc' to quit", 0x09);
+    g_Console.writeToBuffer(c, "2. Press 'Esc' to quit", 0x03);
 }
 
 void renderGame()
