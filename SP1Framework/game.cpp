@@ -374,8 +374,20 @@ void renderMenu()
             g_Console.writeToBuffer(c, " ", 0xC2);
         }
     }
-    c.X = 39; c.Y = 13;
+    c.X = 1; c.Y = 1;
     g_Console.writeToBuffer(c, "This is the menu", 0xC7);
+    c.Y += 2;
+    g_Console.writeToBuffer(c, "Ele-beast 1: ", 0xC0);
+    c.Y += 2;
+    g_Console.writeToBuffer(c, "Ele-beast 2: ", 0xC0);
+    c.Y += 2;
+    g_Console.writeToBuffer(c, "Ele-beast 3: ", 0xC0);
+    c.Y += 2;
+    g_Console.writeToBuffer(c, "Ele-beast 4: ", 0xC0);
+    c.Y += 2;
+    g_Console.writeToBuffer(c, "Ele-beast 5: ", 0xC0);
+    c.Y += 2;
+    g_Console.writeToBuffer(c, "Ele-beast 6: ", 0xC0);
 }
 
 void renderCharacter()
