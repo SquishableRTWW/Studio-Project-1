@@ -82,6 +82,7 @@
     <ClCompile Include="Framework\console.cpp" />
     <ClCompile Include="Framework\timer.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="hunter.cpp" />
     <ClCompile Include="ignis.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="monster.cpp" />
@@ -96,6 +97,7 @@
     <ClInclude Include="Framework\console.h" />
     <ClInclude Include="Framework\timer.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="hunter.h" />
     <ClInclude Include="ignis.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="moveList.h" />
