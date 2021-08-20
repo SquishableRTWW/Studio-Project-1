@@ -219,6 +219,7 @@ void update(double dt)
 
 void splashScreenWait()    // waits for user input in splash screen
 {
+    processUserInput();
     if (g_skKeyEvent[K_ENTER].keyReleased) // wait for user to press 'Enter' to go on to game screen.
         g_eGameState = S_GAME;
 }
@@ -314,11 +315,15 @@ void renderSplashScreen()  // renders the splash screen
             g_Console.writeToBuffer(c, ' ', 0x2B);
         }
     }
-    c.Y /= 2;
-    c.X = c.X / 2 - 9;
-    g_Console.writeToBuffer(c, "1. Press 'F' to start", 0x03);
+    c.X = 27;
+    c.Y = 7;
+    g_Console.setConsoleFont(0, 25, L"Consolas");
+    g_Console.writeToBuffer(c, "'Ele-beast Hunters.'");
+    g_Console.setConsoleFont(0, 16, L"Consolas");
+    c.Y = 11;
+    c.X = 26; 
+    g_Console.writeToBuffer(c, "1. Press 'Enter' to start", 0x03);
     c.Y += 1;
-    c.X = g_Console.getConsoleSize().X / 2 - 9;
     g_Console.writeToBuffer(c, "2. Press 'Esc' to quit", 0x09);
 }
 
