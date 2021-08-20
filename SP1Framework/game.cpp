@@ -6,6 +6,7 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include "ignis.h"
 
 double  g_dElapsedTime;
 bool testing = false;
@@ -34,7 +35,6 @@ void init( void )
 
     // sets the initial state for the game (which is the start screen).
     g_eGameState = S_SPLASHSCREEN;
-
     g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2;
     g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
     g_sChar.m_bActive = true;
@@ -103,6 +103,7 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
         break;
     case S_GAME: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
         break;
+    case S_MENU: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event
     }
 }
 
@@ -213,6 +214,7 @@ void update(double dt)
             break;
         case S_GAME: updateGame(); // gameplay logic when we are in the game
             break;
+        case S_MENU: menuScreenWait();
     }
 }
 
@@ -229,6 +231,14 @@ void updateGame()       // gameplay logic
     processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
     moveCharacter();    // moves the character, collision detection, physics, etc
                         // sound can be played here too.
+}
+
+void menuScreenWait()
+{
+    if (g_skKeyEvent[K_F].keyReleased)
+        g_eGameState = S_GAME;
+    if (g_skKeyEvent[K_ESCAPE].keyReleased)
+        g_eGameState = S_GAME;
 }
 
 void moveCharacter()
@@ -257,16 +267,18 @@ void moveCharacter()
     }
     if (g_skKeyEvent[K_Q].keyReleased)
     {
-        g_sChar.m_bActive = !g_sChar.m_bActive;        
+        g_sChar.m_bActive = !g_sChar.m_bActive;
     }
 
-   
+
 }
 void processUserInput()
 {
     // quits the game if player hits the escape key
     if (g_skKeyEvent[K_ESCAPE].keyReleased)
-        g_bQuitGame = true;   
+        g_bQuitGame = true;
+    if (g_skKeyEvent[K_F].keyReleased)
+        g_eGameState = S_MENU;
 }
 
 //--------------------------------------------------------------
@@ -319,7 +331,7 @@ void renderSplashScreen()  // renders the splash screen
     c.Y = 9;
     g_Console.writeToBuffer(c, "'Ele-beast Hunters.'", 0xA4);
     c.Y = 13;
-    c.X = 26; 
+    c.X = 26;
     g_Console.writeToBuffer(c, "Press 'Enter' to start", 0xA0);
     c.Y += 1;
     g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0xA0);
@@ -346,6 +358,19 @@ void renderMap()
         c.Y = i + 1;
         colour(colors[i]);
         g_Console.writeToBuffer(c, " °±²Û", colors[i]);
+    }
+}
+
+void renderMenu()
+{
+    COORD c;
+    for (int i = 0; i < 25; i++)
+    {
+        for (int j = 0; j < 80; j++)
+        {
+            c.X = j; c.Y = i;
+            g_Console.writeToBuffer(c, " ", 0x1A);
+        }
     }
 }
 
