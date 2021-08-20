@@ -214,7 +214,7 @@ void update(double dt)
             break;
         case S_GAME: updateGame(); // gameplay logic when we are in the game
             break;
-        case S_MENU: menuScreenWait();
+        case S_MENU: menuScreenWait(); //game logic for menu screen
     }
 }
 
@@ -298,6 +298,8 @@ void render()
         break;
     case S_GAME: renderGame();
         break;
+    case S_MENU: renderMenu();
+        break;
     }
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();    // renders status of input events
@@ -369,7 +371,7 @@ void renderMenu()
         for (int j = 0; j < 80; j++)
         {
             c.X = j; c.Y = i;
-            g_Console.writeToBuffer(c, " ", 0x1A);
+            g_Console.writeToBuffer(c, " ", 0xC2);
         }
     }
 }
