@@ -8,8 +8,9 @@
 #include <sstream>
 
 double  g_dElapsedTime;
+bool testing = false;
 double  g_dDeltaTime;
-SKeyEvent g_skKeyEvent[K_COUNT];
+SKeyEvent g_skKeyEvent[K_COUNT + 1];
 SMouseEvent g_mouseEvent;
 
 // Game specific variables here
@@ -98,7 +99,7 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
 {    
     switch (g_eGameState)
     {
-    case S_SPLASHSCREEN: // don't handle anything for the splash screen
+    case S_SPLASHSCREEN: gameplayKBHandler(keyboardEvent);// handle gameplay keyboard event.
         break;
     case S_GAME: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
         break;
@@ -152,6 +153,7 @@ void gameplayKBHandler(const KEY_EVENT_RECORD& keyboardEvent)
     case 0x41: key = K_LEFT; break; 
     case 0x44: key = K_RIGHT; break; 
     case 0x51: key = K_Q; break;
+    case 0x46: key = K_F; break;
     case VK_ESCAPE: key = K_ESCAPE; break; 
     }
     // a key pressed event would be one with bKeyDown == true
@@ -214,9 +216,9 @@ void update(double dt)
 }
 
 
-void splashScreenWait()    // waits for time to pass in splash screen
+void splashScreenWait()    // waits for user input in splash screen
 {
-    if (g_dElapsedTime > 3.0) // wait for 3 seconds to switch to game mode, else do nothing
+    if (g_skKeyEvent[K_F].keyReleased) // wait for user to press 'F' to go on to game screen.
         g_eGameState = S_GAME;
 }
 
@@ -262,7 +264,7 @@ void processUserInput()
 {
     // quits the game if player hits the escape key
     if (g_skKeyEvent[K_ESCAPE].keyReleased)
-        g_bQuitGame = true;    
+        g_bQuitGame = true;   
 }
 
 //--------------------------------------------------------------
@@ -305,10 +307,10 @@ void renderSplashScreen()  // renders the splash screen
     COORD c = g_Console.getConsoleSize();
     c.Y /= 3;
     c.X = c.X / 2 - 9;
-    g_Console.writeToBuffer(c, "A game in 3 seconds", 0x03);
+    g_Console.writeToBuffer(c, "1. Press 'F' to start", 0x03);
     c.Y += 1;
-    c.X = g_Console.getConsoleSize().X / 2 - 20;
-    g_Console.writeToBuffer(c, "Press 'Q' to change character colour", 0x09);
+    c.X = g_Console.getConsoleSize().X / 2 - 9;
+    g_Console.writeToBuffer(c, "2. Press 'Esc' to quit", 0x09);
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 - 9;
     g_Console.writeToBuffer(c, "Press 'Esc' to quit", 0x09);
@@ -388,7 +390,9 @@ void renderInputEvents()
             break;
         case K_RIGHT: key = "RIGHT";
             break;
-        case K_Q: key = "SPACE";
+        case K_Q: key = "Q";
+            break;
+        case K_F: key = "F";
             break;
         default: continue;
         }
