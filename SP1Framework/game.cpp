@@ -519,6 +519,17 @@ void renderEncounter()
             g_Console.writeToBuffer(c, " ", colors[5]);
         }
     }
+    c.X = 10; c.Y = 12;
+    g_Console.writeToBuffer(c, "    .", 0xF0); c.Y += 1;
+    g_Console.writeToBuffer(c, "   (>", 0xF0); c.Y += 1;
+    g_Console.writeToBuffer(c, "~(##)", 0xF0); c.Y += 1;
+    g_Console.writeToBuffer(c, " // | ", 0XF0);
+    c.X = 50; c.Y = 12;
+    g_Console.writeToBuffer(c, ".    ", 0xF0); c.Y += 1;
+    g_Console.writeToBuffer(c, "<)   ", 0xF0); c.Y += 1;
+    g_Console.writeToBuffer(c, "(##)~", 0xF0); c.Y += 1;
+    g_Console.writeToBuffer(c, "| // ", 0XF0);
+
 }
 
 void renderEncounterSplashScreen()
