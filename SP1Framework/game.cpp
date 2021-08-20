@@ -306,12 +306,12 @@ void renderToScreen()
 void renderSplashScreen()  // renders the splash screen
 {
     COORD c = g_Console.getConsoleSize();
-    c.Y /= 3;
+    c.Y /= 2;
     c.X = c.X / 2 - 9;
-    g_Console.writeToBuffer(c, "1. Press 'Enter' to start the game!", 0x03);
+    g_Console.writeToBuffer(c, "1. Press 'F' to start", 0x03);
     c.Y += 1;
     c.X = g_Console.getConsoleSize().X / 2 - 9;
-    g_Console.writeToBuffer(c, "2. Press 'Esc' to quit.", 0x09);
+    g_Console.writeToBuffer(c, "2. Press 'Esc' to quit", 0x09);
 }
 
 void renderGame()
