@@ -483,7 +483,7 @@ void renderEncounter()
         {
             c.Y = j;
             colour(colors[11]);
-            g_Console.writeToBuffer(c, " ", colors[11]);
+            g_Console.writeToBuffer(c, " ", 0xB0);
         }
     }
 
@@ -533,15 +533,15 @@ void renderEncounter()
         }
     }
     c.X = 10; c.Y = 12;
-    g_Console.writeToBuffer(c, "    .", 0xF0); c.Y += 1;
-    g_Console.writeToBuffer(c, "   (>", 0xF0); c.Y += 1;
-    g_Console.writeToBuffer(c, "~(##)", 0xF0); c.Y += 1;
-    g_Console.writeToBuffer(c, " // | ", 0XF0);
+    g_Console.writeToBuffer(c, "    .", 0xB0); c.Y += 1;
+    g_Console.writeToBuffer(c, "   (>", 0xB0); c.Y += 1;
+    g_Console.writeToBuffer(c, "~(##)", 0xB0); c.Y += 1;
+    g_Console.writeToBuffer(c, " // | ", 0XB0);
     c.X = 50; c.Y = 12;
-    g_Console.writeToBuffer(c, ".    ", 0xF0); c.Y += 1;
-    g_Console.writeToBuffer(c, "<)   ", 0xF0); c.Y += 1;
-    g_Console.writeToBuffer(c, "(##)~", 0xF0); c.Y += 1;
-    g_Console.writeToBuffer(c, "| // ", 0XF0);
+    g_Console.writeToBuffer(c, ".    ", 0xB0); c.Y += 1;
+    g_Console.writeToBuffer(c, "<)   ", 0xB0); c.Y += 1;
+    g_Console.writeToBuffer(c, "(##)~", 0xB0); c.Y += 1;
+    g_Console.writeToBuffer(c, "| // ", 0XB0);
 
 }
 
