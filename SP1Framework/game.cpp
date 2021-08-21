@@ -380,6 +380,8 @@ void render()
         break;
     case S_ENCOUNTER: renderEncounter();
         break;
+    case S_TUTORIAL: renderTutorial();
+        break;
     }
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();    // renders status of input events
@@ -591,9 +593,16 @@ void renderTutorial()
         for (int j = 0; j < 80; j++)
         {
             c.X = j; c.Y = i;
-            g_Console.writeToBuffer(c, " ", 0x00);
+            g_Console.writeToBuffer(c, " ", 0xB0);
         }
     }
+    c.X = 0; c.Y = 13; 
+    g_Console.writeToBuffer(c, "Welcome to the world of ele-beasts! Adventure and challenges await you start your.", 0xB0); c.Y++;
+    g_Console.writeToBuffer(c, "journey. When you start, you will be prompted to select a starting ele-beast to", 0xB0); c.Y++;
+    g_Console.writeToBuffer(c, "accompany you in your travels. Fight and catch other ele-beasts to make yours ", 0xB0); c.Y++;
+    g_Console.writeToBuffer(c, "stronger, and defeat the two mysterious ele-beast in your home town area to", 0xB0); c.Y++;
+    g_Console.writeToBuffer(c, "free yourself and explore the rest of the world.", 0xB0); c.Y++;
+    c.X = 19; c.Y = 21; g_Console.writeToBuffer(c, "Press [ENTER] to start your adventure!", 0xB0);
 }
 
 void renderCharacter()
