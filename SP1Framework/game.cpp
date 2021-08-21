@@ -107,6 +107,9 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
     case S_MENU: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event
         break;
     case S_ENCOUNTER: gameplayKBHandler(keyboardEvent);
+        break;
+    case S_TUTORIAL:gameplayKBHandler(keyboardEvent);
+        break;
     }
 }
 
@@ -226,6 +229,8 @@ void update(double dt)
             break;
         case S_ENCOUNTER: updateEncounter();
             break;
+        case S_TUTORIAL: tutorialWait();
+            break;
     }
 }
 
@@ -234,7 +239,7 @@ void splashScreenWait()    // waits for user input in splash screen
 {
     processUserInput();
     if (g_skKeyEvent[K_ENTER].keyReleased) // wait for user to press 'Enter' to go on to game screen.
-        g_eGameState = S_GAME;
+        g_eGameState = S_TUTORIAL;
     if (g_skKeyEvent[K_F].keyReleased)
         g_eGameState = S_SPLASHSCREEN;
 }
@@ -258,6 +263,12 @@ void menuScreenWait()
         g_eGameState = S_GAME;
     if (g_skKeyEvent[K_ESCAPE].keyReleased)
         g_bQuitGame = true;
+}
+
+void tutorialWait()
+{
+    if (g_skKeyEvent[K_ENTER].keyReleased) // wait for user to press 'Enter' to go on to game screen.
+        g_eGameState = S_GAME;
 }
 
 void updateEncounter()
@@ -570,6 +581,19 @@ void renderMenu()
     g_Console.writeToBuffer(c, "Press F to EXIT PAUSE MENU.", 0xC0);
     c.Y++;
     g_Console.writeToBuffer(c, "Press 'ESC' to EXIT the GAME.", 0xC0);
+}
+
+void renderTutorial()
+{
+    COORD c;
+    for (int i = 0; i < 25; i++)
+    {
+        for (int j = 0; j < 80; j++)
+        {
+            c.X = j; c.Y = i;
+            g_Console.writeToBuffer(c, " ", 0x00);
+        }
+    }
 }
 
 void renderCharacter()
