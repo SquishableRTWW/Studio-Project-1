@@ -6,8 +6,8 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
-#include "ignis.h"
 #include <stdlib.h>
+#include "hunter.h"
 
 double  g_dElapsedTime;
 bool testing = false;
