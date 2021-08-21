@@ -582,7 +582,7 @@ void renderMenu()
     c.Y += 3; c.X += 28;
     g_Console.writeToBuffer(c, "Press F to EXIT PAUSE MENU.", 0xC0);
     c.Y++;
-    g_Console.writeToBuffer(c, "Press 'ESC' to EXIT the GAME.", 0xC0);
+    g_Console.writeToBuffer(c, "Press 'ESC' to EXIT THE GAME.", 0xC0);
 }
 
 void renderTutorial()
@@ -597,7 +597,7 @@ void renderTutorial()
         }
     }
     c.X = 0; c.Y = 13; 
-    g_Console.writeToBuffer(c, "Welcome to the world of ele-beasts! Adventure and challenges await you start your.", 0xB0); c.Y++;
+    g_Console.writeToBuffer(c, "Welcome to the world of ele-beasts! Adventure and challenges await during your ", 0xB0); c.Y++;
     g_Console.writeToBuffer(c, "journey. When you start, you will be prompted to select a starting ele-beast to", 0xB0); c.Y++;
     g_Console.writeToBuffer(c, "accompany you in your travels. Fight and catch other ele-beasts to make yours ", 0xB0); c.Y++;
     g_Console.writeToBuffer(c, "stronger, and defeat the two mysterious ele-beast in your home town area to", 0xB0); c.Y++;
