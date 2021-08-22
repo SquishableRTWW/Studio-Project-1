@@ -54,6 +54,36 @@ void hunter::addparty(int m)
 	}
 }
 
+string hunter::getMname(int i)
+{
+	return party[i].getName();
+}
+
+int hunter::getMlvl(int i)
+{
+	return party[i].getLevel();
+}
+
+int hunter::getMhealth(int i)
+{
+	return party[i].getHealth();
+}
+
+int hunter::getMattack(int i)
+{
+	return party[i].getAttack();
+}
+
+int hunter::getMdefense(int i)
+{
+	return party[i].getDefence();
+}
+
+int hunter::getMspeed(int i)
+{
+	return party[i].getSpeed();
+}
+
 hunter::~hunter(void)
 {
 
