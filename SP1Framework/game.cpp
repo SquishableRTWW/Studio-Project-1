@@ -542,7 +542,7 @@ void renderEncounter()
     g_Console.writeToBuffer(c, ".    ", 0xB0); c.Y += 1;
     g_Console.writeToBuffer(c, "<)   ", 0xB0); c.Y += 1;
     g_Console.writeToBuffer(c, "(##)~", 0xB0); c.Y += 1;
-    g_Console.writeToBuffer(c, "| // ", 0XB0);
+    g_Console.writeToBuffer(c, "| \\ ", 0XB0);
 
 }
 
