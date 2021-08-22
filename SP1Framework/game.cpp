@@ -12,6 +12,7 @@
 double  g_dElapsedTime;
 bool testing = false;
 double  g_dDeltaTime;
+hunter jeff;
 SKeyEvent g_skKeyEvent[K_COUNT + 2];
 SMouseEvent g_mouseEvent;
 
@@ -33,7 +34,7 @@ void init( void )
 {
     // Set precision for floating point output
     g_dElapsedTime = 0.0;    
-
+    jeff.choosestarter(1);
     // sets the initial state for the game (which is the start screen).
     g_eGameState = S_SPLASHSCREEN;
     g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2;
@@ -565,20 +566,38 @@ void renderMenu()
                 g_Console.writeToBuffer(c, " ", 0xC2);
         }
     }
+    string name1 = jeff.getMname(0), level1 = to_string(jeff.getMlvl(0)), hp1 = to_string(jeff.getMhealth(0)), atk1 = to_string(jeff.getMattack(0)), def1 = to_string(jeff.getMdefense(0)), spd1 = to_string(jeff.getMspeed(0)),
+        name2 = jeff.getMname(1), level2 = to_string(jeff.getMlvl(1)), hp2 = to_string(jeff.getMhealth(1)), atk2 = to_string(jeff.getMattack(1)), def2 = to_string(jeff.getMdefense(1)), spd2 = to_string(jeff.getMspeed(1)),
+        name3 = jeff.getMname(2), level3 = to_string(jeff.getMlvl(2)), hp3 = to_string(jeff.getMhealth(2)), atk3 = to_string(jeff.getMattack(2)), def3 = to_string(jeff.getMdefense(2)), spd3 = to_string(jeff.getMspeed(2)),
+        name4 = jeff.getMname(3), level4 = to_string(jeff.getMlvl(3)), hp4 = to_string(jeff.getMhealth(3)), atk4 = to_string(jeff.getMattack(3)), def4 = to_string(jeff.getMdefense(3)), spd4 = to_string(jeff.getMspeed(3)),
+        name5 = jeff.getMname(4), level5 = to_string(jeff.getMlvl(4)), hp5 = to_string(jeff.getMhealth(4)), atk5 = to_string(jeff.getMattack(4)), def5 = to_string(jeff.getMdefense(4)), spd5 = to_string(jeff.getMspeed(4)),
+        name6 = jeff.getMname(5), level6 = to_string(jeff.getMlvl(5)), hp6 = to_string(jeff.getMhealth(5)), atk6 = to_string(jeff.getMattack(5)), def6 = to_string(jeff.getMdefense(5)), spd6 = to_string(jeff.getMspeed(5));
     c.X = 1; c.Y = 1;
     g_Console.writeToBuffer(c, "This is the pause menu", 0xC0);
     c.Y += 2;
-    g_Console.writeToBuffer(c, "Ele-beast 1:      Lv:   HP:   Atk:   Def:  Spd: ", 0xC0);
+    g_Console.writeToBuffer(c, "Ele-beast 1:      Lv:   HP:   Atk:   Def:  Spd: ", 0xC0); c.X += 12;
+    g_Console.writeToBuffer(c, name1, 0xC0); c.X += 9; g_Console.writeToBuffer(c, level1, 0xC0); c.X += 6; g_Console.writeToBuffer(c, hp1, 0xC0); c.X += 7; g_Console.writeToBuffer(c, atk1, 0xC0); c.X += 7;
+    g_Console.writeToBuffer(c, def1, 0xC0); c.X += 6; g_Console.writeToBuffer(c, spd1, 0xC0); c.X = 1;
     c.Y += 2;
-    g_Console.writeToBuffer(c, "Ele-beast 2:      Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0);
+    g_Console.writeToBuffer(c, "Ele-beast 2:      Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0); c.X += 12;
+    g_Console.writeToBuffer(c, name2, 0xC0); c.X += 9; g_Console.writeToBuffer(c, level2, 0xC0); c.X += 6; g_Console.writeToBuffer(c, hp2, 0xC0); c.X += 7; g_Console.writeToBuffer(c, atk2, 0xC0); c.X += 7;
+    g_Console.writeToBuffer(c, def2, 0xC0); c.X += 6; g_Console.writeToBuffer(c, spd2, 0xC0); c.X = 1;
     c.Y += 2;
-    g_Console.writeToBuffer(c, "Ele-beast 3:      Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0);
+    g_Console.writeToBuffer(c, "Ele-beast 3:      Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0); c.X += 12;
+    g_Console.writeToBuffer(c, name3, 0xC0); c.X += 9; g_Console.writeToBuffer(c, level3, 0xC0); c.X += 6; g_Console.writeToBuffer(c, hp3, 0xC0); c.X += 7; g_Console.writeToBuffer(c, atk3, 0xC0); c.X += 7;
+    g_Console.writeToBuffer(c, def3, 0xC0); c.X += 6; g_Console.writeToBuffer(c, spd3, 0xC0); c.X = 1;
     c.Y += 2;
-    g_Console.writeToBuffer(c, "Ele-beast 4:      Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0);
+    g_Console.writeToBuffer(c, "Ele-beast 4:      Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0); c.X += 12;
+    g_Console.writeToBuffer(c, name4, 0xC0); c.X += 9; g_Console.writeToBuffer(c, level4, 0xC0); c.X += 6; g_Console.writeToBuffer(c, hp4, 0xC0); c.X += 7; g_Console.writeToBuffer(c, atk4, 0xC0); c.X += 7;
+    g_Console.writeToBuffer(c, def4, 0xC0); c.X += 6; g_Console.writeToBuffer(c, spd4, 0xC0); c.X = 1;
     c.Y += 2;
-    g_Console.writeToBuffer(c, "Ele-beast 5:      Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0);
+    g_Console.writeToBuffer(c, "Ele-beast 5:      Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0); c.X += 12;
+    g_Console.writeToBuffer(c, name5, 0xC0); c.X += 9; g_Console.writeToBuffer(c, level5, 0xC0); c.X += 6; g_Console.writeToBuffer(c, hp5, 0xC0); c.X += 7; g_Console.writeToBuffer(c, atk5, 0xC0); c.X += 7;
+    g_Console.writeToBuffer(c, def1, 0xC0); c.X += 6; g_Console.writeToBuffer(c, spd1, 0xC0); c.X = 1;
     c.Y += 2;
-    g_Console.writeToBuffer(c, "Ele-beast 6:      Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0);
+    g_Console.writeToBuffer(c, "Ele-beast 6:      Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0); c.X += 12;
+    g_Console.writeToBuffer(c, name6, 0xC0); c.X += 9; g_Console.writeToBuffer(c, level6, 0xC0); c.X += 6; g_Console.writeToBuffer(c, hp6, 0xC0); c.X += 7; g_Console.writeToBuffer(c, atk6, 0xC0); c.X += 7;
+    g_Console.writeToBuffer(c, def6, 0xC0); c.X += 6; g_Console.writeToBuffer(c, spd6, 0xC0); c.X = 1;
     c.Y += 3; c.X += 28;
     g_Console.writeToBuffer(c, "Press F to EXIT PAUSE MENU.", 0xC0);
     c.Y++;
