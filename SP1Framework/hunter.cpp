@@ -54,6 +54,11 @@ void hunter::addparty(int m)
 	}
 }
 
+monster hunter::getMonster(int m)
+{
+	return party[m];
+}
+
 string hunter::getMname(int i)
 {
 	return party[i].getName();

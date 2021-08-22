@@ -21,6 +21,7 @@ public:
 	string getname();
 	void choosestarter(int s);
 	void addparty(int m);
+	monster getMonster(int m);
 	//get functions for monsters in party
 	string getMname(int i);
 	int getMlvl(int i);
