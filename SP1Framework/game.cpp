@@ -110,6 +110,7 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
         break;
     case S_TUTORIAL:gameplayKBHandler(keyboardEvent);
         break;
+    case S_STARTER: gameplayKBHandler(keyboardEvent);
     }
 }
 
@@ -138,6 +139,8 @@ void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
     case S_GAME: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
         break;
     case S_ENCOUNTER: gameplayMouseHandler(mouseEvent);
+        break;
+    case S_STARTER: gameplayMouseHandler(mouseEvent);
         break;
     }
     
@@ -231,6 +234,7 @@ void update(double dt)
             break;
         case S_TUTORIAL: tutorialWait();
             break;
+        case S_STARTER: starterScreenWait();
     }
 }
 
@@ -268,7 +272,26 @@ void menuScreenWait()
 void tutorialWait()
 {
     if (g_skKeyEvent[K_ENTER].keyReleased) // wait for user to press 'Enter' to go on to game screen.
+        g_eGameState = S_STARTER;
+}
+
+void starterScreenWait()
+{
+    if ((g_mouseEvent.mousePosition.X > 14 && g_mouseEvent.mousePosition.X < 20 && g_mouseEvent.mousePosition.Y == 9) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    {
+        jeff.choosestarter(1);
         g_eGameState = S_GAME;
+    }
+    if ((g_mouseEvent.mousePosition.X > 23 && g_mouseEvent.mousePosition.X < 30 && g_mouseEvent.mousePosition.Y == 9) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    {
+        jeff.choosestarter(2);
+        g_eGameState = S_GAME;
+    }
+    if ((g_mouseEvent.mousePosition.X > 33 && g_mouseEvent.mousePosition.X < 41 && g_mouseEvent.mousePosition.Y == 9) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    {
+        jeff.choosestarter(3);
+        g_eGameState = S_GAME;
+    }
 }
 
 void updateEncounter()
@@ -381,6 +404,8 @@ void render()
     case S_ENCOUNTER: renderEncounter();
         break;
     case S_TUTORIAL: renderTutorial();
+        break;
+    case S_STARTER: renderStarterScreen();
         break;
     }
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
@@ -621,6 +646,21 @@ void renderTutorial()
     g_Console.writeToBuffer(c, "stronger, and defeat the two mysterious ele-beast in your home town area to", 0xB0); c.Y++;
     g_Console.writeToBuffer(c, "free yourself and explore the rest of the world.", 0xB0); c.Y++;
     c.X = 19; c.Y = 21; g_Console.writeToBuffer(c, "Press [ENTER] to start your adventure!", 0xB0);
+}
+
+void renderStarterScreen()
+{
+    COORD c;
+    for (int i = 0; i < 25; i++)
+    {
+        for (int j = 0; j < 80; j++)
+        {
+            c.X = j; c.Y = i;
+            g_Console.writeToBuffer(c, " ", 0xC0);
+        }
+    }
+    c.X = 12; c.Y = 7; g_Console.writeToBuffer(c, "Please choose your starting ele-beast: ", 0xC0);
+    c.Y += 2; g_Console.writeToBuffer(c, "1: ignis", 0xC0); c.X += 9; g_Console.writeToBuffer(c, "2: typhis", 0xC0); c.X += 10; g_Console.writeToBuffer(c, "3: vitalus", 0xC0);
 }
 
 void renderCharacter()

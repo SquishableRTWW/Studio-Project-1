@@ -46,6 +46,7 @@ enum EGAMESTATES
     S_MENU,
     S_GAME,
     S_TUTORIAL,
+    S_STARTER,
     S_COUNT
 };
 
@@ -67,6 +68,7 @@ void updateGame();          // gameplay logic
 void updateEncounter();
 void menuScreenWait();      // menu screen logic
 void tutorialWait();        // tutorial screen logic.
+void starterScreenWait();   // starter screen game logic
 void moveCharacter();       // moves the character, collision detection, physics, etc
 void moveSelection();
 void processUserInput();    // checks if you should change states or do something else with the game, e.g. pause, exit
@@ -76,6 +78,7 @@ void renderGame();          // renders the game stuff
 void renderMap();           // renders the map to the buffer first
 void renderMenu();          // renders the pause menu screen.
 void renderTutorial();      // renders the tutorial screen.
+void renderStarterScreen(); // renders the screen for user to pick starter ele-beast.
 void renderCharacter();     // renders the character into the buffer
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc
 void renderToScreen();      // dump the contents of the buffer to the screen, one frame worth of game
