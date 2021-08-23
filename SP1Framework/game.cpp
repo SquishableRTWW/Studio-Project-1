@@ -14,6 +14,7 @@
 double  g_dElapsedTime;
 double  g_dDeltaTime;
 int wildMonster = (rand() % 3) + 1;
+monster wild;
 hunter jeff;
 SKeyEvent g_skKeyEvent[K_COUNT + 2];
 SMouseEvent g_mouseEvent;
@@ -37,6 +38,7 @@ void init( void )
     // Set precision for floating point output
     g_dElapsedTime = 0.0;    
     jeff.choosestarter(1);
+    wild.setWildMonster(wild, wildMonster);
     // sets the initial state for the game (which is the start screen).
     g_eGameState = S_SPLASHSCREEN;
     g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2;
@@ -498,9 +500,6 @@ void renderMap()
 
 void renderEncounter()
 {
-    monster wild;
-    wild.setWildMonster(wild, wildMonster);
-    wild.setOGStats();
     string name1 = jeff.getMname(0), level1 = to_string(jeff.getMlvl(0)), hp1 = to_string(jeff.getMhealth(0)), atk1 = to_string(jeff.getMattack(0)), def1 = to_string(jeff.getMdefense(0)), spd1 = to_string(jeff.getMspeed(0)),
         name2 = jeff.getMname(1), level2 = to_string(jeff.getMlvl(1)), hp2 = to_string(jeff.getMhealth(1)), atk2 = to_string(jeff.getMattack(1)), def2 = to_string(jeff.getMdefense(1)), spd2 = to_string(jeff.getMspeed(1)),
         name3 = jeff.getMname(2), level3 = to_string(jeff.getMlvl(2)), hp3 = to_string(jeff.getMhealth(2)), atk3 = to_string(jeff.getMattack(2)), def3 = to_string(jeff.getMdefense(2)), spd3 = to_string(jeff.getMspeed(2)),
