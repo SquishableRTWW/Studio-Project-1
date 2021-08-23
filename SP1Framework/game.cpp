@@ -277,17 +277,17 @@ void tutorialWait()
 
 void starterScreenWait()
 {
-    if ((g_mouseEvent.mousePosition.X > 24 && g_mouseEvent.mousePosition.X < 30 && g_mouseEvent.mousePosition.Y == 12) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    if ((g_mouseEvent.mousePosition.X > 21 && g_mouseEvent.mousePosition.X < 33 && g_mouseEvent.mousePosition.Y == 12) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
         jeff.choosestarter(1);
         g_eGameState = S_GAME;
     }
-    if ((g_mouseEvent.mousePosition.X > 33 && g_mouseEvent.mousePosition.X < 40 && g_mouseEvent.mousePosition.Y == 12) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    if ((g_mouseEvent.mousePosition.X > 36 && g_mouseEvent.mousePosition.X < 50 && g_mouseEvent.mousePosition.Y == 12) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
         jeff.choosestarter(2);
         g_eGameState = S_GAME;
     }
-    if ((g_mouseEvent.mousePosition.X > 43 && g_mouseEvent.mousePosition.X < 51 && g_mouseEvent.mousePosition.Y == 12) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    if ((g_mouseEvent.mousePosition.X > 53 && g_mouseEvent.mousePosition.X < 69 && g_mouseEvent.mousePosition.Y == 12) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
         jeff.choosestarter(3);
         g_eGameState = S_GAME;
@@ -659,8 +659,8 @@ void renderStarterScreen()
             g_Console.writeToBuffer(c, " ", 0xC0);
         }
     }
-    c.X = 12; c.Y = 10; g_Console.writeToBuffer(c, "Please choose your starting ele-beast (Left click to choose): ", 0xC0); c.X += 10;
-    c.Y += 2; g_Console.writeToBuffer(c, "1: ignis", 0xC0); c.X += 9; g_Console.writeToBuffer(c, "2: typhis", 0xC0); c.X += 10; g_Console.writeToBuffer(c, "3: vitalus", 0xC0);
+    c.X = 12; c.Y = 10; g_Console.writeToBuffer(c, "Please choose your starting ele-beast (Left click to choose): ", 0xC0); c.X += 7;
+    c.Y += 2; g_Console.writeToBuffer(c, "1: ignis(fire) ", 0xC0); c.X += 15; g_Console.writeToBuffer(c, "2: typhis(water) ", 0xC0); c.X += 17; g_Console.writeToBuffer(c, "3: vitalus(nature)", 0xC0);
 }
 
 void renderCharacter()
