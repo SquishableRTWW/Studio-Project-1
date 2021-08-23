@@ -299,10 +299,14 @@ void starterScreenWait()
     }
 }
 
+
+
 void updateEncounter()
 {
-    processUserInput();
-    moveSelection();
+    if ((g_mouseEvent.mousePosition.X > 66 && g_mouseEvent.mousePosition.X < 69 && g_mouseEvent.mousePosition.Y == 21) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    {
+        g_eGameState = S_GAME;
+    }
 }
 
 void moveSelection()
