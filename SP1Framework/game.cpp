@@ -3,7 +3,6 @@
 //
 #include "game.h"
 #include "Framework\console.h"
-#include <random>
 #include <iostream>
 #include <iomanip>
 #include <sstream>
@@ -13,9 +12,8 @@
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
-int wildMonster = (rand() % 3) + 1;
-monster wild;
 hunter jeff;
+monster wild;
 SKeyEvent g_skKeyEvent[K_COUNT + 2];
 SMouseEvent g_mouseEvent;
 
@@ -35,10 +33,10 @@ Console g_Console(80, 25, "SP1 Framework");
 //--------------------------------------------------------------
 void init( void )
 {
+    srand((unsigned)time(0));
     // Set precision for floating point output
-    g_dElapsedTime = 0.0;    
+    g_dElapsedTime = 0.0;
     jeff.choosestarter(1);
-    wild.setWildMonster(wild, wildMonster);
     // sets the initial state for the game (which is the start screen).
     g_eGameState = S_SPLASHSCREEN;
     g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2;
@@ -233,7 +231,7 @@ void update(double dt)
             break;
         case S_MENU: menuScreenWait(); //game logic for menu screen
             break;
-        case S_ENCOUNTERSPLASHSCREEN: encounterScreenWait();
+        case S_ENCOUNTERSPLASHSCREEN: wild.setWildMonster(wild, (rand() % 3) + 1); encounterScreenWait();
             break;
         case S_ENCOUNTER: updateEncounter();
             break;
@@ -533,8 +531,8 @@ void renderEncounter()
     g_Console.writeToBuffer(c, "Ele-beast: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xB0); c.Y = 9;
     c.X = 11;
     g_Console.writeToBuffer(c, name1, 0xB0); c.Y++; g_Console.writeToBuffer(c, level1, 0xB0); c.Y++; g_Console.writeToBuffer(c, hp1, 0xB0); c.Y = 9;
-    c.X = 44;
-    g_Console.writeToBuffer(c, "Ele-beast: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xB0); c.X += 9; c.Y = 9;
+    c.X = 48;
+    g_Console.writeToBuffer(c, "Ele-beast: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xB0); c.X += 11; c.Y = 9;
     g_Console.writeToBuffer(c, nameWild, 0xB0); c.Y++; g_Console.writeToBuffer(c, levelWild, 0xB0); c.Y++; g_Console.writeToBuffer(c, hpWild, 0xB0); c.Y = 9;
 
 
