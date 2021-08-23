@@ -277,17 +277,17 @@ void tutorialWait()
 
 void starterScreenWait()
 {
-    if ((g_mouseEvent.mousePosition.X > 14 && g_mouseEvent.mousePosition.X < 20 && g_mouseEvent.mousePosition.Y == 9) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    if ((g_mouseEvent.mousePosition.X > 24 && g_mouseEvent.mousePosition.X < 30 && g_mouseEvent.mousePosition.Y == 12) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
         jeff.choosestarter(1);
         g_eGameState = S_GAME;
     }
-    if ((g_mouseEvent.mousePosition.X > 23 && g_mouseEvent.mousePosition.X < 30 && g_mouseEvent.mousePosition.Y == 9) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    if ((g_mouseEvent.mousePosition.X > 33 && g_mouseEvent.mousePosition.X < 40 && g_mouseEvent.mousePosition.Y == 12) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
         jeff.choosestarter(2);
         g_eGameState = S_GAME;
     }
-    if ((g_mouseEvent.mousePosition.X > 33 && g_mouseEvent.mousePosition.X < 41 && g_mouseEvent.mousePosition.Y == 9) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    if ((g_mouseEvent.mousePosition.X > 43 && g_mouseEvent.mousePosition.X < 51 && g_mouseEvent.mousePosition.Y == 12) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
         jeff.choosestarter(3);
         g_eGameState = S_GAME;
@@ -599,28 +599,28 @@ void renderMenu()
     c.X = 1; c.Y = 1;
     g_Console.writeToBuffer(c, "This is the pause menu", 0xC0);
     c.Y += 2;
-    g_Console.writeToBuffer(c, "Ele-beast 1:      Lv:   HP:   Atk:   Def:  Spd: ", 0xC0); c.X += 12;
-    g_Console.writeToBuffer(c, name1, 0xC0); c.X += 9; g_Console.writeToBuffer(c, level1, 0xC0); c.X += 6; g_Console.writeToBuffer(c, hp1, 0xC0); c.X += 7; g_Console.writeToBuffer(c, atk1, 0xC0); c.X += 7;
+    g_Console.writeToBuffer(c, "Ele-beast 1:       Lv:   HP:   Atk:   Def:  Spd: ", 0xC0); c.X += 12;
+    g_Console.writeToBuffer(c, name1, 0xC0); c.X += 10; g_Console.writeToBuffer(c, level1, 0xC0); c.X += 6; g_Console.writeToBuffer(c, hp1, 0xC0); c.X += 7; g_Console.writeToBuffer(c, atk1, 0xC0); c.X += 7;
     g_Console.writeToBuffer(c, def1, 0xC0); c.X += 6; g_Console.writeToBuffer(c, spd1, 0xC0); c.X = 1;
     c.Y += 2;
-    g_Console.writeToBuffer(c, "Ele-beast 2:      Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0); c.X += 12;
-    g_Console.writeToBuffer(c, name2, 0xC0); c.X += 9; g_Console.writeToBuffer(c, level2, 0xC0); c.X += 6; g_Console.writeToBuffer(c, hp2, 0xC0); c.X += 7; g_Console.writeToBuffer(c, atk2, 0xC0); c.X += 7;
+    g_Console.writeToBuffer(c, "Ele-beast 2:       Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0); c.X += 12;
+    g_Console.writeToBuffer(c, name2, 0xC0); c.X += 10; g_Console.writeToBuffer(c, level2, 0xC0); c.X += 6; g_Console.writeToBuffer(c, hp2, 0xC0); c.X += 7; g_Console.writeToBuffer(c, atk2, 0xC0); c.X += 7;
     g_Console.writeToBuffer(c, def2, 0xC0); c.X += 6; g_Console.writeToBuffer(c, spd2, 0xC0); c.X = 1;
     c.Y += 2;
-    g_Console.writeToBuffer(c, "Ele-beast 3:      Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0); c.X += 12;
-    g_Console.writeToBuffer(c, name3, 0xC0); c.X += 9; g_Console.writeToBuffer(c, level3, 0xC0); c.X += 6; g_Console.writeToBuffer(c, hp3, 0xC0); c.X += 7; g_Console.writeToBuffer(c, atk3, 0xC0); c.X += 7;
+    g_Console.writeToBuffer(c, "Ele-beast 3:       Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0); c.X += 12;
+    g_Console.writeToBuffer(c, name3, 0xC0); c.X += 10; g_Console.writeToBuffer(c, level3, 0xC0); c.X += 6; g_Console.writeToBuffer(c, hp3, 0xC0); c.X += 7; g_Console.writeToBuffer(c, atk3, 0xC0); c.X += 7;
     g_Console.writeToBuffer(c, def3, 0xC0); c.X += 6; g_Console.writeToBuffer(c, spd3, 0xC0); c.X = 1;
     c.Y += 2;
-    g_Console.writeToBuffer(c, "Ele-beast 4:      Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0); c.X += 12;
-    g_Console.writeToBuffer(c, name4, 0xC0); c.X += 9; g_Console.writeToBuffer(c, level4, 0xC0); c.X += 6; g_Console.writeToBuffer(c, hp4, 0xC0); c.X += 7; g_Console.writeToBuffer(c, atk4, 0xC0); c.X += 7;
+    g_Console.writeToBuffer(c, "Ele-beast 4:       Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0); c.X += 12;
+    g_Console.writeToBuffer(c, name4, 0xC0); c.X += 10; g_Console.writeToBuffer(c, level4, 0xC0); c.X += 6; g_Console.writeToBuffer(c, hp4, 0xC0); c.X += 7; g_Console.writeToBuffer(c, atk4, 0xC0); c.X += 7;
     g_Console.writeToBuffer(c, def4, 0xC0); c.X += 6; g_Console.writeToBuffer(c, spd4, 0xC0); c.X = 1;
     c.Y += 2;
-    g_Console.writeToBuffer(c, "Ele-beast 5:      Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0); c.X += 12;
-    g_Console.writeToBuffer(c, name5, 0xC0); c.X += 9; g_Console.writeToBuffer(c, level5, 0xC0); c.X += 6; g_Console.writeToBuffer(c, hp5, 0xC0); c.X += 7; g_Console.writeToBuffer(c, atk5, 0xC0); c.X += 7;
+    g_Console.writeToBuffer(c, "Ele-beast 5:       Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0); c.X += 12;
+    g_Console.writeToBuffer(c, name5, 0xC0); c.X += 10; g_Console.writeToBuffer(c, level5, 0xC0); c.X += 6; g_Console.writeToBuffer(c, hp5, 0xC0); c.X += 7; g_Console.writeToBuffer(c, atk5, 0xC0); c.X += 7;
     g_Console.writeToBuffer(c, def1, 0xC0); c.X += 6; g_Console.writeToBuffer(c, spd1, 0xC0); c.X = 1;
     c.Y += 2;
-    g_Console.writeToBuffer(c, "Ele-beast 6:      Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0); c.X += 12;
-    g_Console.writeToBuffer(c, name6, 0xC0); c.X += 9; g_Console.writeToBuffer(c, level6, 0xC0); c.X += 6; g_Console.writeToBuffer(c, hp6, 0xC0); c.X += 7; g_Console.writeToBuffer(c, atk6, 0xC0); c.X += 7;
+    g_Console.writeToBuffer(c, "Ele-beast 6:       Lv:   HP:   Atk:   Def:  Spd: : ", 0xC0); c.X += 12;
+    g_Console.writeToBuffer(c, name6, 0xC0); c.X += 10; g_Console.writeToBuffer(c, level6, 0xC0); c.X += 6; g_Console.writeToBuffer(c, hp6, 0xC0); c.X += 7; g_Console.writeToBuffer(c, atk6, 0xC0); c.X += 7;
     g_Console.writeToBuffer(c, def6, 0xC0); c.X += 6; g_Console.writeToBuffer(c, spd6, 0xC0); c.X = 1;
     c.Y += 3; c.X += 28;
     g_Console.writeToBuffer(c, "Press F to EXIT PAUSE MENU.", 0xC0);
@@ -659,7 +659,7 @@ void renderStarterScreen()
             g_Console.writeToBuffer(c, " ", 0xC0);
         }
     }
-    c.X = 12; c.Y = 7; g_Console.writeToBuffer(c, "Please choose your starting ele-beast: ", 0xC0);
+    c.X = 12; c.Y = 10; g_Console.writeToBuffer(c, "Please choose your starting ele-beast (Left click to choose): ", 0xC0); c.X += 10;
     c.Y += 2; g_Console.writeToBuffer(c, "1: ignis", 0xC0); c.X += 9; g_Console.writeToBuffer(c, "2: typhis", 0xC0); c.X += 10; g_Console.writeToBuffer(c, "3: vitalus", 0xC0);
 }
 
