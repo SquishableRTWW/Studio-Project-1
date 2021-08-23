@@ -24,6 +24,7 @@ public:
 	void setDefence(int i);
 	void setSpeed(int i);
 	void setLevel(void);
+	void setLevel(int i);
 	void setKills(void);
 	void upKill(void);
 	void upLevel(void);

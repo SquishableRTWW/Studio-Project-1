@@ -61,6 +61,10 @@ void monster::setLevel()
 {
 	this->level = (rand() % 4) + 2;
 }
+void monster::setLevel(int i)
+{
+	this->level = i;
+}
 void monster::setKills()
 {
 	this->kills = 0;

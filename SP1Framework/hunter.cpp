@@ -33,6 +33,7 @@ void hunter::choosestarter(int s)
 		party[0] = vitalus();
 		break;
 	}
+	party[0].setLevel(5);
 }
 
 void hunter::addparty(int m)
