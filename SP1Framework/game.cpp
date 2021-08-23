@@ -339,40 +339,41 @@ void moveSelection()
 
 
 void moveCharacter()
-{    
+{
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
 
     if (g_skKeyEvent[K_UP].keyReleased && g_sChar.m_cLocation.Y > 0)
     {
         //Beep(1440, 30);
-        g_sChar.m_cLocation.Y--;       
+        g_sChar.m_cLocation.Y--;
     }
     if (g_skKeyEvent[K_LEFT].keyReleased && g_sChar.m_cLocation.X > 0)
     {
         //Beep(1440, 30);
-        g_sChar.m_cLocation.X--;        
+        g_sChar.m_cLocation.X--;
     }
     if (g_skKeyEvent[K_DOWN].keyReleased && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
     {
         //Beep(1440, 30);
-        g_sChar.m_cLocation.Y++;        
+        g_sChar.m_cLocation.Y++;
     }
     if (g_skKeyEvent[K_RIGHT].keyReleased && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1)
     {
         //Beep(1440, 30);
-        g_sChar.m_cLocation.X++;        
+        g_sChar.m_cLocation.X++;
     }
     if (g_skKeyEvent[K_Q].keyReleased)
     {
         g_sChar.m_bActive = !g_sChar.m_bActive;
     }
-
-    if (g_sChar.m_cLocation.X > 29 && g_sChar.m_cLocation.X < 40 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 10)
+    if (rand() % 50 == 1)
     {
-        g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+        if (g_sChar.m_cLocation.X > 29 && g_sChar.m_cLocation.X < 40 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 10)
+        {
+            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+        }
     }
-
 }
 void processUserInput()
 {
