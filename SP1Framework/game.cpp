@@ -3,14 +3,17 @@
 //
 #include "game.h"
 #include "Framework\console.h"
+#include <random>
 #include <iostream>
 #include <iomanip>
 #include <sstream>
 #include <stdlib.h>
 #include "hunter.h"
+#include "monster.h"
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
+int wildMonster = (rand() % 3) + 1;
 hunter jeff;
 SKeyEvent g_skKeyEvent[K_COUNT + 2];
 SMouseEvent g_mouseEvent;
@@ -494,6 +497,16 @@ void renderMap()
 
 void renderEncounter()
 {
+    monster wild;
+    wild.setWildMonster(wild, wildMonster);
+    wild.setOGStats();
+    string name1 = jeff.getMname(0), level1 = to_string(jeff.getMlvl(0)), hp1 = to_string(jeff.getMhealth(0)), atk1 = to_string(jeff.getMattack(0)), def1 = to_string(jeff.getMdefense(0)), spd1 = to_string(jeff.getMspeed(0)),
+        name2 = jeff.getMname(1), level2 = to_string(jeff.getMlvl(1)), hp2 = to_string(jeff.getMhealth(1)), atk2 = to_string(jeff.getMattack(1)), def2 = to_string(jeff.getMdefense(1)), spd2 = to_string(jeff.getMspeed(1)),
+        name3 = jeff.getMname(2), level3 = to_string(jeff.getMlvl(2)), hp3 = to_string(jeff.getMhealth(2)), atk3 = to_string(jeff.getMattack(2)), def3 = to_string(jeff.getMdefense(2)), spd3 = to_string(jeff.getMspeed(2)),
+        name4 = jeff.getMname(3), level4 = to_string(jeff.getMlvl(3)), hp4 = to_string(jeff.getMhealth(3)), atk4 = to_string(jeff.getMattack(3)), def4 = to_string(jeff.getMdefense(3)), spd4 = to_string(jeff.getMspeed(3)),
+        name5 = jeff.getMname(4), level5 = to_string(jeff.getMlvl(4)), hp5 = to_string(jeff.getMhealth(4)), atk5 = to_string(jeff.getMattack(4)), def5 = to_string(jeff.getMdefense(4)), spd5 = to_string(jeff.getMspeed(4)),
+        name6 = jeff.getMname(5), level6 = to_string(jeff.getMlvl(5)), hp6 = to_string(jeff.getMhealth(5)), atk6 = to_string(jeff.getMattack(5)), def6 = to_string(jeff.getMdefense(5)), spd6 = to_string(jeff.getMspeed(5));
+    string nameWild = wild.getName(), levelWild = to_string(wild.getLevel()), hpWild = to_string(wild.getHealth()), atkWild = to_string(wild.getAttack()), defWild = to_string(wild.getDefence()), spdWild = to_string(wild.getSpeed());
     const WORD colors[] = {
         0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
         0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6
@@ -511,7 +524,13 @@ void renderEncounter()
             g_Console.writeToBuffer(c, " ", 0xB0);
         }
     }
-
+    c.X = 1; c.Y = 9;
+    g_Console.writeToBuffer(c, "Ele-beast: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xB0); c.Y = 9;
+    c.X = 11;
+    g_Console.writeToBuffer(c, name1, 0xB0); c.Y++; g_Console.writeToBuffer(c, level1, 0xB0); c.Y++; g_Console.writeToBuffer(c, hp1, 0xB0); c.Y = 9;
+    c.X = 44;
+    g_Console.writeToBuffer(c, "Ele-beast: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xB0); c.X += 9; c.Y = 9;
+    g_Console.writeToBuffer(c, nameWild, 0xB0); c.Y++; g_Console.writeToBuffer(c, levelWild, 0xB0); c.Y++; g_Console.writeToBuffer(c, hpWild, 0xB0); c.Y = 9;
 
 
     for (int i = 0; i < 80; i++)
@@ -581,6 +600,12 @@ void renderEncounterSplashScreen()
 
 void renderMenu()
 {
+    string name1 = jeff.getMname(0), level1 = to_string(jeff.getMlvl(0)), hp1 = to_string(jeff.getMhealth(0)), atk1 = to_string(jeff.getMattack(0)), def1 = to_string(jeff.getMdefense(0)), spd1 = to_string(jeff.getMspeed(0)),
+        name2 = jeff.getMname(1), level2 = to_string(jeff.getMlvl(1)), hp2 = to_string(jeff.getMhealth(1)), atk2 = to_string(jeff.getMattack(1)), def2 = to_string(jeff.getMdefense(1)), spd2 = to_string(jeff.getMspeed(1)),
+        name3 = jeff.getMname(2), level3 = to_string(jeff.getMlvl(2)), hp3 = to_string(jeff.getMhealth(2)), atk3 = to_string(jeff.getMattack(2)), def3 = to_string(jeff.getMdefense(2)), spd3 = to_string(jeff.getMspeed(2)),
+        name4 = jeff.getMname(3), level4 = to_string(jeff.getMlvl(3)), hp4 = to_string(jeff.getMhealth(3)), atk4 = to_string(jeff.getMattack(3)), def4 = to_string(jeff.getMdefense(3)), spd4 = to_string(jeff.getMspeed(3)),
+        name5 = jeff.getMname(4), level5 = to_string(jeff.getMlvl(4)), hp5 = to_string(jeff.getMhealth(4)), atk5 = to_string(jeff.getMattack(4)), def5 = to_string(jeff.getMdefense(4)), spd5 = to_string(jeff.getMspeed(4)),
+        name6 = jeff.getMname(5), level6 = to_string(jeff.getMlvl(5)), hp6 = to_string(jeff.getMhealth(5)), atk6 = to_string(jeff.getMattack(5)), def6 = to_string(jeff.getMdefense(5)), spd6 = to_string(jeff.getMspeed(5));
     COORD c;
     for (int i = 0; i < 25; i++)
     {
@@ -590,12 +615,6 @@ void renderMenu()
                 g_Console.writeToBuffer(c, " ", 0xC2);
         }
     }
-    string name1 = jeff.getMname(0), level1 = to_string(jeff.getMlvl(0)), hp1 = to_string(jeff.getMhealth(0)), atk1 = to_string(jeff.getMattack(0)), def1 = to_string(jeff.getMdefense(0)), spd1 = to_string(jeff.getMspeed(0)),
-        name2 = jeff.getMname(1), level2 = to_string(jeff.getMlvl(1)), hp2 = to_string(jeff.getMhealth(1)), atk2 = to_string(jeff.getMattack(1)), def2 = to_string(jeff.getMdefense(1)), spd2 = to_string(jeff.getMspeed(1)),
-        name3 = jeff.getMname(2), level3 = to_string(jeff.getMlvl(2)), hp3 = to_string(jeff.getMhealth(2)), atk3 = to_string(jeff.getMattack(2)), def3 = to_string(jeff.getMdefense(2)), spd3 = to_string(jeff.getMspeed(2)),
-        name4 = jeff.getMname(3), level4 = to_string(jeff.getMlvl(3)), hp4 = to_string(jeff.getMhealth(3)), atk4 = to_string(jeff.getMattack(3)), def4 = to_string(jeff.getMdefense(3)), spd4 = to_string(jeff.getMspeed(3)),
-        name5 = jeff.getMname(4), level5 = to_string(jeff.getMlvl(4)), hp5 = to_string(jeff.getMhealth(4)), atk5 = to_string(jeff.getMattack(4)), def5 = to_string(jeff.getMdefense(4)), spd5 = to_string(jeff.getMspeed(4)),
-        name6 = jeff.getMname(5), level6 = to_string(jeff.getMlvl(5)), hp6 = to_string(jeff.getMhealth(5)), atk6 = to_string(jeff.getMattack(5)), def6 = to_string(jeff.getMdefense(5)), spd6 = to_string(jeff.getMspeed(5));
     c.X = 1; c.Y = 1;
     g_Console.writeToBuffer(c, "This is the pause menu", 0xC0);
     c.Y += 2;
@@ -700,37 +719,6 @@ void renderInputEvents()
     COORD startPos = {50, 2};
     std::ostringstream ss;
     std::string key;
-    for (int i = 0; i < K_COUNT; ++i)
-    {
-        ss.str("");
-        switch (i)
-        {
-        case K_UP: key = "W";
-            break;
-        case K_DOWN: key = "S";
-            break;
-        case K_LEFT: key = "A";
-            break;
-        case K_RIGHT: key = "D";
-            break;
-        case K_Q: key = "Q";
-            break;
-        case K_F: key = "F";
-            break;
-        case K_ENTER: key = "Enter";
-            break;
-        default: continue;
-        }
-        if (g_skKeyEvent[i].keyDown)
-            ss << key << " pressed";
-        else if (g_skKeyEvent[i].keyReleased)
-            ss << key << " released";
-        else
-            ss << key << " not pressed";
-
-        COORD c = { startPos.X, startPos.Y + i };
-        g_Console.writeToBuffer(c, ss.str(), 0x17);
-    }
 
     // mouse events    
     ss.str("");

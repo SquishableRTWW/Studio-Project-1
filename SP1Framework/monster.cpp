@@ -1,4 +1,8 @@
 #include "monster.h"
+#include "oris.h"
+#include "lavarous.h"
+#include "azure.h"
+#include "thornhull.h"
 #include <iostream>
 #include <string>
 #include <random>
@@ -76,6 +80,24 @@ void monster::upKill(void)
 void monster::upLevel(void)
 {
 	level++;
+}
+void monster::setWildMonster(monster& monster, int i)
+{
+	switch (i)
+	{
+	case 1:
+		monster = oris();
+		break;
+	case 2:
+		monster = thornhull();
+		break;
+	case 3:
+		monster = azure();
+		break;
+	case 4:
+		monster = lavarous();
+		break;
+	}
 }
 string monster::getName(void)
 {
