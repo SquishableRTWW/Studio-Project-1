@@ -10,7 +10,6 @@
 #include "hunter.h"
 
 double  g_dElapsedTime;
-bool testing = false;
 double  g_dDeltaTime;
 hunter jeff;
 SKeyEvent g_skKeyEvent[K_COUNT + 2];
