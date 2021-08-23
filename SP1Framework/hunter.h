@@ -29,5 +29,7 @@ public:
 	int getMattack(int i);
 	int getMdefense(int i);
 	int getMspeed(int i);
+	string getMelement(int i);
+	int getMkills(int i);
 	~hunter(void);
 };

@@ -90,6 +90,16 @@ int hunter::getMspeed(int i)
 	return party[i].getSpeed();
 }
 
+string hunter::getMelement(int i)
+{
+	return party[i].getElement();
+}
+
+int hunter::getMkills(int i)
+{
+	return party[i].getKills();
+}
+
 hunter::~hunter(void)
 {
 
