@@ -410,10 +410,12 @@ void moveCharacter()
     }
     if ((g_sChar.m_cLocation.X == 0 && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_GAME)
     {
+        g_sChar.m_cLocation.X = 79;
         g_eGameState = S_ROUTE2;
     }
     if ((g_sChar.m_cLocation.X == 79 && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_GAME)
     {
+        g_sChar.m_cLocation.X = 0;
         g_eGameState = S_ROUTE3;
     }
     if ((g_sChar.m_cLocation.X >= 0 && g_sChar.m_cLocation.X < 13 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 12) ||
