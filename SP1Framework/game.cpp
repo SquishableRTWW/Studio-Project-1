@@ -320,13 +320,6 @@ void updateEncounter()
         {
             jeff.addparty(wild);
             g_Console.writeToBuffer(c, "You caught the ele-beast!");
-            for (int i = 0; i < 6; i++)
-            {
-                if (jeff.getMonster(i).getName() != "NULL")
-                {
-                    jeff.getMonster(i).levelUp(jeff.getMonster(i));
-                }
-            }
             Sleep(2000);
             g_eGameState = S_GAME;
         }
