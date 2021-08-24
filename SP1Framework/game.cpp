@@ -260,7 +260,7 @@ void update(double dt)
             break;
         case S_ROUTE3: updateGame();
             break;
-        case S_Interact:renderInteract();
+        case S_INTERACT: interactionWait();
             break;
     }
 }
@@ -318,6 +318,20 @@ void starterScreenWait()
     {
         jeff.choosestarter(3);
         g_eGameState = S_GAME;
+    }
+}
+
+void interactionWait()
+{
+    Sleep(20000);
+    switch (location)
+    {
+    case 1: g_eGameState = S_GAME;
+        break;
+    case 2: g_eGameState = S_ROUTE2;
+        break;
+    case 3: g_eGameState = S_ROUTE3;
+        break;
     }
 }
 
@@ -425,7 +439,16 @@ void moveCharacter()
             g_sChar.m_cLocation.Y == Test.getY() - 1 && g_sChar.m_cLocation.X == Test.getX() || 
             g_sChar.m_cLocation.Y == Test.getY() + 1 && g_sChar.m_cLocation.X == Test.getX())
         {
-            g_eGameState = S_Interact;
+            switch (g_eGameState)
+            {
+            case S_GAME: location = 1;
+                break;
+            case S_ROUTE2: location = 2;
+                break;
+            case S_ROUTE3: location = 3;
+                break;
+            }
+            g_eGameState = S_INTERACT;
         }
     }
     if ((g_sChar.m_cLocation.X < 0 && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_GAME)
@@ -541,6 +564,15 @@ void render()
     case S_ROUTE2: renderGame2();
         break;
     case S_ROUTE3: renderGame3();
+        break;
+    case S_INTERACT: 
+        switch (location)
+        {
+        case 1: renderGame(); renderInteract(); break;
+        case 2: renderGame2(); renderInteract(); break;
+        case 3: renderGame3(); renderInteract(); break;
+        }
+        break;
     }
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();
@@ -596,24 +628,15 @@ void renderGame()
 }
 void renderGame2() //While in route 2
 {
-    renderRoute2();
+    renderRoute2(); // render mao of route 2.
     renderCharacter();  // renders the character into the buffer
     renderNPC();
 }
 void renderGame3()
 {
-    renderRoute3();
+    renderRoute3(); // render map if route 3
     renderCharacter();  // renders the character into the buffer
     renderNPC();
-}
-void renderInteract()
-{
-    renderGame();
-    COORD c;
-    c.X = 5;
-    c.Y = 21;
-    g_Console.writeToBuffer(c, Test.interact(), 0x0B);
-    g_eGameState = S_GAME;
 }
 // -------------------------------------------------------------------------
 
@@ -783,6 +806,15 @@ void renderRoute3()
         }
     }
 
+}
+
+void renderInteract()
+{
+    COORD c;
+    c.X = 5;
+    c.Y = 21;
+    g_Console.writeToBuffer(c, Test.interact(), 0x0B);
+    g_eGameState = S_GAME;
 }
 
 void renderEncounter()

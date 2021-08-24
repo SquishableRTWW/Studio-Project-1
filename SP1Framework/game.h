@@ -47,7 +47,7 @@ enum EGAMESTATES
     S_GAME,
     S_ROUTE2,
     S_ROUTE3,
-    S_Interact,
+    S_INTERACT,
     S_TUTORIAL,
     S_STARTER,
     S_COUNT
@@ -72,6 +72,8 @@ void updateEncounter();
 void menuScreenWait();      // menu screen logic
 void tutorialWait();        // tutorial screen logic.
 void starterScreenWait();   // starter screen game logic
+void interactionWait();     // interaction screen logic
+
 void moveCharacter();       // moves the character, collision detection, physics, etc
 void collision();           //tet collision
 void moveSelection();
