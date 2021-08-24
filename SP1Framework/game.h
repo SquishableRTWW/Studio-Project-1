@@ -47,6 +47,7 @@ enum EGAMESTATES
     S_GAME,
     S_ROUTE2,
     S_ROUTE3,
+    S_Interact,
     S_TUTORIAL,
     S_STARTER,
     S_COUNT
@@ -81,7 +82,7 @@ void renderSplashScreen();  // renders the splash screen
 void renderGame();          // renders the game stuff
 void renderGame2();         // renders the route 2 stuff.
 void renderGame3();         // renders the route 3 stuff.
-
+void renderInteract();
 void renderMap();           // renders the map to the buffer first
 void renderRoute2();        // renders route 2 to the buffer.
 void renderRoute3();        // renders route 3 to the buffer.
