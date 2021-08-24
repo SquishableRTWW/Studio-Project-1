@@ -76,6 +76,7 @@ void collision();           //tet collision
 void moveSelection();
 void processUserInput();    // checks if you should change states or do something else with the game, e.g. pause, exit
 void clearScreen();         // clears the current screen and draw from scratch 
+
 void renderSplashScreen();  // renders the splash screen
 void renderGame();          // renders the game stuff
 void renderGame2();         // renders the route 2 stuff.
@@ -87,6 +88,7 @@ void renderRoute3();        // renders route 3 to the buffer.
 void renderMenu();          // renders the pause menu screen.
 void renderTutorial();      // renders the tutorial screen.
 void renderStarterScreen(); // renders the screen for user to pick starter ele-beast.
+
 void renderCharacter();     // renders the character into the buffer
 void renderNPC();           // testing
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc

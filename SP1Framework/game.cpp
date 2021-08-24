@@ -14,6 +14,7 @@ double  g_dElapsedTime;
 double  g_dDeltaTime;
 bool isCaught;
 bool failedCatch;
+int location;
 hunter jeff;
 monster wild;
 Entity Test;
@@ -38,6 +39,7 @@ void init( void )
 {
     srand((unsigned)time(0));
     isCaught = false; failedCatch = false;
+    location = 1;
     // Set precision for floating point output
     g_dElapsedTime = 0.0;
     jeff.choosestarter(1);
@@ -333,7 +335,15 @@ void updateEncounter()
         {
             jeff.addparty(wild);
             isCaught = true;
-            g_eGameState = S_GAME;
+            switch (location)
+            {
+            case 1: g_eGameState = S_GAME;
+                break;
+            case 2: g_eGameState = S_ROUTE2;
+                break;
+            case 3: g_eGameState = S_ROUTE3;
+                break;
+            }
             isCaught = false;
         }
         else
@@ -389,7 +399,7 @@ void moveCharacter()
         //Beep(1440, 30);
         g_sChar.m_cLocation.Y--;
     }
-    if (g_skKeyEvent[K_LEFT].keyReleased && g_sChar.m_cLocation.X > 0)
+    if (g_skKeyEvent[K_LEFT].keyReleased && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16)
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.X--;
@@ -399,7 +409,7 @@ void moveCharacter()
         //Beep(1440, 30);
         g_sChar.m_cLocation.Y++;
     }
-    if (g_skKeyEvent[K_RIGHT].keyReleased && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1)
+    if (g_skKeyEvent[K_RIGHT].keyReleased && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16)
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.X++;
@@ -408,21 +418,40 @@ void moveCharacter()
     {
         g_sChar.m_bActive = !g_sChar.m_bActive;
     }
-    if ((g_sChar.m_cLocation.X == 0 && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_GAME)
+    if ((g_sChar.m_cLocation.X < 0 && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_GAME)
     {
         g_sChar.m_cLocation.X = 79;
         g_eGameState = S_ROUTE2;
     }
-    if ((g_sChar.m_cLocation.X == 79 && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_GAME)
+    if ((g_sChar.m_cLocation.X > 79 && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_GAME)
     {
         g_sChar.m_cLocation.X = 0;
         g_eGameState = S_ROUTE3;
+    }
+    if ((g_sChar.m_cLocation.X > 79 && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_ROUTE2)
+    {
+        g_sChar.m_cLocation.X = 0;
+        g_eGameState = S_GAME;
+    }
+    if ((g_sChar.m_cLocation.X < 0 && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_ROUTE3)
+    {
+        g_sChar.m_cLocation.X = 79;
+        g_eGameState = S_GAME;
     }
     if ((g_sChar.m_cLocation.X >= 0 && g_sChar.m_cLocation.X < 13 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 12) ||
         (g_sChar.m_cLocation.X >= 61 && g_sChar.m_cLocation.X < 80 && g_sChar.m_cLocation.Y >=16 && g_sChar.m_cLocation.Y < 25) ||
         (g_sChar.m_cLocation.X >= 54 && g_sChar.m_cLocation.X < 70 && g_sChar.m_cLocation.Y >= 3 && g_sChar.m_cLocation.Y < 8) ||
         (g_sChar.m_cLocation.X >= 20 && g_sChar.m_cLocation.X < 36 && g_sChar.m_cLocation.Y >= 16 && g_sChar.m_cLocation.Y < 21))
     {
+        switch (g_eGameState)
+        {
+        case S_GAME: location = 1;
+            break;
+        case S_ROUTE2: location =2;
+            break;
+        case S_ROUTE3: location = 3;
+            break;
+        }
         if (rand() % 100 == 1)
         {
             g_eGameState = S_ENCOUNTERSPLASHSCREEN;
