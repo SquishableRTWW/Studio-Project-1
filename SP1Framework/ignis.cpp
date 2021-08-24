@@ -39,6 +39,10 @@ void ignis::setMove(int i)
 	string fireMoveList[4] = { "flamethrower", "enrage", "scorch", "blast burn" };
 	moves.setMoveWithName(fireMoveList[i], i);
 }
+string ignis::getMove(int i)
+{
+	return moves.getMove(i);
+}
 ignis::~ignis(void)
 {
 

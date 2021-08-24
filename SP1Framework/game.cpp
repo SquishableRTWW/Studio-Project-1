@@ -231,7 +231,7 @@ void update(double dt)
             break;
         case S_MENU: menuScreenWait(); //game logic for menu screen
             break;
-        case S_ENCOUNTERSPLASHSCREEN: wild.setWildMonster(wild, (rand() % 3) + 1); encounterScreenWait();
+        case S_ENCOUNTERSPLASHSCREEN: wild.setWildMonster(wild, (rand() % 4) + 1); encounterScreenWait();
             break;
         case S_ENCOUNTER: updateEncounter();
             break;
@@ -619,7 +619,7 @@ void renderMenu()
         }
     }
     c.X = 1; c.Y = 1;
-    g_Console.writeToBuffer(c, "This is the pause menu", 0xC0);
+    g_Console.writeToBuffer(c, "This is the pause menu.", 0xC0);
     c.Y += 2;
     g_Console.writeToBuffer(c, "Ele-beast 1:       Lv:   HP:   Atk:   Def:  Spd: ", 0xC0); c.X += 12;
     g_Console.writeToBuffer(c, name1, 0xC0); c.X += 10; g_Console.writeToBuffer(c, level1, 0xC0); c.X += 6; g_Console.writeToBuffer(c, hp1, 0xC0); c.X += 7; g_Console.writeToBuffer(c, atk1, 0xC0); c.X += 7;
@@ -648,6 +648,8 @@ void renderMenu()
     g_Console.writeToBuffer(c, "Press F to EXIT PAUSE MENU.", 0xC0);
     c.Y++;
     g_Console.writeToBuffer(c, "Press 'ESC' to EXIT THE GAME.", 0xC0);
+    c.Y++;
+    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(0), 0xC0);
 }
 
 void renderTutorial()

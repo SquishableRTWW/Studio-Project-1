@@ -12,10 +12,10 @@ monster::monster(void)
 	element = "NULL";
 	name = "NULL";
 	level = (rand() % 4) + 2;
-	health = 10;
-	attack = 5;
-	defence = 3;
-	speed = 10;
+	health = 0;
+	attack = 0;
+	defence = 0;
+	speed = 0;
 	kills = 0;
 }
 void monster::setName(string name)
@@ -126,6 +126,10 @@ int monster::getKills(void)
 int monster::getLevel(void)
 {
 	return level;
+}
+string monster::getMove(int i)
+{
+	return move.getMove(i);
 }
 string monster::getElement(void)
 {

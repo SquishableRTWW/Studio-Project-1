@@ -36,6 +36,7 @@ public:
 	int getSpeed(void);
 	int getKills(void);
 	int getLevel(void);
+	string getMove(int i);
 	string getElement(void);
 	~monster(void);
 };

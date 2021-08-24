@@ -10,6 +10,7 @@ public:
 	ignis(void); //Default constructor
 	void levelUp();
 	void setMove(int i);
+	string getMove(int i);
 	~ignis(void);
 };
 
