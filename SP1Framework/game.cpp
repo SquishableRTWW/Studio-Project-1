@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "hunter.h"
 #include "monster.h"
+#include "NPC.h"
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -16,7 +17,7 @@ bool isCaught;
 bool failedCatch;
 hunter jeff;
 monster wild;
-Entity Test;
+NPC Test;
 SKeyEvent g_skKeyEvent[K_COUNT + 2];
 SMouseEvent g_mouseEvent;
 
@@ -257,6 +258,8 @@ void update(double dt)
             break;
         case S_ROUTE3: updateGame();
             break;
+        case S_Interact:renderInteract();
+            break;
     }
 }
 
@@ -407,6 +410,13 @@ void moveCharacter()
     if (g_skKeyEvent[K_Q].keyReleased)
     {
         g_sChar.m_bActive = !g_sChar.m_bActive;
+        if (g_sChar.m_cLocation.X == Test.getX() + 1 && g_sChar.m_cLocation.Y == Test.getY() ||
+            g_sChar.m_cLocation.X == Test.getX() - 1 && g_sChar.m_cLocation.Y == Test.getY() || 
+            g_sChar.m_cLocation.Y == Test.getY() - 1 && g_sChar.m_cLocation.X == Test.getX() || 
+            g_sChar.m_cLocation.Y == Test.getY() + 1 && g_sChar.m_cLocation.X == Test.getX())
+        {
+            g_eGameState = S_Interact;
+        }
     }
     if ((g_sChar.m_cLocation.X == 0 && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_GAME)
     {
@@ -564,6 +574,15 @@ void renderGame3()
     renderRoute3();
     renderCharacter();  // renders the character into the buffer
     renderNPC();
+}
+void renderInteract()
+{
+    renderGame();
+    COORD c;
+    c.X = 5;
+    c.Y = 21;
+    g_Console.writeToBuffer(c, Test.interact(), 0x0B);
+    g_eGameState = S_GAME;
 }
 // -------------------------------------------------------------------------
 

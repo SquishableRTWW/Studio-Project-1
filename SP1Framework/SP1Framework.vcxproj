@@ -90,6 +90,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="moveList.cpp" />
+    <ClCompile Include="NPC.cpp" />
     <ClCompile Include="oris.cpp" />
     <ClCompile Include="smeltor.cpp" />
     <ClCompile Include="thornhull.cpp" />
@@ -108,6 +109,7 @@
     <ClInclude Include="lavarous.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="moveList.h" />
+    <ClInclude Include="NPC.h" />
     <ClInclude Include="oris.h" />
     <ClInclude Include="smeltor.h" />
     <ClInclude Include="thornhull.h" />
