@@ -52,20 +52,13 @@ void hunter::choosestarter(int s)
 	party[0].setLevel(5);
 }
 
-void hunter::addparty(int m)
+void hunter::addparty(monster& monster)
 {
 	for (int i = 1; i < 6; i++)
 	{
-		switch (m)
+		if (party[i].getName() == "NULL")
 		{
-		case 1:
-			party[i] = oris();
-			break;
-		case 2:
-			party[i] = lavarous();
-			break;
-		case 3:
-			party[i] = azure();
+			party[i] = monster;
 			break;
 		}
 	}
