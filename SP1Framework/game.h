@@ -84,7 +84,7 @@ void renderSplashScreen();  // renders the splash screen
 void renderGame();          // renders the game stuff
 void renderGame2();         // renders the route 2 stuff.
 void renderGame3();         // renders the route 3 stuff.
-void renderInteract();
+void renderInteract();      //renders the interaction onto the map.
 void renderMap();           // renders the map to the buffer first
 void renderRoute2();        // renders route 2 to the buffer.
 void renderRoute3();        // renders route 3 to the buffer.

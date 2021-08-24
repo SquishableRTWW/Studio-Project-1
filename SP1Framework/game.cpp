@@ -411,22 +411,22 @@ void moveCharacter()
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
 
-    if (g_skKeyEvent[K_UP].keyReleased && g_sChar.m_cLocation.Y > 0)
+    if (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.Y > 0)
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.Y--;
     }
-    if (g_skKeyEvent[K_LEFT].keyReleased && (g_sChar.m_cLocation.X != 0 || (g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16)))
+    if (g_skKeyEvent[K_LEFT].keyDown && (g_sChar.m_cLocation.X != 0 || (g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16)))
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.X--;
     }
-    if (g_skKeyEvent[K_DOWN].keyReleased && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
+    if (g_skKeyEvent[K_DOWN].keyDown && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.Y++;
     }
-    if (g_skKeyEvent[K_RIGHT].keyReleased && (g_sChar.m_cLocation.X != 79 || (g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16)))
+    if (g_skKeyEvent[K_RIGHT].keyDown && (g_sChar.m_cLocation.X != 79 || (g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16)))
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.X++;
@@ -495,28 +495,28 @@ void moveCharacter()
 
 void collision()
 {
-    if (g_skKeyEvent[K_UP].keyReleased)
+    if (g_skKeyEvent[K_UP].keyDown)
     {
         if (g_sChar.m_cLocation.X == Test.getX() && g_sChar.m_cLocation.Y == Test.getY())
         {
             g_sChar.m_cLocation.Y++;
         }
     }
-    if (g_skKeyEvent[K_LEFT].keyReleased && g_sChar.m_cLocation.X > 0)
+    if (g_skKeyEvent[K_LEFT].keyDown && g_sChar.m_cLocation.X > 0)
     {
         if (g_sChar.m_cLocation.X == Test.getX() && g_sChar.m_cLocation.Y == Test.getY())
         {
             g_sChar.m_cLocation.X++;
         }
     }
-    if (g_skKeyEvent[K_DOWN].keyReleased && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
+    if (g_skKeyEvent[K_DOWN].keyDown && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
     {
         if (g_sChar.m_cLocation.X == Test.getX() && g_sChar.m_cLocation.Y == Test.getY())
         {
             g_sChar.m_cLocation.Y--;
         }
     }
-    if (g_skKeyEvent[K_RIGHT].keyReleased && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1)
+    if (g_skKeyEvent[K_RIGHT].keyDown && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1)
     {
         if (g_sChar.m_cLocation.X == Test.getX() && g_sChar.m_cLocation.Y == Test.getY())
         {
@@ -814,7 +814,16 @@ void renderInteract()
     c.X = g_sChar.m_cLocation.X - 10;
     c.Y = g_sChar.m_cLocation.Y + 1;
     g_Console.writeToBuffer(c, Test.interact(), 0x0B);
-    g_eGameState = S_GAME;
+    switch (location)
+    {
+    case 1: g_eGameState = S_GAME;
+        break;
+    case 2: g_eGameState = S_ROUTE2;
+        break;
+    case 3: g_eGameState = S_ROUTE3;
+        break;
+    }
+    
 }
 
 void renderEncounter()
@@ -972,6 +981,7 @@ void renderMenu()
     g_Console.writeToBuffer(c, "Press F to EXIT PAUSE MENU.", 0xC0);
     c.Y++;
     g_Console.writeToBuffer(c, "Press 'ESC' to EXIT THE GAME.", 0xC0);
+    c.Y++;
 }
 
 void renderTutorial()
