@@ -12,6 +12,8 @@
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
+bool isCaught;
+bool failedCatch;
 hunter jeff;
 monster wild;
 Entity Test;
@@ -35,6 +37,7 @@ Console g_Console(80, 25, "SP1 Framework");
 void init( void )
 {
     srand((unsigned)time(0));
+    isCaught = false; failedCatch = false;
     // Set precision for floating point output
     g_dElapsedTime = 0.0;
     jeff.choosestarter(1);
@@ -115,6 +118,11 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
     case S_TUTORIAL:gameplayKBHandler(keyboardEvent);
         break;
     case S_STARTER: gameplayKBHandler(keyboardEvent);
+        break;
+    case S_ROUTE2: gameplayKBHandler(keyboardEvent);
+        break;
+    case S_ROUTE3: gameplayKBHandler(keyboardEvent);
+        break;
     }
 }
 
@@ -244,6 +252,11 @@ void update(double dt)
         case S_TUTORIAL: tutorialWait();
             break;
         case S_STARTER: starterScreenWait();
+            break;
+        case S_ROUTE2: updateGame();
+            break;
+        case S_ROUTE3: updateGame();
+            break;
     }
 }
 
@@ -319,20 +332,14 @@ void updateEncounter()
         if (caught == 0)
         {
             jeff.addparty(wild);
-            g_Console.writeToBuffer(c, "You caught the ele-beast!");
-            for (int i = 0; i < 6; i++)
-            {
-                if (jeff.getMonster(i).getName() != "NULL")
-                {
-                    jeff.getMonster(i).levelUp(jeff.getMonster(i));
-                }
-            }
-            Sleep(2000);
+            isCaught = true;
             g_eGameState = S_GAME;
+            isCaught = false;
         }
         else
         {
-            g_Console.writeToBuffer(c, "You failed to catch the ele-beast!");
+            failedCatch = true;
+            failedCatch = false;
         }
     }
 }
@@ -401,7 +408,18 @@ void moveCharacter()
     {
         g_sChar.m_bActive = !g_sChar.m_bActive;
     }
-    if (g_sChar.m_cLocation.X > 29 && g_sChar.m_cLocation.X < 40 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 10)
+    if ((g_sChar.m_cLocation.X == 0 && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_GAME)
+    {
+        g_eGameState = S_ROUTE2;
+    }
+    if ((g_sChar.m_cLocation.X == 79 && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_GAME)
+    {
+        g_eGameState = S_ROUTE3;
+    }
+    if ((g_sChar.m_cLocation.X >= 0 && g_sChar.m_cLocation.X < 13 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 12) ||
+        (g_sChar.m_cLocation.X >= 61 && g_sChar.m_cLocation.X < 80 && g_sChar.m_cLocation.Y >=16 && g_sChar.m_cLocation.Y < 25) ||
+        (g_sChar.m_cLocation.X >= 54 && g_sChar.m_cLocation.X < 70 && g_sChar.m_cLocation.Y >= 3 && g_sChar.m_cLocation.Y < 8) ||
+        (g_sChar.m_cLocation.X >= 20 && g_sChar.m_cLocation.X < 36 && g_sChar.m_cLocation.Y >= 16 && g_sChar.m_cLocation.Y < 21))
     {
         if (rand() % 100 == 1)
         {
@@ -479,6 +497,9 @@ void render()
         break;
     case S_STARTER: renderStarterScreen();
         break;
+    case S_ROUTE2: renderGame2();
+        break;
+    case S_ROUTE3: renderGame3();
     }
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();
@@ -525,12 +546,26 @@ void renderSplashScreen()  // renders the splash screen
     g_Console.writeToBuffer(c, " Press 'Esc' to quit    ", 0xA0);
 }
 
+// --------------------------GAME RENDERING---------------------------------
 void renderGame()
 {
     renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
     renderNPC();
 }
+void renderGame2() //While in route 2
+{
+    renderRoute2();
+    renderCharacter();  // renders the character into the buffer
+    renderNPC();
+}
+void renderGame3()
+{
+    renderRoute3();
+    renderCharacter();  // renders the character into the buffer
+    renderNPC();
+}
+// -------------------------------------------------------------------------
 
 void renderMap()
 {
@@ -547,22 +582,167 @@ void renderMap()
         for (int j = 0; j < 25; j++)
         {
             c.Y = j;
-            colour(colors[11]);
-            g_Console.writeToBuffer(c, " ", colors[11]);
+            colour(colors[10]);
+            g_Console.writeToBuffer(c, " ", colors[10]);
+        }
+    }
+    for (int i = 12; i < 16; i++)
+    {
+        c.Y = i;
+        for (int j = 0; j < 80; j++)
+        {
+            c.X = j;
+            colour(colors[5]);
+            g_Console.writeToBuffer(c, " ", colors[5]);
+        }
+    }
+    for (int i = 36; i < 47; i++)
+    {
+        c.X = i;
+        for (int j = 0; j < 21; j++)
+        {
+            c.Y = j;
+            colour(colors[5]);
+            g_Console.writeToBuffer(c, " ", colors[5]);
         }
     }
 
     //Grasspatch test
-    for (int i = 30; i < 40; i++)
+    for (int i = 0; i < 13; i++)
     {
         c.X = i;
-        for (int j = 5; j < 10; j++)
+        for (int j = 5; j < 12; j++)
         {
             c.Y = j;
             colour(colors[1]);
             g_Console.writeToBuffer(c, " ", colors[1]);
         }
     }
+    for (int i = 61; i < 80; i++) //patch 2
+    {
+        c.X = i;
+        for (int j = 16; j < 25; j++)
+        {
+            c.Y = j;
+            colour(colors[1]);
+            g_Console.writeToBuffer(c, " ", colors[1]);
+        }
+    }
+    for (int i = 54; i < 70; i++) //patch 3
+    {
+        c.X = i;
+        for (int j = 3; j < 8; j++)
+        {
+            c.Y = j;
+            colour(colors[1]);
+            g_Console.writeToBuffer(c, " ", colors[1]);
+        }
+    }
+    for (int i = 20; i < 36; i++) //patch 4
+    {
+        c.X = i;
+        for (int j = 16; j < 21; j++)
+        {
+            c.Y = j;
+            colour(colors[1]);
+            g_Console.writeToBuffer(c, " ", colors[1]);
+        }
+    }
+}
+
+void renderRoute2()
+{
+    // Set up sample colours, and output shadings
+    const WORD colors[] = {
+        0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
+        0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6
+    };
+
+    COORD c;
+    for (int i = 0; i < 80; i++)
+    {
+        c.X = i;
+        for (int j = 0; j < 25; j++)
+        {
+            c.Y = j;
+            colour(colors[10]);
+            g_Console.writeToBuffer(c, " ", colors[10]);
+        }
+    }
+    for (int i = 12; i < 16; i++)
+    {
+        c.Y = i;
+        for (int j = 0; j < 80; j++)
+        {
+            c.X = j;
+            colour(colors[5]);
+            g_Console.writeToBuffer(c, " ", colors[5]);
+        }
+    }
+
+    //Grasspatch test
+    for (int i = 0; i < 13; i++)
+    {
+        c.X = i;
+        for (int j = 5; j < 12; j++)
+        {
+            c.Y = j;
+            colour(colors[1]);
+            g_Console.writeToBuffer(c, " ", colors[1]);
+        }
+    }
+    for (int i = 61; i < 80; i++) //patch 2
+    {
+        c.X = i;
+        for (int j = 16; j < 25; j++)
+        {
+            c.Y = j;
+            colour(colors[1]);
+            g_Console.writeToBuffer(c, " ", colors[1]);
+        }
+    }
+    for (int i = 20; i < 36; i++) //patch 4
+    {
+        c.X = i;
+        for (int j = 16; j < 21; j++)
+        {
+            c.Y = j;
+            colour(colors[1]);
+            g_Console.writeToBuffer(c, " ", colors[1]);
+        }
+    }
+}
+
+void renderRoute3()
+{
+    // Set up sample colours, and output shadings
+    const WORD colors[] = {
+        0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
+        0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6
+    };
+
+    COORD c;
+    for (int i = 0; i < 80; i++)
+    {
+        c.X = i;
+        for (int j = 0; j < 25; j++)
+        {
+            c.Y = j;
+            colour(colors[10]);
+            g_Console.writeToBuffer(c, " ", colors[10]);
+        }
+    }
+    for (int i = 12; i < 16; i++)
+    {
+        c.Y = i;
+        for (int j = 0; j < 80; j++)
+        {
+            c.X = j;
+            colour(colors[5]);
+            g_Console.writeToBuffer(c, " ", colors[5]);
+        }
+    }
+
 }
 
 void renderEncounter()
@@ -598,6 +778,15 @@ void renderEncounter()
     c.X = 48;
     g_Console.writeToBuffer(c, "Ele-beast: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xB0); c.X += 11; c.Y = 9;
     g_Console.writeToBuffer(c, nameWild, 0xB0); c.Y++; g_Console.writeToBuffer(c, levelWild, 0xB0); c.Y++; g_Console.writeToBuffer(c, hpWild, 0xB0); c.Y = 9;
+    c.X = 1; c.Y = 24;
+    if (isCaught == true)
+    {
+        g_Console.writeToBuffer(c, "You caught the ele-beast!");
+    }
+    if (failedCatch == true)
+    {
+        g_Console.writeToBuffer(c, "You failed to catch the ele-beast!");
+    }
 
 
     for (int i = 0; i < 80; i++)
@@ -614,10 +803,9 @@ void renderEncounter()
         for (int j = 17; j < 25; j++)
         {
             c.Y = j;
-            colour(colors[11]);
+            colour(colors[10]);
             g_Console.writeToBuffer(c, " ", colors[10]);
         }
-
     }
 
     c.X = 56;
