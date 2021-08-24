@@ -379,7 +379,7 @@ void moveCharacter()
     }
     if (g_sChar.m_cLocation.X > 29 && g_sChar.m_cLocation.X < 40 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 10)
     {
-        if (rand() % 5000 == 1)
+        if (rand() % 100 == 1)
         {
             g_eGameState = S_ENCOUNTERSPLASHSCREEN;
         }
