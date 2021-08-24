@@ -890,16 +890,10 @@ void renderEncounter()
     }
 
     c.X = 56;
-    c.Y = 19;                          //Background - Text
-    g_Console.writeToBuffer(c, "Attack", 0x51);
-    c.X = 66;
-    c.Y = 19;
+    c.Y = 20;
     g_Console.writeToBuffer(c, "Catch");
-    c.X = 55;
-    c.Y = c.Y + 2;
-    g_Console.writeToBuffer(c, "EleBeast");
-    c.X = 67;
-    c.Y = c.Y;
+    c.X = 68;
+    c.Y = 20;
     g_Console.writeToBuffer(c, "Run");
 
     for (int i = 50; i < 51; i++)
@@ -922,6 +916,15 @@ void renderEncounter()
     g_Console.writeToBuffer(c, "<)   ", 0xB0); c.Y += 1;
     g_Console.writeToBuffer(c, "(##)~", 0xB0); c.Y += 1;
     g_Console.writeToBuffer(c, "| \\ ", 0XB0);
+
+    c.X = 10, c.Y = 19;
+    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(0));
+    c.X = 27, c.Y = 19;
+    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(1));
+    c.X = 10, c.Y = 22;
+    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(2));
+    c.X = 27, c.Y = 22;
+    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(3));
 
 }
 
