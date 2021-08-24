@@ -437,7 +437,6 @@ void moveCharacter()
     }
     if (g_skKeyEvent[K_Q].keyReleased)
     {
-        g_sChar.m_bActive = !g_sChar.m_bActive;
         if (g_sChar.m_cLocation.X == Test.getX() + 1 && g_sChar.m_cLocation.Y == Test.getY() ||
             g_sChar.m_cLocation.X == Test.getX() - 1 && g_sChar.m_cLocation.Y == Test.getY() || 
             g_sChar.m_cLocation.Y == Test.getY() - 1 && g_sChar.m_cLocation.X == Test.getX() || 
@@ -884,7 +883,7 @@ void renderRoute3()
 void renderInteract()
 {
     COORD c;
-    c.X = g_sChar.m_cLocation.X - 10;
+    c.X = g_sChar.m_cLocation.X - 30;
     c.Y = g_sChar.m_cLocation.Y + 1;
     g_Console.writeToBuffer(c, Test.interact(), 0x0B);   
 }
