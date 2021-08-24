@@ -323,7 +323,7 @@ void starterScreenWait()
 
 void interactionWait()
 {
-    Sleep(20000);
+    Sleep(2000);
     switch (location)
     {
     case 1: g_eGameState = S_GAME;
@@ -811,8 +811,8 @@ void renderRoute3()
 void renderInteract()
 {
     COORD c;
-    c.X = 5;
-    c.Y = 21;
+    c.X = g_sChar.m_cLocation.X - 10;
+    c.Y = g_sChar.m_cLocation.Y + 1;
     g_Console.writeToBuffer(c, Test.interact(), 0x0B);
     g_eGameState = S_GAME;
 }
