@@ -384,6 +384,38 @@ void moveCharacter()
             g_eGameState = S_ENCOUNTERSPLASHSCREEN;
         }
     }
+    collision();
+}
+void collision()
+{
+    if (g_skKeyEvent[K_UP].keyReleased)
+    {
+        if (g_sChar.m_cLocation.X == Test.getX() && g_sChar.m_cLocation.Y == Test.getY())
+        {
+            g_sChar.m_cLocation.Y++;
+        }
+    }
+    if (g_skKeyEvent[K_LEFT].keyReleased && g_sChar.m_cLocation.X > 0)
+    {
+        if (g_sChar.m_cLocation.X == Test.getX() && g_sChar.m_cLocation.Y == Test.getY())
+        {
+            g_sChar.m_cLocation.X++;
+        }
+    }
+    if (g_skKeyEvent[K_DOWN].keyReleased && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
+    {
+        if (g_sChar.m_cLocation.X == Test.getX() && g_sChar.m_cLocation.Y == Test.getY())
+        {
+            g_sChar.m_cLocation.Y--;
+        }
+    }
+    if (g_skKeyEvent[K_RIGHT].keyReleased && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1)
+    {
+        if (g_sChar.m_cLocation.X == Test.getX() && g_sChar.m_cLocation.Y == Test.getY())
+        {
+            g_sChar.m_cLocation.X++;
+        }
+    }
 }
 void processUserInput()
 {
