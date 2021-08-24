@@ -683,6 +683,42 @@ void renderMap()
             g_Console.writeToBuffer(c, " ", colors[5]);
         }
     }
+    //House.
+    for (int i = 21; i < 35; i++)
+    {
+        c.X = i;
+        for (int j = 6; j < 11; j++)
+        {
+            c.Y = j;
+            colour(colors[5]);
+            if (c.X == 21 || c.X == 34 || c.Y == 6 || c.Y == 10)
+            {
+                g_Console.writeToBuffer(c, " ", 0x00);
+            }
+            else
+            {
+                g_Console.writeToBuffer(c, " ", 0xF0);
+            }
+        }
+        c.Y = 11;
+        for (int i = 26; i < 33; i++)
+        {
+            c.X = i;
+            if (c.X == 26 || c.X == 32)
+            {
+                g_Console.writeToBuffer(c, " ", 0x00);
+            }
+            else
+            {
+                g_Console.writeToBuffer(c, " ", 0xF0);
+            }
+        }
+        for (int i = 27; i < 32; i++)
+        {
+            c.X = i; c.Y = 10;
+            g_Console.writeToBuffer(c, " ", 0xF0);
+        }
+    }
 
     //Grasspatch test
     for (int i = 0; i < 13; i++)
@@ -864,15 +900,6 @@ void renderEncounter()
     g_Console.writeToBuffer(c, "Ele-beast: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xB0); c.X += 11; c.Y = 9;
     g_Console.writeToBuffer(c, nameWild, 0xB0); c.Y++; g_Console.writeToBuffer(c, levelWild, 0xB0); c.Y++; g_Console.writeToBuffer(c, hpWild, 0xB0); c.Y = 9;
     c.X = 1; c.Y = 24;
-    if (isCaught == true)
-    {
-        g_Console.writeToBuffer(c, "You caught the ele-beast!");
-    }
-    if (failedCatch == true)
-    {
-        g_Console.writeToBuffer(c, "You failed to catch the ele-beast!");
-    }
-
 
     for (int i = 0; i < 80; i++)
     {
