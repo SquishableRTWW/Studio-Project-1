@@ -45,6 +45,7 @@ enum EGAMESTATES
     S_ENCOUNTER,
     S_MENU,
     S_GAME,
+    S_ROUTE2,
     S_TUTORIAL,
     S_STARTER,
     S_COUNT
@@ -76,7 +77,9 @@ void processUserInput();    // checks if you should change states or do somethin
 void clearScreen();         // clears the current screen and draw from scratch 
 void renderSplashScreen();  // renders the splash screen
 void renderGame();          // renders the game stuff
+void renderGame2();
 void renderMap();           // renders the map to the buffer first
+void renderRoute2();        // renders route 2 to the buffer.
 void renderMenu();          // renders the pause menu screen.
 void renderTutorial();      // renders the tutorial screen.
 void renderStarterScreen(); // renders the screen for user to pick starter ele-beast.

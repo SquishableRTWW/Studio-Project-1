@@ -118,6 +118,9 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
     case S_TUTORIAL:gameplayKBHandler(keyboardEvent);
         break;
     case S_STARTER: gameplayKBHandler(keyboardEvent);
+        break;
+    case S_ROUTE2: gameplayKBHandler(keyboardEvent);
+        break;
     }
 }
 
@@ -247,6 +250,9 @@ void update(double dt)
         case S_TUTORIAL: tutorialWait();
             break;
         case S_STARTER: starterScreenWait();
+            break;
+        case S_ROUTE2: updateGame();
+            break;
     }
 }
 
@@ -398,6 +404,10 @@ void moveCharacter()
     {
         g_sChar.m_bActive = !g_sChar.m_bActive;
     }
+    if ((g_sChar.m_cLocation.X == 0 && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_GAME)
+    {
+        g_eGameState = S_ROUTE2;
+    }
     if ((g_sChar.m_cLocation.X >= 0 && g_sChar.m_cLocation.X < 13 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 12) ||
         (g_sChar.m_cLocation.X >= 61 && g_sChar.m_cLocation.X < 80 && g_sChar.m_cLocation.Y >=16 && g_sChar.m_cLocation.Y < 25) ||
         (g_sChar.m_cLocation.X >= 54 && g_sChar.m_cLocation.X < 70 && g_sChar.m_cLocation.Y >= 3 && g_sChar.m_cLocation.Y < 8) ||
@@ -479,6 +489,8 @@ void render()
         break;
     case S_STARTER: renderStarterScreen();
         break;
+    case S_ROUTE2: renderGame2();
+        break;
     }
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();
@@ -525,12 +537,20 @@ void renderSplashScreen()  // renders the splash screen
     g_Console.writeToBuffer(c, " Press 'Esc' to quit    ", 0xA0);
 }
 
+// --------------------------GAME RENDERING---------------------------------
 void renderGame()
 {
     renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
     renderNPC();
 }
+void renderGame2() //While in route 2
+{
+    renderRoute2();
+    renderCharacter();  // renders the character into the buffer
+    renderNPC();
+}
+// -------------------------------------------------------------------------
 
 void renderMap()
 {
@@ -564,7 +584,7 @@ void renderMap()
     for (int i = 36; i < 47; i++)
     {
         c.X = i;
-        for (int j = 0; j < 25; j++)
+        for (int j = 0; j < 21; j++)
         {
             c.Y = j;
             colour(colors[5]);
@@ -597,6 +617,69 @@ void renderMap()
     {
         c.X = i;
         for (int j = 3; j < 8; j++)
+        {
+            c.Y = j;
+            colour(colors[1]);
+            g_Console.writeToBuffer(c, " ", colors[1]);
+        }
+    }
+    for (int i = 20; i < 36; i++) //patch 4
+    {
+        c.X = i;
+        for (int j = 16; j < 21; j++)
+        {
+            c.Y = j;
+            colour(colors[1]);
+            g_Console.writeToBuffer(c, " ", colors[1]);
+        }
+    }
+}
+
+void renderRoute2()
+{
+    // Set up sample colours, and output shadings
+    const WORD colors[] = {
+        0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
+        0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6
+    };
+
+    COORD c;
+    for (int i = 0; i < 80; i++)
+    {
+        c.X = i;
+        for (int j = 0; j < 25; j++)
+        {
+            c.Y = j;
+            colour(colors[10]);
+            g_Console.writeToBuffer(c, " ", colors[10]);
+        }
+    }
+    for (int i = 12; i < 16; i++)
+    {
+        c.Y = i;
+        for (int j = 0; j < 80; j++)
+        {
+            c.X = j;
+            colour(colors[5]);
+            g_Console.writeToBuffer(c, " ", colors[5]);
+        }
+    }
+
+    //Grasspatch test
+    for (int i = 0; i < 13; i++)
+    {
+        c.X = i;
+        for (int j = 5; j < 12; j++)
+        {
+            c.Y = j;
+            colour(colors[1]);
+            g_Console.writeToBuffer(c, " ", colors[1]);
+        }
+    }
+    for (int i = 61; i < 80; i++) //patch 2
+    {
+        c.X = i;
+        for (int j = 16; j < 25; j++)
         {
             c.Y = j;
             colour(colors[1]);
