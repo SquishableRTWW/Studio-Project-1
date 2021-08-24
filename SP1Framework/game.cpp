@@ -14,6 +14,7 @@ double  g_dElapsedTime;
 double  g_dDeltaTime;
 hunter jeff;
 monster wild;
+Entity Test;
 SKeyEvent g_skKeyEvent[K_COUNT + 2];
 SMouseEvent g_mouseEvent;
 
@@ -400,10 +401,9 @@ void moveCharacter()
     {
         g_sChar.m_bActive = !g_sChar.m_bActive;
     }
-
     if (g_sChar.m_cLocation.X > 29 && g_sChar.m_cLocation.X < 40 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 10)
     {
-        if (rand() % 50 == 1)
+        if (rand() % 100 == 1)
         {
             g_eGameState = S_ENCOUNTERSPLASHSCREEN;
         }
@@ -495,6 +495,7 @@ void renderGame()
 {
     renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
+    renderNPC();
 }
 
 void renderMap()
@@ -723,6 +724,12 @@ void renderCharacter()
         charColor = 0x0A;
     }
     g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
+}
+
+void renderNPC()
+{
+    Test.setposition(50,5);
+    g_Console.writeToBuffer(Test.getposition(), (char)2, 0x0B);
 }
 
 void renderFramerate()
