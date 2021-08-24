@@ -403,6 +403,7 @@ void moveCharacter()
     }
     collision();
 }
+
 void collision()
 {
     if (g_skKeyEvent[K_UP].keyReleased)
@@ -430,10 +431,11 @@ void collision()
     {
         if (g_sChar.m_cLocation.X == Test.getX() && g_sChar.m_cLocation.Y == Test.getY())
         {
-            g_sChar.m_cLocation.X++;
+            g_sChar.m_cLocation.X--;
         }
     }
 }
+
 void processUserInput()
 {
     // quits the game if player hits the escape key
