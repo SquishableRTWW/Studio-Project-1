@@ -853,17 +853,7 @@ void renderInteract()
     COORD c;
     c.X = g_sChar.m_cLocation.X - 10;
     c.Y = g_sChar.m_cLocation.Y + 1;
-    g_Console.writeToBuffer(c, Test.interact(), 0x0B);
-    switch (location)
-    {
-    case 1: g_eGameState = S_GAME;
-        break;
-    case 2: g_eGameState = S_ROUTE2;
-        break;
-    case 3: g_eGameState = S_ROUTE3;
-        break;
-    }
-    
+    g_Console.writeToBuffer(c, Test.interact(), 0x0B);   
 }
 
 void renderEncounter()
