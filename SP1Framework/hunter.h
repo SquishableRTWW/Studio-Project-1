@@ -20,7 +20,7 @@ public:
 	void setname(string n);
 	string getname();
 	void choosestarter(int s);
-	void addparty(int m);
+	void addparty(monster& monster);
 	monster getMonster(int m);
 	//get functions for monsters in party
 	string getMname(int i);
