@@ -731,20 +731,10 @@ void renderRoute2()
     }
 
     //Grasspatch test
-    for (int i = 0; i < 13; i++)
+    for (int i = 0; i < 13; i++) //patch 1
     {
         c.X = i;
         for (int j = 5; j < 12; j++)
-        {
-            c.Y = j;
-            colour(colors[1]);
-            g_Console.writeToBuffer(c, " ", colors[1]);
-        }
-    }
-    for (int i = 61; i < 80; i++) //patch 2
-    {
-        c.X = i;
-        for (int j = 16; j < 25; j++)
         {
             c.Y = j;
             colour(colors[1]);
