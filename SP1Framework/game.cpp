@@ -398,7 +398,10 @@ void moveCharacter()
     {
         g_sChar.m_bActive = !g_sChar.m_bActive;
     }
-    if (g_sChar.m_cLocation.X >= 0 && g_sChar.m_cLocation.X < 13 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 12)
+    if ((g_sChar.m_cLocation.X >= 0 && g_sChar.m_cLocation.X < 13 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 12) ||
+        (g_sChar.m_cLocation.X >= 61 && g_sChar.m_cLocation.X < 80 && g_sChar.m_cLocation.Y >=16 && g_sChar.m_cLocation.Y < 25) ||
+        (g_sChar.m_cLocation.X >= 54 && g_sChar.m_cLocation.X < 70 && g_sChar.m_cLocation.Y >= 3 && g_sChar.m_cLocation.Y < 8) ||
+        (g_sChar.m_cLocation.X >= 20 && g_sChar.m_cLocation.X < 36 && g_sChar.m_cLocation.Y >= 16 && g_sChar.m_cLocation.Y < 21))
     {
         if (rand() % 100 == 1)
         {
@@ -580,7 +583,7 @@ void renderMap()
             g_Console.writeToBuffer(c, " ", colors[1]);
         }
     }
-    for (int i = 61; i < 80; i++)
+    for (int i = 61; i < 80; i++) //patch 2
     {
         c.X = i;
         for (int j = 16; j < 25; j++)
@@ -590,7 +593,7 @@ void renderMap()
             g_Console.writeToBuffer(c, " ", colors[1]);
         }
     }
-    for (int i = 54; i < 70; i++)
+    for (int i = 54; i < 70; i++) //patch 3
     {
         c.X = i;
         for (int j = 3; j < 8; j++)
@@ -600,7 +603,7 @@ void renderMap()
             g_Console.writeToBuffer(c, " ", colors[1]);
         }
     }
-    for (int i = 20; i < 36; i++)
+    for (int i = 20; i < 36; i++) //patch 4
     {
         c.X = i;
         for (int j = 16; j < 21; j++)
