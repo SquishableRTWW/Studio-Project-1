@@ -25,12 +25,27 @@ void hunter::choosestarter(int s)
 	{
 	case 1:
 		party[0] = ignis();
+		party[0].setElement("fire");
+		for (int i = 0; i < 2; i++)
+		{
+			party[0].setMove(party[0], i);
+		}
 		break;
 	case 2:
 		party[0] = typhis();
+		party[0].setElement("water");
+		for (int i = 0; i < 2; i++)
+		{
+			party[0].setMove(party[0], i);
+		}
 		break;
 	case 3:
 		party[0] = vitalus();
+		party[0].setElement("nature");
+		for (int i = 0; i < 2; i++)
+		{
+			party[0].setMove(party[0], i);
+		}
 		break;
 	}
 	party[0].setLevel(5);

@@ -231,7 +231,12 @@ void update(double dt)
             break;
         case S_MENU: menuScreenWait(); //game logic for menu screen
             break;
-        case S_ENCOUNTERSPLASHSCREEN: wild.setWildMonster(wild, (rand() % 4) + 1); encounterScreenWait();
+        case S_ENCOUNTERSPLASHSCREEN: wild.setWildMonster(wild, (rand() % 4) + 1); 
+            for (int i = 0; i < 2; i++)
+            {
+                wild.setMove(wild, i);
+            } 
+            encounterScreenWait();
             break;
         case S_ENCOUNTER: updateEncounter();
             break;

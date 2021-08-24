@@ -3,6 +3,7 @@
 #include "lavarous.h"
 #include "azure.h"
 #include "thornhull.h"
+#include "ignis.h"
 #include <iostream>
 #include <string>
 #include <random>
@@ -73,6 +74,58 @@ void monster::setKills()
 {
 	this->kills = 0;
 }
+void monster::setElement(string element)
+{
+	this->element = element;
+}
+void monster::setMove(monster& monster, int i)
+{
+	string fireMoveList[4] = { "flamethrower", "enrage", "scorch", "blast burn" };
+	string natureMoveList[4] = { "leaf blade", "entangle", "power whip", "frenzy plant" };
+	string waterMoveList[4] = { "water gun", "drown", "waterfall", "hydro pump" };
+	string boss1MoveList[4] = { "aqua tail", "scald", "water spout", "flash flood" };
+	string waterMoveList2[4] = { "bubble beam", "drought", "thrash", "riptide" };
+	string earthMoveList[4] = { "rock throw", "bulk up", "landslide", "earthquake" };
+	string boss2MoveList[4] = { "rock tomb", "rupture", "lava spout", "drill drive" };
+	string fireMoveList2[4] = { "flamethrower", "fire-up", "heatwave", "blast burn" };
+	if (monster.getName() == "ignis")
+	{
+		move.setMoveWithName(fireMoveList[i], i);
+	}
+	if (monster.getName() == "typhis")
+	{
+		move.setMoveWithName(waterMoveList[i], i);
+	}
+	if (monster.getName() == "vitalus")
+	{
+		move.setMoveWithName(natureMoveList[i], i);
+	}
+	if (monster.getName() == "oris")
+	{
+		move.setMoveWithName(earthMoveList[i], i);
+	}
+	if (monster.getName() == "azure")
+	{
+		move.setMoveWithName(waterMoveList2[i], i);
+	}
+	if (monster.getName() == "lavarous")
+	{
+		move.setMoveWithName(fireMoveList2[i], i);
+	}
+	if (monster.getName() == "thornhull")
+	{
+		move.setMoveWithName(natureMoveList[i], i);
+	}
+	if (monster.getName() == "atax")
+	{
+		move.setMoveWithName(boss1MoveList[i], i);
+	}
+	if (monster.getName() == "smeltor")
+	{
+		move.setMoveWithName(boss2MoveList[i], i);
+	}
+
+}
 void monster::upKill(void)
 {
 	kills++;
@@ -97,6 +150,128 @@ void monster::setWildMonster(monster& monster, int i)
 	case 4:
 		monster = lavarous();
 		break;
+	}
+}
+void monster::levelUp(monster& monster)
+{
+	if (monster.getName() == "ignis")
+	{
+		upKill();
+		if (getKills() % 3 == 0)
+		{
+			upLevel();
+			setHealth(2); setAttack(2); setDefence(1); setSpeed(1);
+		}
+		if (getLevel() == 8)
+		{
+			setMove(monster, 2);
+		}
+		if (getLevel() == 14)
+		{
+			setMove(monster, 3);
+		}
+	}
+	if (monster.getName() == "typhis")
+	{
+		upKill();
+		if (getKills() % 3 == 0)
+		{
+			upLevel();
+			setHealth(3); setAttack(1); setDefence(1); setSpeed(1);
+		}
+		if (getLevel() == 8)
+		{
+			setMove(monster, 2);
+		}
+		if (getLevel() == 14)
+		{
+			setMove(monster, 3);
+		}
+	}
+	if (monster.getName() == "vitalus")
+	{
+		upKill();
+		if (getKills() % 3 == 0)
+		{
+			upLevel();
+			setHealth(2); setAttack(2); setDefence(1); setSpeed(1);
+		}
+		if (getLevel() == 8)
+		{
+			setMove(monster, 2);
+		}
+		if (getLevel() == 14)
+		{
+			setMove(monster, 3);
+		}
+	}
+	if (monster.getName() == "azure")
+	{
+		upKill();
+		if (getKills() % 3 == 0)
+		{
+			upLevel();
+			setHealth(2); setAttack(2); setDefence(1); setSpeed(1);
+		}
+		if (getLevel() == 8)
+		{
+			setMove(monster, 2);
+		}
+		if (getLevel() == 14)
+		{
+			setMove(monster, 3);
+		}
+	}
+	if (monster.getName() == "lavarous")
+	{
+		upKill();
+		if (getKills() % 3 == 0)
+		{
+			upLevel();
+			setHealth(2); setAttack(2); setDefence(1); setSpeed(1);
+		}
+		if (getLevel() == 8)
+		{
+			setMove(monster, 2);
+		}
+		if (getLevel() == 14)
+		{
+			setMove(monster, 3);
+		}
+	}
+	if (monster.getName() == "thornhull")
+	{
+		upKill();
+		if (getKills() % 3 == 0)
+		{
+			upLevel();
+			setHealth(2); setAttack(2); setDefence(1); setSpeed(1);
+		}
+		if (getLevel() == 8)
+		{
+			setMove(monster, 2);
+		}
+		if (getLevel() == 14)
+		{
+			setMove(monster, 3);
+		}
+	}
+	if (monster.getName() == "oris")
+	{
+		upKill();
+		if (getKills() % 3 == 0)
+		{
+			upLevel();
+			setHealth(2); setAttack(2); setDefence(1); setSpeed(1);
+		}
+		if (getLevel() == 8)
+		{
+			setMove(monster, 2);
+		}
+		if (getLevel() == 14)
+		{
+			setMove(monster, 3);
+		}
 	}
 }
 string monster::getName(void)

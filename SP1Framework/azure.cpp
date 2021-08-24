@@ -36,8 +36,8 @@ void azure::levelUp(void)
 }
 void azure::setMove(int i)
 {
-	string waterMoveList[4] = { "bubble beam", "drought", "thrash", "riptide" };
-	moves.setMoveWithName(waterMoveList[i], i);
+	string waterMoveList2[4] = { "bubble beam", "drought", "thrash", "riptide" };
+	moves.setMoveWithName(waterMoveList2[i], i);
 }
 azure::~azure(void)
 {

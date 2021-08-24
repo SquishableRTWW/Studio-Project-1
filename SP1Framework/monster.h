@@ -26,9 +26,12 @@ public:
 	void setLevel(void);
 	void setLevel(int i);
 	void setKills(void);
+	void setElement(string element);
+	void setMove(monster& monster, int i);
 	void upKill(void);
 	void upLevel(void);
 	void setWildMonster(monster& monster, int i);
+	void levelUp(monster& monster);
 	string getName(void);
 	int getHealth(void);
 	int getAttack(void);
