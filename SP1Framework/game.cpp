@@ -339,11 +339,11 @@ void interactionWait()
 
 void updateEncounter()
 {
-    if ((g_mouseEvent.mousePosition.X > 66 && g_mouseEvent.mousePosition.X < 69 && g_mouseEvent.mousePosition.Y == 21) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    if ((g_mouseEvent.mousePosition.X > 67 && g_mouseEvent.mousePosition.X < 71 && g_mouseEvent.mousePosition.Y == 20) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
         g_eGameState = S_GAME;
     }
-    if ((g_mouseEvent.mousePosition.X > 65 && g_mouseEvent.mousePosition.X < 71 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    if ((g_mouseEvent.mousePosition.X > 55 && g_mouseEvent.mousePosition.X < 61 && g_mouseEvent.mousePosition.Y == 20) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
         COORD c;
         c.X = 1; c.Y = 24;
@@ -368,6 +368,10 @@ void updateEncounter()
             failedCatch = true;
             failedCatch = false;
         }
+    }
+    if ((g_mouseEvent.mousePosition.X > 66 && g_mouseEvent.mousePosition.X < 69 && g_mouseEvent.mousePosition.Y == 21) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    {
+
     }
 }
 
