@@ -3,7 +3,6 @@
 
 NPC::NPC()
 {
-	Phrase = rand() % 6;
 	Advice[0] = { "Remember to heal your beasts regularly." };
 	Advice[1] = { "There is no beast centre nearby to revive a beast that has fainted." };
 	Advice[2] = { "Fire is super effective against Nature." };
@@ -14,7 +13,7 @@ NPC::NPC()
 
 std::string NPC::interact()
 {
-	return Advice[Phrase];
+	return Advice[rand()% 6];
 }
 
 NPC::~NPC()
