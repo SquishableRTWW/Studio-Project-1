@@ -7,6 +7,7 @@ hunter::hunter(void)
 	{
 		party[i].setOGStats();
 	}
+	
 }
 
 void hunter::setname(string n)
