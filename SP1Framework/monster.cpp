@@ -306,10 +306,6 @@ string monster::getMove(int i)
 {
 	return move.getMove(i);
 }
-int monster::getMoveDamage(int i)
-{
-	return move.getMoveDamage(i);
-}
 string monster::getElement(void)
 {
 	return element;
@@ -324,6 +320,10 @@ int monster::getMaxHealth(void)
 	{
 		return (10 + (2 * getLevel()));
 	}
+}
+int monster::getMoveDamage(int i)
+{
+	return move.getMoveDamage(i);
 }
 monster::~monster(void)
 {

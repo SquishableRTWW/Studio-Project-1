@@ -373,10 +373,23 @@ void updateEncounter()
         }
     }
 
-    if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 14 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 22 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
-        wild.setHealth(-(wild.getHealth() - jeff.getMonster(0).getMoveDamage(0)));
-        
+        wild.setHealth(-(jeff.getMonster(0).getMoveDamage(0)) * ((jeff.getMonster(0).getAttack() / wild.getDefence()) * 0.5));
+        if (wild.getHealth() <= 0)
+        {
+            jeff.getMonster(0).upKill();
+            jeff.getMonster(0).levelUp(jeff.getMonster(0));
+            switch (location)
+            {
+            case 1: g_eGameState = S_GAME;
+                break;
+            case 2: g_eGameState = S_ROUTE2;
+                break;
+            case 3: g_eGameState = S_ROUTE3;
+                break;
+            }
+        }
 
     }
 
