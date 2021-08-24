@@ -6,10 +6,11 @@ class NPC :public Entity
 {
 private:
 	std::string Advice[6];
-	int Phrase;
+	std::string Healwords;
 public:
 	NPC();
 	std::string interact();
+	std::string Healquote();
 	~NPC();
 };
 

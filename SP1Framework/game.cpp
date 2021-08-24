@@ -446,7 +446,6 @@ void moveCharacter()
     }
     if (g_skKeyEvent[K_Q].keyReleased)
     {
-        g_sChar.m_bActive = !g_sChar.m_bActive;
         if (g_sChar.m_cLocation.X == Test.getX() + 1 && g_sChar.m_cLocation.Y == Test.getY() ||
             g_sChar.m_cLocation.X == Test.getX() - 1 && g_sChar.m_cLocation.Y == Test.getY() || 
             g_sChar.m_cLocation.Y == Test.getY() - 1 && g_sChar.m_cLocation.X == Test.getX() || 
@@ -534,6 +533,46 @@ void collision()
         if (g_sChar.m_cLocation.X == Test.getX() && g_sChar.m_cLocation.Y == Test.getY())
         {
             g_sChar.m_cLocation.X--;
+        }
+    }
+    // Collision for house walls
+    if (g_eGameState == S_GAME)
+    {
+        if (g_skKeyEvent[K_UP].keyDown)
+        {
+            if ((g_sChar.m_cLocation.X == 21 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) || (g_sChar.m_cLocation.X == 34 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) ||
+                (g_sChar.m_cLocation.Y == 6 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 35) || (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 27) ||
+                (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 31 && g_sChar.m_cLocation.X < 35))
+            {
+                g_sChar.m_cLocation.Y++;
+            }
+        }
+        if (g_skKeyEvent[K_LEFT].keyDown && g_sChar.m_cLocation.X > 0)
+        {
+            if ((g_sChar.m_cLocation.X == 21 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) || (g_sChar.m_cLocation.X == 34 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) ||
+                (g_sChar.m_cLocation.Y == 6 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 35) || (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 27) ||
+                (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 31 && g_sChar.m_cLocation.X < 35))
+            {
+                g_sChar.m_cLocation.X++;
+            }
+        }
+        if (g_skKeyEvent[K_DOWN].keyDown && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
+        {
+            if ((g_sChar.m_cLocation.X == 21 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) || (g_sChar.m_cLocation.X == 34 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) ||
+                (g_sChar.m_cLocation.Y == 6 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 35) || (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 27) ||
+                (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 31 && g_sChar.m_cLocation.X < 35))
+            {
+                g_sChar.m_cLocation.Y--;
+            }
+        }
+        if (g_skKeyEvent[K_RIGHT].keyDown && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1)
+        {
+            if ((g_sChar.m_cLocation.X == 21 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) || (g_sChar.m_cLocation.X == 34 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) ||
+                (g_sChar.m_cLocation.Y == 6 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 35) || (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 27) ||
+                (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 31 && g_sChar.m_cLocation.X < 35))
+            {
+                g_sChar.m_cLocation.X--;
+            }
         }
     }
 }
@@ -692,6 +731,35 @@ void renderMap()
             g_Console.writeToBuffer(c, " ", colors[5]);
         }
     }
+    //House.
+    for (int i = 21; i < 35; i++)
+    {
+        c.X = i;
+        for (int j = 6; j < 11; j++)
+        {
+            c.Y = j;
+            colour(colors[5]);
+            if (c.X == 21 || c.X == 34 || c.Y == 6 || c.Y == 10)
+            {
+                g_Console.writeToBuffer(c, " ", 0x00);
+            }
+            else
+            {
+                g_Console.writeToBuffer(c, " ", 0xD0);
+            }
+        }
+        c.Y = 11;
+        for (int i = 27; i < 32; i++)
+        {
+            c.X = i;
+                g_Console.writeToBuffer(c, " ", 0xD2);
+        }
+        for (int i = 27; i < 32; i++)
+        {
+            c.X = i; c.Y = 10;
+            g_Console.writeToBuffer(c, " ", 0xD2);
+        }
+    }
 
     //Grasspatch test
     for (int i = 0; i < 13; i++)
@@ -824,19 +892,9 @@ void renderRoute3()
 void renderInteract()
 {
     COORD c;
-    c.X = g_sChar.m_cLocation.X - 10;
+    c.X = g_sChar.m_cLocation.X - 30;
     c.Y = g_sChar.m_cLocation.Y + 1;
-    g_Console.writeToBuffer(c, Test.interact(), 0x0B);
-    switch (location)
-    {
-    case 1: g_eGameState = S_GAME;
-        break;
-    case 2: g_eGameState = S_ROUTE2;
-        break;
-    case 3: g_eGameState = S_ROUTE3;
-        break;
-    }
-    
+    g_Console.writeToBuffer(c, Test.interact(), 0x0B);   
 }
 
 void renderEncounter()
@@ -873,15 +931,6 @@ void renderEncounter()
     g_Console.writeToBuffer(c, "Ele-beast: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xB0); c.X += 11; c.Y = 9;
     g_Console.writeToBuffer(c, nameWild, 0xB0); c.Y++; g_Console.writeToBuffer(c, levelWild, 0xB0); c.Y++; g_Console.writeToBuffer(c, hpWild, 0xB0); c.Y = 9;
     c.X = 1; c.Y = 24;
-    if (isCaught == true)
-    {
-        g_Console.writeToBuffer(c, "You caught the ele-beast!");
-    }
-    if (failedCatch == true)
-    {
-        g_Console.writeToBuffer(c, "You failed to catch the ele-beast!");
-    }
-
 
     for (int i = 0; i < 80; i++)
     {
