@@ -12,6 +12,8 @@
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
+bool isCaught;
+bool failedCatch;
 hunter jeff;
 monster wild;
 Entity Test;
@@ -35,6 +37,7 @@ Console g_Console(80, 25, "SP1 Framework");
 void init( void )
 {
     srand((unsigned)time(0));
+    isCaught = false; failedCatch = false;
     // Set precision for floating point output
     g_dElapsedTime = 0.0;
     jeff.choosestarter(1);
@@ -319,13 +322,14 @@ void updateEncounter()
         if (caught == 0)
         {
             jeff.addparty(wild);
-            g_Console.writeToBuffer(c, "You caught the ele-beast!");
-            Sleep(2000);
+            isCaught = true;
             g_eGameState = S_GAME;
+            isCaught = false;
         }
         else
         {
-            g_Console.writeToBuffer(c, "You failed to catch the ele-beast!");
+            failedCatch = true;
+            failedCatch = false;
         }
     }
 }
@@ -394,7 +398,7 @@ void moveCharacter()
     {
         g_sChar.m_bActive = !g_sChar.m_bActive;
     }
-    if (g_sChar.m_cLocation.X > 29 && g_sChar.m_cLocation.X < 40 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 10)
+    if (g_sChar.m_cLocation.X >= 0 && g_sChar.m_cLocation.X < 13 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 12)
     {
         if (rand() % 100 == 1)
         {
@@ -540,16 +544,66 @@ void renderMap()
         for (int j = 0; j < 25; j++)
         {
             c.Y = j;
-            colour(colors[11]);
-            g_Console.writeToBuffer(c, " ", colors[11]);
+            colour(colors[10]);
+            g_Console.writeToBuffer(c, " ", colors[10]);
+        }
+    }
+    for (int i = 12; i < 16; i++)
+    {
+        c.Y = i;
+        for (int j = 0; j < 80; j++)
+        {
+            c.X = j;
+            colour(colors[5]);
+            g_Console.writeToBuffer(c, " ", colors[5]);
+        }
+    }
+    for (int i = 36; i < 47; i++)
+    {
+        c.X = i;
+        for (int j = 0; j < 25; j++)
+        {
+            c.Y = j;
+            colour(colors[5]);
+            g_Console.writeToBuffer(c, " ", colors[5]);
         }
     }
 
     //Grasspatch test
-    for (int i = 30; i < 40; i++)
+    for (int i = 0; i < 13; i++)
     {
         c.X = i;
-        for (int j = 5; j < 10; j++)
+        for (int j = 5; j < 12; j++)
+        {
+            c.Y = j;
+            colour(colors[1]);
+            g_Console.writeToBuffer(c, " ", colors[1]);
+        }
+    }
+    for (int i = 61; i < 80; i++)
+    {
+        c.X = i;
+        for (int j = 16; j < 25; j++)
+        {
+            c.Y = j;
+            colour(colors[1]);
+            g_Console.writeToBuffer(c, " ", colors[1]);
+        }
+    }
+    for (int i = 54; i < 70; i++)
+    {
+        c.X = i;
+        for (int j = 3; j < 8; j++)
+        {
+            c.Y = j;
+            colour(colors[1]);
+            g_Console.writeToBuffer(c, " ", colors[1]);
+        }
+    }
+    for (int i = 20; i < 36; i++)
+    {
+        c.X = i;
+        for (int j = 16; j < 21; j++)
         {
             c.Y = j;
             colour(colors[1]);
@@ -591,6 +645,15 @@ void renderEncounter()
     c.X = 48;
     g_Console.writeToBuffer(c, "Ele-beast: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xB0); c.X += 11; c.Y = 9;
     g_Console.writeToBuffer(c, nameWild, 0xB0); c.Y++; g_Console.writeToBuffer(c, levelWild, 0xB0); c.Y++; g_Console.writeToBuffer(c, hpWild, 0xB0); c.Y = 9;
+    c.X = 1; c.Y = 24;
+    if (isCaught == true)
+    {
+        g_Console.writeToBuffer(c, "You caught the ele-beast!");
+    }
+    if (failedCatch == true)
+    {
+        g_Console.writeToBuffer(c, "You failed to catch the ele-beast!");
+    }
 
 
     for (int i = 0; i < 80; i++)
@@ -607,10 +670,9 @@ void renderEncounter()
         for (int j = 17; j < 25; j++)
         {
             c.Y = j;
-            colour(colors[11]);
+            colour(colors[10]);
             g_Console.writeToBuffer(c, " ", colors[10]);
         }
-
     }
 
     c.X = 56;
