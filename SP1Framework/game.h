@@ -43,6 +43,8 @@ enum EGAMESTATES
     S_SPLASHSCREEN,
     S_ENCOUNTERSPLASHSCREEN,
     S_ENCOUNTER,
+    S_ENCOUNTERBOSS,
+    S_BOSSSPLASHSCREEN,
     S_MENU,
     S_GAME,
     S_ROUTE2,
@@ -100,6 +102,8 @@ void renderInputEvents();   // renders the status of input events
 void encounterScreenWait(); // set timer for the encounter splash screen
 void renderEncounterSplashScreen();     // renders the encounter splash screen
 void renderEncounter();     // renders the encounter screen
+void renderEncounterBoss(); // renders the encounter boss screen
+void renderBossSS();        // renders boss splash screen
 
 // keyboard and mouse input event managers
 void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent);  // define this function for the console to call when there are keyboard events
