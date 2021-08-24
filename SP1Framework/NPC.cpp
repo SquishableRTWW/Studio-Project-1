@@ -9,7 +9,7 @@ NPC::NPC()
 	Advice[2] = { "Fire is super effective against Nature." };
 	Advice[3] = { "Nature is strong against Water." };
 	Advice[4] = { "Water can defeat Fire easily." };
-	Advice[5] = { "Rock is good against Fire but is weak to Water." };
+	Advice[5] = { "Earth is good against Fire but is weak to Water." };
 }
 
 std::string NPC::interact()
