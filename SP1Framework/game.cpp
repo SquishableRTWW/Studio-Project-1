@@ -281,6 +281,8 @@ void encounterScreenWait()
     g_eGameState = S_ENCOUNTER;
 }
 
+
+
 void updateGame()       // gameplay logic
 {
     processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
@@ -339,6 +341,7 @@ void interactionWait()
 
 void updateEncounter()
 {
+
     if ((g_mouseEvent.mousePosition.X > 67 && g_mouseEvent.mousePosition.X < 71 && g_mouseEvent.mousePosition.Y == 20) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
         g_eGameState = S_GAME;
@@ -369,10 +372,16 @@ void updateEncounter()
             failedCatch = false;
         }
     }
-    if ((g_mouseEvent.mousePosition.X > 66 && g_mouseEvent.mousePosition.X < 69 && g_mouseEvent.mousePosition.Y == 21) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+
+    if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 14 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
+        wild.setHealth(-(wild.getHealth() - jeff.getMonster(0).getMoveDamage(0)));
+        
 
     }
+
+
+    
 }
 
 void moveSelection()
@@ -929,6 +938,9 @@ void renderEncounter()
     g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(2));
     c.X = 27, c.Y = 22;
     g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(3));
+    c.X = 10, c.Y = 10;
+
+
 
 }
 

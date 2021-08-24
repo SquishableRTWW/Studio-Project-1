@@ -40,6 +40,7 @@ public:
 	int getKills(void);
 	int getLevel(void);
 	string getMove(int i);
+	int getMoveDamage(int i);
 	string getElement(void);
 	~monster(void);
 };

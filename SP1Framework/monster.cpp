@@ -306,6 +306,10 @@ string monster::getMove(int i)
 {
 	return move.getMove(i);
 }
+int monster::getMoveDamage(int i)
+{
+	return move.getMoveDamage(i);
+}
 string monster::getElement(void)
 {
 	return element;
