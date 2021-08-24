@@ -402,7 +402,7 @@ void moveCharacter()
         //Beep(1440, 30);
         g_sChar.m_cLocation.Y--;
     }
-    if (g_skKeyEvent[K_LEFT].keyReleased && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16)
+    if (g_skKeyEvent[K_LEFT].keyReleased && (g_sChar.m_cLocation.X != 0 || (g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16)))
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.X--;
@@ -412,7 +412,7 @@ void moveCharacter()
         //Beep(1440, 30);
         g_sChar.m_cLocation.Y++;
     }
-    if (g_skKeyEvent[K_RIGHT].keyReleased && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16)
+    if (g_skKeyEvent[K_RIGHT].keyReleased && (g_sChar.m_cLocation.X != 79 || (g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16)))
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.X++;
