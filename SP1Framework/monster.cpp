@@ -314,11 +314,11 @@ int monster::getMaxHealth(void)
 {
 	if (getElement() == "water")
 	{
-		return (10 + (3 * getLevel()));
+		return (10 + (3 * getLevel()-1));
 	}
 	else
 	{
-		return (10 + (2 * getLevel()));
+		return (10 + (2 * getLevel()-1));
 	}
 }
 monster::~monster(void)
