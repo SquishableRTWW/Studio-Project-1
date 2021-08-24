@@ -293,7 +293,15 @@ void updateGame()       // gameplay logic
 void menuScreenWait()
 {
     if (g_skKeyEvent[K_F].keyReleased)
-        g_eGameState = S_GAME;
+        switch (location)
+        {
+        case 1: g_eGameState = S_GAME;
+            break;
+        case 2: g_eGameState = S_ROUTE2;
+            break;
+        case 3: g_eGameState = S_ROUTE3;
+            break;
+        }
     if (g_skKeyEvent[K_ESCAPE].keyReleased)
         g_bQuitGame = true;
 }
@@ -344,7 +352,15 @@ void updateEncounter()
 
     if ((g_mouseEvent.mousePosition.X > 67 && g_mouseEvent.mousePosition.X < 71 && g_mouseEvent.mousePosition.Y == 20) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
-        g_eGameState = S_GAME;
+        switch (location)
+        {
+        case 1: g_eGameState = S_GAME;
+            break;
+        case 2: g_eGameState = S_ROUTE2;
+            break;
+        case 3: g_eGameState = S_ROUTE3;
+            break;
+        }
     }
     if ((g_mouseEvent.mousePosition.X > 55 && g_mouseEvent.mousePosition.X < 61 && g_mouseEvent.mousePosition.Y == 20) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
@@ -375,19 +391,42 @@ void updateEncounter()
 
     if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 22 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
-        wild.setHealth(-(jeff.getMonster(0).getMoveDamage(0)) * ((jeff.getMonster(0).getAttack() / wild.getDefence()) * 0.5));
-        if (wild.getHealth() <= 0)
+        if (wild.getSpeed() >= jeff.getMonster(0).getSpeed())
         {
-            jeff.getMonster(0).upKill();
-            jeff.getMonster(0).levelUp(jeff.getMonster(0));
-            switch (location)
+            wild.setHealth(-(jeff.getMonster(0).getMoveDamage(0)) * ((jeff.getMonster(0).getAttack() / wild.getDefence()) * 0.5));
+            if (wild.getHealth() <= 0)
             {
-            case 1: g_eGameState = S_GAME;
-                break;
-            case 2: g_eGameState = S_ROUTE2;
-                break;
-            case 3: g_eGameState = S_ROUTE3;
-                break;
+                jeff.getMonster(0).upKill();
+                jeff.getMonster(0).levelUp(jeff.getMonster(0));
+                switch (location)
+                {
+                case 1: g_eGameState = S_GAME;
+                    break;
+                case 2: g_eGameState = S_ROUTE2;
+                    break;
+                case 3: g_eGameState = S_ROUTE3;
+                    break;
+                }
+            }
+            jeff.getMonster(0).setHealth(-(wild.getMoveDamage(0))* ((wild.getAttack() / jeff.getMonster(0).getDefence()) * 0.5));
+        }
+        else
+        {
+            jeff.getMonster(0).setHealth(-(wild.getMoveDamage(0)) * ((wild.getAttack() / jeff.getMonster(0).getDefence()) * 0.5));
+            wild.setHealth(-(jeff.getMonster(0).getMoveDamage(0)) * ((jeff.getMonster(0).getAttack() / wild.getDefence()) * 0.5));
+            if (wild.getHealth() <= 0)
+            {
+                jeff.getMonster(0).upKill();
+                jeff.getMonster(0).levelUp(jeff.getMonster(0));
+                switch (location)
+                {
+                case 1: g_eGameState = S_GAME;
+                    break;
+                case 2: g_eGameState = S_ROUTE2;
+                    break;
+                case 3: g_eGameState = S_ROUTE3;
+                    break;
+                }
             }
         }
 
@@ -515,6 +554,8 @@ void moveCharacter()
             g_eGameState = S_ENCOUNTERSPLASHSCREEN;
         }
     }
+    if (g_skKeyEvent[K_F].keyReleased)
+        g_eGameState = S_MENU;
     collision();
 }
 
@@ -595,8 +636,7 @@ void processUserInput()
     // quits the game if player hits the escape key
     if (g_skKeyEvent[K_ESCAPE].keyReleased)
         g_bQuitGame = true;
-    if (g_skKeyEvent[K_F].keyReleased)
-        g_eGameState = S_MENU;
+
 }
 
 //--------------------------------------------------------------

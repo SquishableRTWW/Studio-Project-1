@@ -29,6 +29,7 @@ void monster::setOGStats(void)
 	this->attack = 6;
 	this->defence = 3;
 	this->speed = 10;
+	this->kills = 0;
 }
 void monster::setOGBossStats(void)
 {
@@ -128,11 +129,11 @@ void monster::setMove(monster& monster, int i)
 }
 void monster::upKill(void)
 {
-	kills++;
+	kills += 1;
 }
 void monster::upLevel(void)
 {
-	level++;
+	level += 1;
 }
 void monster::setWildMonster(monster& monster, int i)
 {
@@ -156,7 +157,7 @@ void monster::levelUp(monster& monster)
 {
 	if (monster.getName() == "ignis")
 	{
-		upKill();
+		kills++;
 		if (getKills() % 3 == 0)
 		{
 			upLevel();
@@ -173,7 +174,7 @@ void monster::levelUp(monster& monster)
 	}
 	if (monster.getName() == "typhis")
 	{
-		upKill();
+		kills++;
 		if (getKills() % 3 == 0)
 		{
 			upLevel();
@@ -190,7 +191,7 @@ void monster::levelUp(monster& monster)
 	}
 	if (monster.getName() == "vitalus")
 	{
-		upKill();
+		kills;
 		if (getKills() % 3 == 0)
 		{
 			upLevel();
