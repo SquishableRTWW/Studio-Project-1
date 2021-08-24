@@ -5,7 +5,7 @@ ignis::ignis(void)
 {
 	element = "fire";
 	setName("ignis");
-	setLevel();
+	setLevel(5);
 	setKills();
 	setOGStats();
 	for (int i = 0; i < getLevel(); i++)

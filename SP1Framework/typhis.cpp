@@ -5,12 +5,12 @@ typhis::typhis(void)
 {
 	element = "water";
 	setName("typhis");
-	setLevel();
+	setLevel(5);
 	setKills();
 	setOGStats();
 	for (int i = 0; i < getLevel(); i++)
 	{
-		setHealth(2); setAttack(2); setDefence(1); setSpeed(1);
+		setHealth(3); setAttack(1); setDefence(1); setSpeed(1);
 	}
 	for (int i = 0; i < 2; i++)
 	{

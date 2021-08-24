@@ -527,6 +527,46 @@ void collision()
             g_sChar.m_cLocation.X--;
         }
     }
+    // Collision for house walls
+    if (g_eGameState == S_GAME)
+    {
+        if (g_skKeyEvent[K_UP].keyDown)
+        {
+            if ((g_sChar.m_cLocation.X == 21 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) || (g_sChar.m_cLocation.X == 34 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) ||
+                (g_sChar.m_cLocation.Y == 6 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 35) || (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 27) ||
+                (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 31 && g_sChar.m_cLocation.X < 35))
+            {
+                g_sChar.m_cLocation.Y++;
+            }
+        }
+        if (g_skKeyEvent[K_LEFT].keyDown && g_sChar.m_cLocation.X > 0)
+        {
+            if ((g_sChar.m_cLocation.X == 21 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) || (g_sChar.m_cLocation.X == 34 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) ||
+                (g_sChar.m_cLocation.Y == 6 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 35) || (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 27) ||
+                (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 31 && g_sChar.m_cLocation.X < 35))
+            {
+                g_sChar.m_cLocation.X++;
+            }
+        }
+        if (g_skKeyEvent[K_DOWN].keyDown && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
+        {
+            if ((g_sChar.m_cLocation.X == 21 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) || (g_sChar.m_cLocation.X == 34 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) ||
+                (g_sChar.m_cLocation.Y == 6 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 35) || (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 27) ||
+                (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 31 && g_sChar.m_cLocation.X < 35))
+            {
+                g_sChar.m_cLocation.Y--;
+            }
+        }
+        if (g_skKeyEvent[K_RIGHT].keyDown && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1)
+        {
+            if ((g_sChar.m_cLocation.X == 21 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) || (g_sChar.m_cLocation.X == 34 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) ||
+                (g_sChar.m_cLocation.Y == 6 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 35) || (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 27) ||
+                (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 31 && g_sChar.m_cLocation.X < 35))
+            {
+                g_sChar.m_cLocation.X--;
+            }
+        }
+    }
 }
 
 void processUserInput()
@@ -697,26 +737,19 @@ void renderMap()
             }
             else
             {
-                g_Console.writeToBuffer(c, " ", 0xF0);
+                g_Console.writeToBuffer(c, " ", 0xD0);
             }
         }
         c.Y = 11;
-        for (int i = 26; i < 33; i++)
+        for (int i = 27; i < 32; i++)
         {
             c.X = i;
-            if (c.X == 26 || c.X == 32)
-            {
-                g_Console.writeToBuffer(c, " ", 0x00);
-            }
-            else
-            {
-                g_Console.writeToBuffer(c, " ", 0xF0);
-            }
+                g_Console.writeToBuffer(c, " ", 0xD2);
         }
         for (int i = 27; i < 32; i++)
         {
             c.X = i; c.Y = 10;
-            g_Console.writeToBuffer(c, " ", 0xF0);
+            g_Console.writeToBuffer(c, " ", 0xD2);
         }
     }
 
