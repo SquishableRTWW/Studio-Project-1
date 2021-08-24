@@ -7,10 +7,10 @@
 #include "oris.h"
 #include "lavarous.h"
 #include "azure.h"
+#include "Entity.h"
 
 
-
-class hunter
+class hunter: public Entity
 {
 private:
 	string name;
