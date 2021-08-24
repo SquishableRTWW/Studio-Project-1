@@ -121,6 +121,8 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
         break;
     case S_ROUTE2: gameplayKBHandler(keyboardEvent);
         break;
+    case S_ROUTE3: gameplayKBHandler(keyboardEvent);
+        break;
     }
 }
 
@@ -252,6 +254,8 @@ void update(double dt)
         case S_STARTER: starterScreenWait();
             break;
         case S_ROUTE2: updateGame();
+            break;
+        case S_ROUTE3: updateGame();
             break;
     }
 }
@@ -408,6 +412,10 @@ void moveCharacter()
     {
         g_eGameState = S_ROUTE2;
     }
+    if ((g_sChar.m_cLocation.X == 79 && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_GAME)
+    {
+        g_eGameState = S_ROUTE3;
+    }
     if ((g_sChar.m_cLocation.X >= 0 && g_sChar.m_cLocation.X < 13 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 12) ||
         (g_sChar.m_cLocation.X >= 61 && g_sChar.m_cLocation.X < 80 && g_sChar.m_cLocation.Y >=16 && g_sChar.m_cLocation.Y < 25) ||
         (g_sChar.m_cLocation.X >= 54 && g_sChar.m_cLocation.X < 70 && g_sChar.m_cLocation.Y >= 3 && g_sChar.m_cLocation.Y < 8) ||
@@ -491,6 +499,7 @@ void render()
         break;
     case S_ROUTE2: renderGame2();
         break;
+    case S_ROUTE3: renderGame3();
     }
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();
@@ -547,6 +556,12 @@ void renderGame()
 void renderGame2() //While in route 2
 {
     renderRoute2();
+    renderCharacter();  // renders the character into the buffer
+    renderNPC();
+}
+void renderGame3()
+{
+    renderRoute3();
     renderCharacter();  // renders the character into the buffer
     renderNPC();
 }
@@ -696,6 +711,38 @@ void renderRoute2()
             g_Console.writeToBuffer(c, " ", colors[1]);
         }
     }
+}
+
+void renderRoute3()
+{
+    // Set up sample colours, and output shadings
+    const WORD colors[] = {
+        0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
+        0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6
+    };
+
+    COORD c;
+    for (int i = 0; i < 80; i++)
+    {
+        c.X = i;
+        for (int j = 0; j < 25; j++)
+        {
+            c.Y = j;
+            colour(colors[10]);
+            g_Console.writeToBuffer(c, " ", colors[10]);
+        }
+    }
+    for (int i = 12; i < 16; i++)
+    {
+        c.Y = i;
+        for (int j = 0; j < 80; j++)
+        {
+            c.X = j;
+            colour(colors[5]);
+            g_Console.writeToBuffer(c, " ", colors[5]);
+        }
+    }
+
 }
 
 void renderEncounter()
