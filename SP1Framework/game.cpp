@@ -19,12 +19,14 @@ int location;
 hunter jeff;
 monster wild;
 NPC Test;
+NPC Nurse;
 SKeyEvent g_skKeyEvent[K_COUNT + 2];
 SMouseEvent g_mouseEvent;
 
 // Game specific variables here
 SGameChar   g_sChar;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
+
 
 // Console object
 Console g_Console(80, 25, "SP1 Framework");
@@ -459,10 +461,10 @@ void moveCharacter()
     }
     if (g_skKeyEvent[K_Q].keyReleased)
     {
-        if (g_sChar.m_cLocation.X == Test.getX() + 1 && g_sChar.m_cLocation.Y == Test.getY() ||
-            g_sChar.m_cLocation.X == Test.getX() - 1 && g_sChar.m_cLocation.Y == Test.getY() || 
-            g_sChar.m_cLocation.Y == Test.getY() - 1 && g_sChar.m_cLocation.X == Test.getX() || 
-            g_sChar.m_cLocation.Y == Test.getY() + 1 && g_sChar.m_cLocation.X == Test.getX())
+        if (g_sChar.m_cLocation.X == Test.getX() + 1 && g_sChar.m_cLocation.Y == Test.getY() || g_sChar.m_cLocation.X == Test.getX() - 1 && g_sChar.m_cLocation.Y == Test.getY() || 
+            g_sChar.m_cLocation.Y == Test.getY() - 1 && g_sChar.m_cLocation.X == Test.getX() || g_sChar.m_cLocation.Y == Test.getY() + 1 && g_sChar.m_cLocation.X == Test.getX() ||
+            g_sChar.m_cLocation.X == Nurse.getX() + 1 && g_sChar.m_cLocation.Y == Nurse.getY() || g_sChar.m_cLocation.X == Nurse.getX() - 1 && g_sChar.m_cLocation.Y == Nurse.getY() ||
+            g_sChar.m_cLocation.Y == Nurse.getY() - 1 && g_sChar.m_cLocation.X == Nurse.getX() || g_sChar.m_cLocation.Y == Nurse.getY() + 1 && g_sChar.m_cLocation.X == Nurse.getX())
         {
             switch (g_eGameState)
             {
@@ -527,21 +529,21 @@ void collision()
             g_sChar.m_cLocation.Y++;
         }
     }
-    if (g_skKeyEvent[K_LEFT].keyDown && g_sChar.m_cLocation.X > 0)
+    if (g_skKeyEvent[K_LEFT].keyDown)
     {
         if (g_sChar.m_cLocation.X == Test.getX() && g_sChar.m_cLocation.Y == Test.getY())
         {
             g_sChar.m_cLocation.X++;
         }
     }
-    if (g_skKeyEvent[K_DOWN].keyDown && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
+    if (g_skKeyEvent[K_DOWN].keyDown)
     {
         if (g_sChar.m_cLocation.X == Test.getX() && g_sChar.m_cLocation.Y == Test.getY())
         {
             g_sChar.m_cLocation.Y--;
         }
     }
-    if (g_skKeyEvent[K_RIGHT].keyDown && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1)
+    if (g_skKeyEvent[K_RIGHT].keyDown)
     {
         if (g_sChar.m_cLocation.X == Test.getX() && g_sChar.m_cLocation.Y == Test.getY())
         {
@@ -555,34 +557,34 @@ void collision()
         {
             if ((g_sChar.m_cLocation.X == 21 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) || (g_sChar.m_cLocation.X == 34 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) ||
                 (g_sChar.m_cLocation.Y == 6 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 35) || (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 27) ||
-                (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 31 && g_sChar.m_cLocation.X < 35))
+                (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 31 && g_sChar.m_cLocation.X < 35) || (g_sChar.m_cLocation.X == Nurse.getX() && g_sChar.m_cLocation.Y == Nurse.getY()))
             {
                 g_sChar.m_cLocation.Y++;
             }
         }
-        if (g_skKeyEvent[K_LEFT].keyDown && g_sChar.m_cLocation.X > 0)
+        if (g_skKeyEvent[K_LEFT].keyDown)
         {
             if ((g_sChar.m_cLocation.X == 21 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) || (g_sChar.m_cLocation.X == 34 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) ||
                 (g_sChar.m_cLocation.Y == 6 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 35) || (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 27) ||
-                (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 31 && g_sChar.m_cLocation.X < 35))
+                (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 31 && g_sChar.m_cLocation.X < 35) || (g_sChar.m_cLocation.X == Nurse.getX() && g_sChar.m_cLocation.Y == Nurse.getY()))
             {
                 g_sChar.m_cLocation.X++;
             }
         }
-        if (g_skKeyEvent[K_DOWN].keyDown && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
+        if (g_skKeyEvent[K_DOWN].keyDown)
         {
             if ((g_sChar.m_cLocation.X == 21 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) || (g_sChar.m_cLocation.X == 34 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) ||
                 (g_sChar.m_cLocation.Y == 6 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 35) || (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 27) ||
-                (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 31 && g_sChar.m_cLocation.X < 35))
+                (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 31 && g_sChar.m_cLocation.X < 35) || (g_sChar.m_cLocation.X == Nurse.getX() && g_sChar.m_cLocation.Y == Nurse.getY()))
             {
                 g_sChar.m_cLocation.Y--;
             }
         }
-        if (g_skKeyEvent[K_RIGHT].keyDown && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1)
+        if (g_skKeyEvent[K_RIGHT].keyDown)
         {
             if ((g_sChar.m_cLocation.X == 21 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) || (g_sChar.m_cLocation.X == 34 && g_sChar.m_cLocation.Y > 5 && g_sChar.m_cLocation.Y < 11) ||
                 (g_sChar.m_cLocation.Y == 6 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 35) || (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 20 && g_sChar.m_cLocation.X < 27) ||
-                (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 31 && g_sChar.m_cLocation.X < 35))
+                (g_sChar.m_cLocation.Y == 10 && g_sChar.m_cLocation.X > 31 && g_sChar.m_cLocation.X < 35) || (g_sChar.m_cLocation.X == Nurse.getX() && g_sChar.m_cLocation.Y == Nurse.getY()))
             {
                 g_sChar.m_cLocation.X--;
             }
@@ -773,7 +775,9 @@ void renderMap()
             g_Console.writeToBuffer(c, " ", 0xD2);
         }
     }
-
+    //Nurse NPC to heal monster
+    Nurse.setposition(29, 7);
+    g_Console.writeToBuffer(Nurse.getposition(), char(4), 0x0C);
     //Grasspatch test
     for (int i = 0; i < 13; i++)
     {
