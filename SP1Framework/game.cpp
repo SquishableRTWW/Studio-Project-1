@@ -929,7 +929,7 @@ void renderRoute3()
         {
             c.Y = j;
             colour(colors[10]);
-            g_Console.writeToBuffer(c, " ", colors[10]);
+            g_Console.writeToBuffer(c, "*", 0xE0);
         }
     }
     for (int i = 33; i < 44; i++)
@@ -939,7 +939,7 @@ void renderRoute3()
         {
             c.Y = j;
             colour(colors[5]);
-            g_Console.writeToBuffer(c, " ", colors[5]);
+            g_Console.writeToBuffer(c, "+", 0x60);
         }
     }
 
@@ -951,7 +951,7 @@ void renderRoute3()
         {
             c.Y = j;
             colour(colors[1]);
-            g_Console.writeToBuffer(c, " ", colors[1]);
+            g_Console.writeToBuffer(c, "&", 0xA0);
         }
     }
 
