@@ -23,7 +23,7 @@ int boss;
 hunter jeff;
 hunter Enemy[8];
 monster wild;
-monster mon1;
+monster mon1, mon2, mon3, mon4, mon5, mon6;
 NPC Advice[4];
 NPC Nurse;
 SKeyEvent g_skKeyEvent[K_COUNT + 2];
@@ -471,10 +471,31 @@ void updateEncounter()
     {
         COORD c;
         c.X = 1; c.Y = 24;
+        int yourDMG = mon1.getMoveDamage(0) * (mon1.getAttack() / wild.getDefence()) * 0.5;
+        int wildDMG = wild.getMoveDamage(0) * ((wild.getAttack() / mon1.getDefence()) * 0.5);
         int caught = (rand() % 5) + 0;
         if (caught == 0)
         {
-            jeff.addparty(wild);
+            if (mon2.getName() == "NULL")
+            {
+                mon2 = wild;
+            }
+            if (mon3.getName() == "NULL" && mon4.getName() != "NULL")
+            {
+                mon3 = wild;
+            }
+            if (mon4.getName() == "NULL" && mon5.getName() != "NULL")
+            {
+                mon4 = wild;
+            }
+            if (mon5.getName() == "NULL" && mon6.getName() != "NULL")
+            {
+                mon5 = wild;
+            }
+            if (mon6.getName() == "NULL" && mon2.getName() != "NULL" && mon3.getName() != "NULL" && mon4.getName() != "NULL" && mon5.getName() != "NULL")
+            {
+                mon6 = wild;
+            }
             isCaught = true;
             switch (location)
             {
@@ -489,16 +510,18 @@ void updateEncounter()
         }
         else
         {
+            mon1.setHealth(-wildDMG);
             failedCatch = true;
             failedCatch = false;
         }
     }
-    int yourDMG = mon1.getMoveDamage(0)* (mon1.getAttack() / wild.getDefence()) * 0.5;
-    int wildDMG = wild.getMoveDamage(0)* ((wild.getAttack() / mon1.getDefence()) * 0.5);
     if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 14 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
-        if (wild.getSpeed() >= jeff.getMonster(0).getSpeed())
+        int yourDMG = mon1.getMoveDamage(0) * (mon1.getAttack() / wild.getDefence()) * 0.5;
+        int wildDMG = wild.getMoveDamage(0) * ((wild.getAttack() / mon1.getDefence()) * 0.5);
+        if (wild.getSpeed() >= mon1.getSpeed())
         {
+            mon1.setHealth(-wildDMG);
             wild.setHealth(-yourDMG);
             if (wild.getHealth() <= 0)
             {
@@ -514,11 +537,10 @@ void updateEncounter()
                     break;
                 }
             }
-            mon1.setHealth(-wildDMG);
         }
         else
         {
-            jeff.setMHealth(0, -wildDMG);
+            mon1.setHealth(-wildDMG);
             wild.setHealth(-yourDMG);
             if (wild.getHealth() <= 0)
             {
@@ -1211,21 +1233,19 @@ void renderInteract()
     {
     case E_NPC: g_Console.writeToBuffer(c, Advice[0].interact(), 0x0B); break;
     case E_Healer: g_Console.writeToBuffer(c, Nurse.Healquote(), 0x0B);
-        for (int i = 0; i < 6; i++)
-        {
-            jeff.getMonster(i).setHealth(jeff.getMonster(i).getMaxHealth());
-        }
+            mon1.setHealth(mon1.getMaxHealth() - mon1.getHealth());
+            break;
     }
 }
 
 void renderEncounter()
 {
     string name1 = mon1.getName(), level1 = to_string(mon1.getLevel()), hp1 = to_string(mon1.getHealth()), atk1 = to_string(mon1.getAttack()), def1 = to_string(mon1.getDefence()), spd1 = to_string(mon1.getSpeed()),
-        name2 = jeff.getMname(1), level2 = to_string(jeff.getMlvl(1)), hp2 = to_string(jeff.getMhealth(1)), atk2 = to_string(jeff.getMattack(1)), def2 = to_string(jeff.getMdefense(1)), spd2 = to_string(jeff.getMspeed(1)),
-        name3 = jeff.getMname(2), level3 = to_string(jeff.getMlvl(2)), hp3 = to_string(jeff.getMhealth(2)), atk3 = to_string(jeff.getMattack(2)), def3 = to_string(jeff.getMdefense(2)), spd3 = to_string(jeff.getMspeed(2)),
-        name4 = jeff.getMname(3), level4 = to_string(jeff.getMlvl(3)), hp4 = to_string(jeff.getMhealth(3)), atk4 = to_string(jeff.getMattack(3)), def4 = to_string(jeff.getMdefense(3)), spd4 = to_string(jeff.getMspeed(3)),
-        name5 = jeff.getMname(4), level5 = to_string(jeff.getMlvl(4)), hp5 = to_string(jeff.getMhealth(4)), atk5 = to_string(jeff.getMattack(4)), def5 = to_string(jeff.getMdefense(4)), spd5 = to_string(jeff.getMspeed(4)),
-        name6 = jeff.getMname(5), level6 = to_string(jeff.getMlvl(5)), hp6 = to_string(jeff.getMhealth(5)), atk6 = to_string(jeff.getMattack(5)), def6 = to_string(jeff.getMdefense(5)), spd6 = to_string(jeff.getMspeed(5));
+        name2 = mon2.getName(), level2 = to_string(mon2.getLevel()), hp2 = to_string(mon2.getHealth()), atk2 = to_string(mon2.getAttack()), def2 = to_string(mon2.getDefence()), spd2 = to_string(mon2.getSpeed()),
+        name3 = mon3.getName(), level3 = to_string(mon3.getLevel()), hp3 = to_string(mon3.getHealth()), atk3 = to_string(mon3.getAttack()), def3 = to_string(mon3.getDefence()), spd3 = to_string(mon3.getSpeed()),
+        name4 = mon4.getName(), level4 = to_string(mon4.getLevel()), hp4 = to_string(mon4.getHealth()), atk4 = to_string(mon4.getAttack()), def4 = to_string(mon4.getDefence()), spd4 = to_string(mon4.getSpeed()),
+        name5 = mon5.getName(), level5 = to_string(mon5.getLevel()), hp5 = to_string(mon5.getHealth()), atk5 = to_string(mon5.getAttack()), def5 = to_string(mon5.getDefence()), spd5 = to_string(mon5.getSpeed()),
+        name6 = mon6.getName(), level6 = to_string(mon6.getLevel()), hp6 = to_string(mon6.getHealth()), atk6 = to_string(mon6.getAttack()), def6 = to_string(mon6.getDefence()), spd6 = to_string(mon6.getSpeed());
     string nameWild = wild.getName(), levelWild = to_string(wild.getLevel()), hpWild = to_string(wild.getHealth()), atkWild = to_string(wild.getAttack()), defWild = to_string(wild.getDefence()), spdWild = to_string(wild.getSpeed());
     const WORD colors[] = {
         0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
@@ -1598,12 +1618,12 @@ void renderEncounterBoss()
 
 void renderMenu()
 {
-    string name1 = jeff.getMname(0), level1 = to_string(jeff.getMlvl(0)), hp1 = to_string(jeff.getMhealth(0)), atk1 = to_string(jeff.getMattack(0)), def1 = to_string(jeff.getMdefense(0)), spd1 = to_string(jeff.getMspeed(0)),
-        name2 = jeff.getMname(1), level2 = to_string(jeff.getMlvl(1)), hp2 = to_string(jeff.getMhealth(1)), atk2 = to_string(jeff.getMattack(1)), def2 = to_string(jeff.getMdefense(1)), spd2 = to_string(jeff.getMspeed(1)),
-        name3 = jeff.getMname(2), level3 = to_string(jeff.getMlvl(2)), hp3 = to_string(jeff.getMhealth(2)), atk3 = to_string(jeff.getMattack(2)), def3 = to_string(jeff.getMdefense(2)), spd3 = to_string(jeff.getMspeed(2)),
-        name4 = jeff.getMname(3), level4 = to_string(jeff.getMlvl(3)), hp4 = to_string(jeff.getMhealth(3)), atk4 = to_string(jeff.getMattack(3)), def4 = to_string(jeff.getMdefense(3)), spd4 = to_string(jeff.getMspeed(3)),
-        name5 = jeff.getMname(4), level5 = to_string(jeff.getMlvl(4)), hp5 = to_string(jeff.getMhealth(4)), atk5 = to_string(jeff.getMattack(4)), def5 = to_string(jeff.getMdefense(4)), spd5 = to_string(jeff.getMspeed(4)),
-        name6 = jeff.getMname(5), level6 = to_string(jeff.getMlvl(5)), hp6 = to_string(jeff.getMhealth(5)), atk6 = to_string(jeff.getMattack(5)), def6 = to_string(jeff.getMdefense(5)), spd6 = to_string(jeff.getMspeed(5));
+    string name1 = mon1.getName(), level1 = to_string(mon1.getLevel()), hp1 = to_string(mon1.getHealth()), atk1 = to_string(mon1.getAttack()), def1 = to_string(mon1.getDefence()), spd1 = to_string(mon1.getSpeed()),
+        name2 = mon2.getName(), level2 = to_string(mon2.getLevel()), hp2 = to_string(mon2.getHealth()), atk2 = to_string(mon2.getAttack()), def2 = to_string(mon2.getDefence()), spd2 = to_string(mon2.getSpeed()),
+        name3 = mon3.getName(), level3 = to_string(mon3.getLevel()), hp3 = to_string(mon3.getHealth()), atk3 = to_string(mon3.getAttack()), def3 = to_string(mon3.getDefence()), spd3 = to_string(mon3.getSpeed()),
+        name4 = mon4.getName(), level4 = to_string(mon4.getLevel()), hp4 = to_string(mon4.getHealth()), atk4 = to_string(mon4.getAttack()), def4 = to_string(mon4.getDefence()), spd4 = to_string(mon4.getSpeed()),
+        name5 = mon5.getName(), level5 = to_string(mon5.getLevel()), hp5 = to_string(mon5.getHealth()), atk5 = to_string(mon5.getAttack()), def5 = to_string(mon5.getDefence()), spd5 = to_string(mon5.getSpeed()),
+        name6 = mon6.getName(), level6 = to_string(mon6.getLevel()), hp6 = to_string(mon6.getHealth()), atk6 = to_string(mon6.getAttack()), def6 = to_string(mon6.getDefence()), spd6 = to_string(mon6.getSpeed());
     COORD c;
     for (int i = 0; i < 25; i++)
     {
