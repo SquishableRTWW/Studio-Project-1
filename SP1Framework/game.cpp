@@ -501,11 +501,11 @@ void updateEncounter()
                     break;
                 }
             }
-            jeff.getMonster(0).setHealth(-(wild.getMoveDamage(0))* ((wild.getAttack() / jeff.getMonster(0).getDefence()) * 0.5));
+            jeff.setMHealth(0, -(wild.getMoveDamage(0))* ((wild.getAttack() / jeff.getMonster(0).getDefence()) * 0.5));
         }
         else
         {
-            jeff.getMonster(0).setHealth(-(wild.getMoveDamage(0)) * ((wild.getAttack() / jeff.getMonster(0).getDefence()) * 0.5));
+            jeff.setMHealth(0, -(wild.getMoveDamage(0)) * ((wild.getAttack() / jeff.getMonster(0).getDefence()) * 0.5));
             wild.setHealth(-(jeff.getMonster(0).getMoveDamage(0)) * ((jeff.getMonster(0).getAttack() / wild.getDefence()) * 0.5));
             if (wild.getHealth() <= 0)
             {

@@ -29,6 +29,10 @@ public:
 	int getMattack(int i);
 	int getMdefense(int i);
 	int getMspeed(int i);
+	void setMHealth(int i, int  j);
+	void setMAttack(int i, int  j);
+	void setMDefence(int i, int  j);
+	void setMSpeed(int i, int  j);
 	string getMelement(int i);
 	int getMkills(int i);
 	~hunter(void);

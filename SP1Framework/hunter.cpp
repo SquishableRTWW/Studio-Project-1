@@ -99,6 +99,23 @@ int hunter::getMspeed(int i)
 	return party[i].getSpeed();
 }
 
+void hunter::setMHealth(int i, int j)
+{
+	getMonster(i).setHealth(j);
+}
+void hunter::setMAttack(int i, int j)
+{
+	getMonster(i).setAttack(j);
+}
+void hunter::setMDefence(int i, int j)
+{
+	getMonster(i).setDefence(j);
+}
+void hunter::setMSpeed(int i, int j)
+{
+	getMonster(i).setSpeed(j);
+}
+
 string hunter::getMelement(int i)
 {
 	return party[i].getElement();
