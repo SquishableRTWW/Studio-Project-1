@@ -298,6 +298,9 @@ void update(double dt)
         case S_ENCOUNTERBOSS:
             updateEncounter();
             break;
+        case S_GAMEOVER:
+            gameOverWait();
+            break;
     }
 }
 
@@ -385,6 +388,12 @@ void bossSplashscreenWait()
 {
     Sleep(2000);
     g_eGameState = S_ENCOUNTERBOSS;
+}
+
+void gameOverWait()
+{
+    Sleep(2000);
+    g_bQuitGame = true;
 }
 
 
@@ -674,7 +683,7 @@ void updateEncounter()
             {
                 if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
                 {
-                    g_bQuitGame = true;
+                    g_eGameState = S_GAMEOVER;
                 }
 
             }
@@ -693,7 +702,7 @@ void updateEncounter()
             {
                 if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
                 {
-                    g_bQuitGame = true;
+                    g_eGameState = S_GAMEOVER;
                 }
 
             }
@@ -716,7 +725,7 @@ void updateEncounter()
                 }
                 if (wild.getName() == "smeltor")
                 {
-                    g_bQuitGame = true;
+                    g_eGameState = S_GAMEOVER;
                 }
             }
         }
@@ -741,7 +750,7 @@ void updateEncounter()
                 }
                 if (wild.getName() == "smeltor")
                 {
-                    g_bQuitGame = true;
+                    g_eGameState = S_GAMEOVER;
                 }
             }
             mon1.setHealth(-wildDMG);
@@ -749,7 +758,7 @@ void updateEncounter()
             {
                 if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
                 {
-                    g_bQuitGame = true;
+                    g_eGameState = S_GAMEOVER;
                 }
 
             }
@@ -1137,6 +1146,8 @@ void render()
         case 3: renderGame3(); renderInteract(); break;
         }
         break;
+    case S_GAMEOVER: renderGameOver();
+        break;
     }
     renderInstructions();
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
@@ -1213,6 +1224,10 @@ void renderBossRoute() //while in the boss map
 {
     renderBossMap(); // renders map of boss route
     renderCharacter();
+}
+void renderGameOver()
+{
+    renderGameOverScreen();
 }
 // -------------------------------------------------------------------------
 
@@ -1583,13 +1598,13 @@ void renderEncounter()
     g_Console.writeToBuffer(c, "| \\ ", 0XB0);
 
     c.X = 10, c.Y = 19;
-    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(0));
+    g_Console.writeToBuffer(c, mon1.getMove(0));
     c.X = 27, c.Y = 19;
-    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(1));
+    g_Console.writeToBuffer(c, mon1.getMove(1));
     c.X = 10, c.Y = 22;
-    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(2));
+    g_Console.writeToBuffer(c, mon1.getMove(2));
     c.X = 27, c.Y = 22;
-    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(3));
+    g_Console.writeToBuffer(c, mon1.getMove(3));
     c.X = 10, c.Y = 10;
 
 
@@ -1956,6 +1971,22 @@ void renderCharacter()
         charColor = 0x0A;
     }
     g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
+}
+
+void renderGameOverScreen()
+{
+    COORD c;
+    for (int i = 0; i < 80; i++)
+    {
+        c.X = i;
+        for (int j = 0; j < 25; j++)
+        {
+            c.Y = j;
+            g_Console.writeToBuffer(c, ".", 0x0F);
+        }
+    }
+    c.X = 40; c.Y = 12;
+    g_Console.writeToBuffer(c, "Game over...", 0x0F);
 }
 
 void renderFramerate()

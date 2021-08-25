@@ -53,6 +53,7 @@ enum EGAMESTATES
     S_INTERACT,
     S_TUTORIAL,
     S_STARTER,
+    S_GAMEOVER,
     S_COUNT
 };
 
@@ -86,6 +87,7 @@ void tutorialWait();        // tutorial screen logic.
 void starterScreenWait();   // starter screen game logic
 void interactionWait();     // interaction screen logic
 void bossSplashscreenWait();//Boss splash screen logic.
+void gameOverWait();
 
 void moveCharacter();       // moves the character, collision detection, physics, etc
 void collision();           //tet collision
@@ -99,6 +101,7 @@ void renderGame();          // renders the game stuff
 void renderGame2();         // renders the route 2 stuff.
 void renderGame3();         // renders the route 3 stuff.
 void renderBossRoute();     // renders boss route to the buffer.
+void renderGameOver();      //renders game over stuff
 void renderInteract();      //renders the interaction onto the map.
 void renderMap();           // renders the map to the buffer first
 void renderRoute2();        // renders route 2 map to the buffer.
@@ -108,6 +111,7 @@ void renderMenu();          // renders the pause menu screen.
 void renderTutorial();      // renders the tutorial screen.
 void renderStarterScreen(); // renders the screen for user to pick starter ele-beast.
 void renderInstructions();  // renders the instruction on screen for users to know
+void renderGameOverScreen();// renders the game over screen.
 
 void renderCharacter();     // renders the character into the buffer
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc
