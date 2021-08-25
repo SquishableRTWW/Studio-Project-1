@@ -26,7 +26,7 @@ SMouseEvent g_mouseEvent;
 // Game specific variables here
 SGameChar   g_sChar;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
-
+Entities Type;
 
 // Console object
 Console g_Console(80, 25, "SP1 Framework");
@@ -521,10 +521,9 @@ void moveCharacter()
     if (g_skKeyEvent[K_Q].keyReleased)
     {
         if (g_sChar.m_cLocation.X == Test.getX() + 1 && g_sChar.m_cLocation.Y == Test.getY() || g_sChar.m_cLocation.X == Test.getX() - 1 && g_sChar.m_cLocation.Y == Test.getY() || 
-            g_sChar.m_cLocation.Y == Test.getY() - 1 && g_sChar.m_cLocation.X == Test.getX() || g_sChar.m_cLocation.Y == Test.getY() + 1 && g_sChar.m_cLocation.X == Test.getX() ||
-            g_sChar.m_cLocation.X == Nurse.getX() + 1 && g_sChar.m_cLocation.Y == Nurse.getY() || g_sChar.m_cLocation.X == Nurse.getX() - 1 && g_sChar.m_cLocation.Y == Nurse.getY() ||
-            g_sChar.m_cLocation.Y == Nurse.getY() - 1 && g_sChar.m_cLocation.X == Nurse.getX() || g_sChar.m_cLocation.Y == Nurse.getY() + 1 && g_sChar.m_cLocation.X == Nurse.getX())
+            g_sChar.m_cLocation.Y == Test.getY() - 1 && g_sChar.m_cLocation.X == Test.getX() || g_sChar.m_cLocation.Y == Test.getY() + 1 && g_sChar.m_cLocation.X == Test.getX())
         {
+            Type = E_NPC;
             switch (g_eGameState)
             {
             case S_GAME: location = 1;
@@ -534,6 +533,12 @@ void moveCharacter()
             case S_ROUTE3: location = 3;
                 break;
             }
+            g_eGameState = S_INTERACT;
+        }
+        if (g_sChar.m_cLocation.X == Nurse.getX() + 1 && g_sChar.m_cLocation.Y == Nurse.getY() || g_sChar.m_cLocation.X == Nurse.getX() - 1 && g_sChar.m_cLocation.Y == Nurse.getY() ||
+            g_sChar.m_cLocation.Y == Nurse.getY() - 1 && g_sChar.m_cLocation.X == Nurse.getX() || g_sChar.m_cLocation.Y == Nurse.getY() + 1 && g_sChar.m_cLocation.X == Nurse.getX())
+        {
+            Type = E_Healer;
             g_eGameState = S_INTERACT;
         }
     }
@@ -1013,7 +1018,15 @@ void renderInteract()
     COORD c;
     c.X = g_sChar.m_cLocation.X - 30;
     c.Y = g_sChar.m_cLocation.Y + 1;
-    g_Console.writeToBuffer(c, Test.interact(), 0x0B);   
+    switch (Type)
+    {
+    case E_NPC: g_Console.writeToBuffer(c, Test.interact(), 0x0B); break;
+    case E_Healer: g_Console.writeToBuffer(c, Nurse.Healquote(), 0x0B);
+        for (int i = 0; i < 6; i++)
+        {
+            jeff.getMonster(i).setHealth(jeff.getMonster(i).getMaxHealth())
+        }
+    }
 }
 
 void renderEncounter()
