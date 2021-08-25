@@ -9,6 +9,8 @@
 #include <stdlib.h>
 #include "hunter.h"
 #include "monster.h"
+#include "atax.h"
+#include "smeltor.h"
 #include "NPC.h"
 
 double  g_dElapsedTime;
@@ -16,6 +18,7 @@ double  g_dDeltaTime;
 bool isCaught;
 bool failedCatch;
 int location;
+int boss;
 hunter jeff;
 monster wild;
 NPC Test;
@@ -41,6 +44,7 @@ Console g_Console(80, 25, "SP1 Framework");
 void init( void )
 {
     srand((unsigned)time(0));
+    atax atax; smeltor smeltor; boss = 1;
     isCaught = false; failedCatch = false;
     location = 1;
     // Set precision for floating point output
@@ -128,6 +132,7 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
         break;
     case S_ROUTE3: gameplayKBHandler(keyboardEvent);
         break;
+    case S_BOSSROUTE: gameplayKBHandler(keyboardEvent);
     }
 }
 
@@ -159,6 +164,7 @@ void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
         break;
     case S_STARTER: gameplayMouseHandler(mouseEvent);
         break;
+    case S_BOSSROUTE: gameplayMouseHandler(mouseEvent);
     }
     
 }
@@ -498,7 +504,7 @@ void moveCharacter()
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
 
-    if (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.Y > 0 || (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && (g_eGameState == S_ROUTE2) || g_eGameState == S_BOSSROUTE))
+    if (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.Y > 0 || (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && g_eGameState == S_ROUTE2) ||(g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && g_eGameState == S_BOSSROUTE))
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.Y--;
@@ -999,11 +1005,32 @@ void renderBossMap()
     for (int i = 33; i < 44; i++)
     {
         c.X = i;
-        for (int j = 0; j < 25; j++)
+        for (int j = 0; j < 23; j++)
         {
             c.Y = j;
-            colour(colors[5]);
             g_Console.writeToBuffer(c, "+", 0x60);
+        }
+    }
+    for (int i = 23; i < 52; i++) //Boss cave layer 1.
+    {
+        c.X = i;
+        for (int j = 18; j < 23; j++)
+        {
+            c.Y = j;
+            g_Console.writeToBuffer(c, "||", 0x60);
+            if (c.Y == 22 && c.X >23)
+            {
+                g_Console.writeToBuffer(c, "=", 0x60);
+            }
+        }
+    }
+    for (int i = 25; i < 51; i++) //Boss cave layer 2.
+    {
+        c.X = i;
+        for (int j = 18; j < 22; j++)
+        {
+            c.Y = j;
+            g_Console.writeToBuffer(c, "/", colors[2]);
         }
     }
 }
