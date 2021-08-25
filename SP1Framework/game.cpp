@@ -415,19 +415,19 @@ void updateEncounter()
             {
                 mon2 = wild;
             }
-            if (mon3.getName() == "NULL" && mon4.getName() != "NULL")
+            else if (mon2.getName() != "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
             {
                 mon3 = wild;
             }
-            if (mon4.getName() == "NULL" && mon5.getName() != "NULL")
+            else if (mon3.getName() != "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
             {
                 mon4 = wild;
             }
-            if (mon5.getName() == "NULL" && mon6.getName() != "NULL")
+            else if (mon4.getName() != "NULL" && mon5.getName() != "NULL" && mon6.getName() == "NULL")
             {
                 mon5 = wild;
             }
-            if (mon6.getName() == "NULL" && mon2.getName() != "NULL" && mon3.getName() != "NULL" && mon4.getName() != "NULL" && mon5.getName() != "NULL")
+            else if (mon5.getName() != "NULL" && mon2.getName() != "NULL" && mon3.getName() != "NULL" && mon4.getName() != "NULL" && mon5.getName() != "NULL")
             {
                 mon6 = wild;
             }
@@ -484,6 +484,14 @@ void updateEncounter()
                 case 3: g_eGameState = S_ROUTE3;
                     break;
                 }
+                if (wild.getName() == "atax")
+                {
+                    boss++;
+                }
+                if (wild.getName() == "smeltor")
+                {
+                    g_bQuitGame = true;
+                }
             }
         }
         else
@@ -500,6 +508,14 @@ void updateEncounter()
                     break;
                 case 3: g_eGameState = S_ROUTE3;
                     break;
+                }
+                if (wild.getName() == "atax")
+                {
+                    boss++;
+                }
+                if (wild.getName() == "smeltor")
+                {
+                    g_bQuitGame = true;
                 }
             }
             mon1.setHealth(-wildDMG);
@@ -543,6 +559,14 @@ void updateEncounter()
                 case 3: g_eGameState = S_ROUTE3;
                     break;
                 }
+                if (wild.getName() == "atax")
+                {
+                    boss++;
+                }
+                if (wild.getName() == "smeltor")
+                {
+                    g_bQuitGame = true;
+                }
             }
         }
         else
@@ -559,6 +583,14 @@ void updateEncounter()
                     break;
                 case 3: g_eGameState = S_ROUTE3;
                     break;
+                }
+                if (wild.getName() == "atax")
+                {
+                    boss++;
+                }
+                if (wild.getName() == "smeltor")
+                {
+                    g_bQuitGame = true;
                 }
             }
             mon1.setHealth(-wildDMG);
@@ -602,6 +634,14 @@ void updateEncounter()
                 case 3: g_eGameState = S_ROUTE3;
                     break;
                 }
+                if (wild.getName() == "atax")
+                {
+                    boss++;
+                }
+                if (wild.getName() == "smeltor")
+                {
+                    g_bQuitGame = true;
+                }
             }
         }
         else
@@ -618,6 +658,14 @@ void updateEncounter()
                     break;
                 case 3: g_eGameState = S_ROUTE3;
                     break;
+                }
+                if (wild.getName() == "atax")
+                {
+                    boss++;
+                }
+                if (wild.getName() == "smeltor")
+                {
+                    g_bQuitGame = true;
                 }
             }
             mon1.setHealth(-wildDMG);
@@ -661,6 +709,14 @@ void updateEncounter()
                 case 3: g_eGameState = S_ROUTE3;
                     break;
                 }
+                if (wild.getName() == "atax")
+                {
+                    boss++;
+                }
+                if (wild.getName() == "smeltor")
+                {
+                    g_bQuitGame = true;
+                }
             }
         }
         else
@@ -677,6 +733,14 @@ void updateEncounter()
                     break;
                 case 3: g_eGameState = S_ROUTE3;
                     break;
+                }
+                if (wild.getName() == "atax")
+                {
+                    boss++;
+                }
+                if (wild.getName() == "smeltor")
+                {
+                    g_bQuitGame = true;
                 }
             }
             mon1.setHealth(-wildDMG);
