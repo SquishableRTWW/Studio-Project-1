@@ -961,9 +961,19 @@ void render()
         }
         break;
     }
+    renderInstructions();
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();
     renderToScreen();       // dump the contents of the buffer to the screen, one frame worth of game
+}
+
+void renderInstructions()
+{
+    COORD c;
+    c.X = 0; c.Y = 0; g_Console.writeToBuffer(c, "WASD for movement", 0x0F);
+    c.Y++; g_Console.writeToBuffer(c, "F for party menu", 0x0F);
+    c.Y++; g_Console.writeToBuffer(c, "ESC for exit", 0x0F);
+    c.Y++; g_Console.writeToBuffer(c, "Left click to select", 0x0F);
 }
 
 void clearScreen()
