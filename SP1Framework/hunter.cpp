@@ -64,6 +64,22 @@ void hunter::addparty(monster& monster)
 	}
 }
 
+void hunter::setDirRange(int d, int r)
+{
+	direction = d;
+	range = r;
+}
+
+int hunter::getdirection(void)
+{
+	return direction;
+}
+
+int hunter::getrange(void)
+{
+	return range;
+}
+
 monster hunter::getMonster(int m)
 {
 	return party[m];

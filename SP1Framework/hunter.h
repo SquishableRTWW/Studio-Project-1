@@ -15,12 +15,16 @@ class hunter: public Entity
 private:
 	string name;
 	monster party[6];
+	int direction, range;
 public:
 	hunter(void);
 	void setname(string n);
-	string getname();
+	string getname(void);
 	void choosestarter(int s);
 	void addparty(monster& monster);
+	void setDirRange(int d, int r);
+	int getdirection(void);
+	int getrange(void);
 	monster getMonster(int m);
 	//get functions for monsters in party
 	string getMname(int i);

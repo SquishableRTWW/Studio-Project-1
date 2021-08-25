@@ -1,7 +1,7 @@
 #include "NPC.h"
 #include "game.h"
 
-NPC::NPC()
+NPC::NPC(void)
 {
 	Advice[0] = { "Remember to heal your beasts regularly." };
 	Advice[1] = { "There is no beast centre nearby to revive a beast that has fainted." };
@@ -12,12 +12,12 @@ NPC::NPC()
 	Healwords = "your Ele-beasts look beat up let me heal them for you";
 }
 
-std::string NPC::interact()
+std::string NPC::interact(void)
 {
 	return Advice[rand()% 6];
 }
 
-std::string NPC::Healquote()
+std::string NPC::Healquote(void)
 {
 	return Healwords;
 }

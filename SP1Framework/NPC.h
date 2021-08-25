@@ -8,9 +8,9 @@ private:
 	std::string Advice[6];
 	std::string Healwords;
 public:
-	NPC();
-	std::string interact();
-	std::string Healquote();
+	NPC(void);
+	std::string interact(void);
+	std::string Healquote(void);
 	~NPC();
 };
 
