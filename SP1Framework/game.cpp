@@ -496,17 +496,17 @@ void moveCharacter()
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
 
-    if (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.Y > 0 || (g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && g_eGameState != S_ROUTE2))
+    if (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.Y > 0 || (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && g_eGameState == S_ROUTE2))
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.Y--;
     }
-    if (g_skKeyEvent[K_LEFT].keyDown && (g_sChar.m_cLocation.X != 0 || (g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16)))
+    if (g_skKeyEvent[K_LEFT].keyDown && g_sChar.m_cLocation.X > 0 || ((g_skKeyEvent[K_LEFT].keyDown && (g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16)) && g_eGameState == S_GAME))
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.X--;
     }
-    if (g_skKeyEvent[K_DOWN].keyDown && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
+    if (g_skKeyEvent[K_DOWN].keyDown && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 || (g_skKeyEvent[K_DOWN].keyDown && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && g_eGameState == S_ROUTE3))
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.Y++;
@@ -542,7 +542,7 @@ void moveCharacter()
     }
     if ((g_sChar.m_cLocation.Y < 0 && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44) && g_eGameState == S_ROUTE2)
     {
-        g_sChar.m_cLocation.X = 79;
+        g_sChar.m_cLocation.Y = 24;
         g_eGameState = S_ROUTE3;
     }
     if ((g_sChar.m_cLocation.X > 79 && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_ROUTE2)
@@ -550,9 +550,9 @@ void moveCharacter()
         g_sChar.m_cLocation.X = 0;
         g_eGameState = S_GAME;
     }
-    if ((g_sChar.m_cLocation.Y > 24 && g_sChar.m_cLocation.X >= 12 && g_sChar.m_cLocation.X < 16) && g_eGameState == S_ROUTE3)
+    if ((g_sChar.m_cLocation.Y > 24 && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44) && g_eGameState == S_ROUTE3)
     {
-        g_sChar.m_cLocation.X = 0;
+        g_sChar.m_cLocation.Y = 0;
         g_eGameState = S_ROUTE2;
     }
     if (((g_sChar.m_cLocation.X >= 0 && g_sChar.m_cLocation.X < 13 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 12) ||
@@ -784,8 +784,7 @@ void renderMap()
         for (int j = 0; j < 25; j++)
         {
             c.Y = j;
-            colour(colors[10]);
-            g_Console.writeToBuffer(c, " ", colors[10]);
+            g_Console.writeToBuffer(c, "*", 0xE0);
         }
     }
     for (int i = 12; i < 16; i++)
@@ -795,7 +794,7 @@ void renderMap()
         {
             c.X = j;
             colour(colors[5]);
-            g_Console.writeToBuffer(c, " ", colors[5]);
+            g_Console.writeToBuffer(c, "+", 0x60);
         }
     }
     //House.
@@ -838,7 +837,7 @@ void renderMap()
         {
             c.Y = j;
             colour(colors[1]);
-            g_Console.writeToBuffer(c, " ", colors[1]);
+            g_Console.writeToBuffer(c, "&", 0xA0);
         }
     }
     for (int i = 61; i < 80; i++) //patch 2
@@ -848,7 +847,7 @@ void renderMap()
         {
             c.Y = j;
             colour(colors[1]);
-            g_Console.writeToBuffer(c, " ", colors[1]);
+            g_Console.writeToBuffer(c, "&", 0xA0);
         }
     }
     for (int i = 54; i < 70; i++) //patch 3
@@ -858,7 +857,7 @@ void renderMap()
         {
             c.Y = j;
             colour(colors[1]);
-            g_Console.writeToBuffer(c, " ", colors[1]);
+            g_Console.writeToBuffer(c, "&", 0xA0);
         }
     }
     for (int i = 20; i < 36; i++) //patch 4
@@ -868,7 +867,7 @@ void renderMap()
         {
             c.Y = j;
             colour(colors[1]);
-            g_Console.writeToBuffer(c, " ", colors[1]);
+            g_Console.writeToBuffer(c, "&", 0xA0);
         }
     }
 }
@@ -889,7 +888,7 @@ void renderRoute2()
         {
             c.Y = j;
             colour(colors[10]);
-            g_Console.writeToBuffer(c, " ", colors[10]);
+            g_Console.writeToBuffer(c, "*", 0xE0);
         }
     }
     for (int i = 33; i < 44; i++)
@@ -899,7 +898,7 @@ void renderRoute2()
         {
             c.Y = j;
             colour(colors[5]);
-            g_Console.writeToBuffer(c, " ", colors[5]);
+            g_Console.writeToBuffer(c, "+", 0x60);
         }
     }
     for (int i = 44; i < 80; i++)
@@ -909,7 +908,7 @@ void renderRoute2()
         {
             c.Y = j;
             colour(colors[5]);
-            g_Console.writeToBuffer(c, " ", colors[5]);
+            g_Console.writeToBuffer(c, "+", 0x60);
         }
     }
 }
