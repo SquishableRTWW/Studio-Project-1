@@ -276,9 +276,7 @@ void update(double dt)
             break;
         case S_INTERACT: interactionWait();
             break;
-        case S_BOSSSPLASHSCREEN: bossSplashscreenWait();
-            break;
-        case S_ENCOUNTERBOSS:
+        case S_BOSSSPLASHSCREEN:
             if (boss == 1)
             {
                 wild.setWildMonster(wild, 5);
@@ -295,6 +293,9 @@ void update(double dt)
                     wild.setMove(wild, i);
                 }
             }
+            bossSplashscreenWait();
+            break;
+        case S_ENCOUNTERBOSS:
             updateEncounter();
             break;
     }
@@ -1767,12 +1768,12 @@ void renderBossSS()
 //When encounter boss
 void renderEncounterBoss()
 {
-    string name1 = jeff.getMname(0), level1 = to_string(jeff.getMlvl(0)), hp1 = to_string(jeff.getMhealth(0)), atk1 = to_string(jeff.getMattack(0)), def1 = to_string(jeff.getMdefense(0)), spd1 = to_string(jeff.getMspeed(0)),
-        name2 = jeff.getMname(1), level2 = to_string(jeff.getMlvl(1)), hp2 = to_string(jeff.getMhealth(1)), atk2 = to_string(jeff.getMattack(1)), def2 = to_string(jeff.getMdefense(1)), spd2 = to_string(jeff.getMspeed(1)),
-        name3 = jeff.getMname(2), level3 = to_string(jeff.getMlvl(2)), hp3 = to_string(jeff.getMhealth(2)), atk3 = to_string(jeff.getMattack(2)), def3 = to_string(jeff.getMdefense(2)), spd3 = to_string(jeff.getMspeed(2)),
-        name4 = jeff.getMname(3), level4 = to_string(jeff.getMlvl(3)), hp4 = to_string(jeff.getMhealth(3)), atk4 = to_string(jeff.getMattack(3)), def4 = to_string(jeff.getMdefense(3)), spd4 = to_string(jeff.getMspeed(3)),
-        name5 = jeff.getMname(4), level5 = to_string(jeff.getMlvl(4)), hp5 = to_string(jeff.getMhealth(4)), atk5 = to_string(jeff.getMattack(4)), def5 = to_string(jeff.getMdefense(4)), spd5 = to_string(jeff.getMspeed(4)),
-        name6 = jeff.getMname(5), level6 = to_string(jeff.getMlvl(5)), hp6 = to_string(jeff.getMhealth(5)), atk6 = to_string(jeff.getMattack(5)), def6 = to_string(jeff.getMdefense(5)), spd6 = to_string(jeff.getMspeed(5));
+    string name1 = mon1.getName(), level1 = to_string(mon1.getLevel()), hp1 = to_string(mon1.getHealth()), atk1 = to_string(mon1.getAttack()), def1 = to_string(mon1.getDefence()), spd1 = to_string(mon1.getSpeed()),
+        name2 = mon2.getName(), level2 = to_string(mon2.getLevel()), hp2 = to_string(mon2.getHealth()), atk2 = to_string(mon2.getAttack()), def2 = to_string(mon2.getDefence()), spd2 = to_string(mon2.getSpeed()),
+        name3 = mon3.getName(), level3 = to_string(mon3.getLevel()), hp3 = to_string(mon3.getHealth()), atk3 = to_string(mon3.getAttack()), def3 = to_string(mon3.getDefence()), spd3 = to_string(mon3.getSpeed()),
+        name4 = mon4.getName(), level4 = to_string(mon4.getLevel()), hp4 = to_string(mon4.getHealth()), atk4 = to_string(mon4.getAttack()), def4 = to_string(mon4.getDefence()), spd4 = to_string(mon4.getSpeed()),
+        name5 = mon5.getName(), level5 = to_string(mon5.getLevel()), hp5 = to_string(mon5.getHealth()), atk5 = to_string(mon5.getAttack()), def5 = to_string(mon5.getDefence()), spd5 = to_string(mon5.getSpeed()),
+        name6 = mon6.getName(), level6 = to_string(mon6.getLevel()), hp6 = to_string(mon6.getHealth()), atk6 = to_string(mon6.getAttack()), def6 = to_string(mon6.getDefence()), spd6 = to_string(mon6.getSpeed());
 
     string nameBoss = wild.getName(), levelBoss = to_string(wild.getLevel()), hpBoss = to_string(wild.getHealth()), atkBoss = to_string(wild.getAttack()), defBoss = to_string(wild.getDefence()), spdBoss = to_string(wild.getSpeed());
     const WORD colors[] = {
@@ -1840,13 +1841,13 @@ void renderEncounterBoss()
     g_Console.writeToBuffer(c, "| \\ ", 0XC0);
 
     c.X = 10, c.Y = 19;
-    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(0));
+    g_Console.writeToBuffer(c, mon1.getMove(0));
     c.X = 27, c.Y = 19;
-    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(1));
+    g_Console.writeToBuffer(c, mon1.getMove(1));
     c.X = 10, c.Y = 22;
-    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(2));
+    g_Console.writeToBuffer(c, mon1.getMove(2));
     c.X = 27, c.Y = 22;
-    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(3));
+    g_Console.writeToBuffer(c, mon1.getMove(3));
     c.X = 10, c.Y = 10;
 
 
