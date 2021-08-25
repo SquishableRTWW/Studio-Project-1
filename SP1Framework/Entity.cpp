@@ -12,17 +12,17 @@ void Entity::setposition(int X, int Y)
 	pos.Y = Y;
 }
 
-COORD Entity::getposition()
+COORD Entity::getposition(void)
 {
 	return pos;
 }
 
-int Entity::getX()
+int Entity::getX(void)
 {
 	return pos.X;
 }
 
-int Entity::getY()
+int Entity::getY(void)
 {
 	return pos.Y;
 }

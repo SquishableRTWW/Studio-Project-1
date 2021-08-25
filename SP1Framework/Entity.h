@@ -7,8 +7,8 @@ private:
 public:
 	Entity(void);
 	void setposition(int X, int Y);
-	COORD getposition();
-	int getX();
-	int getY();
+	COORD getposition(void);
+	int getX(void);
+	int getY(void);
 };
 
