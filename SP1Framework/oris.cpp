@@ -23,7 +23,7 @@ void oris::levelUp(void)
 	if (getKills() % 3 == 0)
 	{
 		upLevel();
-		setHealth(2); setAttack(2); setDefence(1); setSpeed(1);
+		setHealth(2); setAttack(1); setDefence(2); setSpeed(1);
 	}
 	if (getLevel() == 8)
 	{

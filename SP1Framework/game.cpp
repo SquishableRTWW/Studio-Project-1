@@ -20,9 +20,10 @@ bool isCaught;
 bool failedCatch;
 int location;
 int boss;
+int moveDecision;
 hunter jeff;
 hunter Enemy[8];
-monster wild;
+monster wild, Null;
 monster mon1, mon2, mon3, mon4, mon5, mon6;
 NPC Advice[4];
 NPC Nurse;
@@ -47,7 +48,7 @@ Console g_Console(80, 25, "SP1 Framework");
 void init( void )
 {
     srand((unsigned)time(0)); boss = 1;
-    isCaught = false; failedCatch = false;
+    isCaught = false; failedCatch = false; moveDecision = 0;
     location = 1;
     // Set precision for floating point output
     g_dElapsedTime = 0.0;
@@ -294,7 +295,7 @@ void update(double dt)
                     wild.setMove(wild, i);
                 }
             }
-            updateBossEncounter();
+            updateEncounter();
             break;
     }
 }
@@ -385,72 +386,6 @@ void bossSplashscreenWait()
     g_eGameState = S_ENCOUNTERBOSS;
 }
 
-void updateBossEncounter()
-{
-    //First skill
-    int yourDMG = jeff.getMonster(0).getMoveDamage(0) * (jeff.getMonster(0).getAttack() / wild.getDefence()) * 0.5;
-    int wildDMG = wild.getMoveDamage(0) * ((wild.getAttack() / jeff.getMonster(0).getDefence()) * 0.5);
-    if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 14 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
-    {
-        if (wild.getSpeed() >= jeff.getMonster(0).getSpeed())
-        {
-            wild.setHealth(-yourDMG);
-            if (wild.getHealth() <= 0)
-            {
-                jeff.getMonster(0).upKill();
-                jeff.getMonster(0).levelUp(jeff.getMonster(0));
-                switch (location)
-                {
-                case 1: g_eGameState = S_GAME;
-                    break;
-                case 2: g_eGameState = S_ROUTE2;
-                    break;
-                case 3: g_eGameState = S_ROUTE3;
-                    break;
-                }
-            }
-            jeff.setMHealth(0, -wildDMG);
-        }
-        else
-        {
-            jeff.setMHealth(0, -wildDMG);
-            wild.setHealth(-yourDMG);
-            if (wild.getHealth() <= 0)
-            {
-                jeff.getMonster(0).upKill();
-                jeff.getMonster(0).levelUp(jeff.getMonster(0));
-                switch (location)
-                {
-                case 1: g_eGameState = S_GAME;
-                    break;
-                case 2: g_eGameState = S_ROUTE2;
-                    break;
-                case 3: g_eGameState = S_ROUTE3;
-                    break;
-                }
-            }
-        }
-
-    }
-
-    //Second skill
-    if ((g_mouseEvent.mousePosition.X > 26 && g_mouseEvent.mousePosition.X < 31 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
-    {
-        //Insert attack
-    }
-
-    //Third skill
-    if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 14 && g_mouseEvent.mousePosition.Y == 22) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
-    {
-        //Insert attack
-    }
-
-    //Fourth skill
-    if ((g_mouseEvent.mousePosition.X > 27 && g_mouseEvent.mousePosition.X < 30 && g_mouseEvent.mousePosition.Y == 22) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
-    {
-        //Insert attack
-    }
-}
 
 void updateEncounter()
 {
@@ -515,18 +450,31 @@ void updateEncounter()
             failedCatch = false;
         }
     }
+    //First skill
     if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 14 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
-        int yourDMG = mon1.getMoveDamage(0) * (mon1.getAttack() / wild.getDefence()) * 0.5;
-        int wildDMG = wild.getMoveDamage(0) * ((wild.getAttack() / mon1.getDefence()) * 0.5);
+        moveDecision = 0;
+        int yourDMG = mon1.getMoveDamage(moveDecision) * (mon1.getAttack() / wild.getDefence()) * 0.5;
+        int wildDMG = wild.getMoveDamage(moveDecision) * ((wild.getAttack() / mon1.getDefence()) * 0.5);
         if (wild.getSpeed() >= mon1.getSpeed())
         {
             mon1.setHealth(-wildDMG);
+            if (mon1.getHealth() <= 0)
+            {
+                if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+                {
+                    g_bQuitGame = true;
+                }
+                else
+                {
+                    mon1 = mon2;
+                    mon2 = mon3; mon3 = mon4; mon4 = mon5; mon5 = mon6; mon6 = Null;
+                }
+            }
             wild.setHealth(-yourDMG);
             if (wild.getHealth() <= 0)
             {
-                jeff.getMonster(0).upKill();
-                jeff.getMonster(0).levelUp(jeff.getMonster(0));
+                mon1.levelUp(mon1);
                 switch (location)
                 {
                 case 1: g_eGameState = S_GAME;
@@ -540,12 +488,52 @@ void updateEncounter()
         }
         else
         {
-            mon1.setHealth(-wildDMG);
             wild.setHealth(-yourDMG);
             if (wild.getHealth() <= 0)
             {
-                jeff.getMonster(0).upKill();
-                jeff.getMonster(0).levelUp(jeff.getMonster(0));
+                mon1.levelUp(mon1);
+                switch (location)
+                {
+                case 1: g_eGameState = S_GAME;
+                    break;
+                case 2: g_eGameState = S_ROUTE2;
+                    break;
+                case 3: g_eGameState = S_ROUTE3;
+                    break;
+                }
+            }
+            mon1.setHealth(-wildDMG);
+            if (mon1.getHealth() <= 0)
+            {
+                if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+                {
+                    g_bQuitGame = true;
+                }
+
+            }
+        }
+    }
+    //Second skill
+    if ((g_mouseEvent.mousePosition.X > 26 && g_mouseEvent.mousePosition.X < 31 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    {
+        moveDecision = 1;
+        int yourDMG = mon1.getMoveDamage(moveDecision) * (mon1.getAttack() / wild.getDefence()) * 0.5;
+        int wildDMG = wild.getMoveDamage(moveDecision) * ((wild.getAttack() / mon1.getDefence()) * 0.5);
+        if (wild.getSpeed() >= mon1.getSpeed())
+        {
+            mon1.setHealth(-wildDMG);
+            if (mon1.getHealth() <= 0)
+            {
+                if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+                {
+                    g_bQuitGame = true;
+                }
+
+            }
+            wild.setHealth(-yourDMG);
+            if (wild.getHealth() <= 0)
+            {
+                mon1.levelUp(mon1);
                 switch (location)
                 {
                 case 1: g_eGameState = S_GAME;
@@ -557,27 +545,151 @@ void updateEncounter()
                 }
             }
         }
+        else
+        {
+            wild.setHealth(-yourDMG);
+            if (wild.getHealth() <= 0)
+            {
+                mon1.levelUp(mon1);
+                switch (location)
+                {
+                case 1: g_eGameState = S_GAME;
+                    break;
+                case 2: g_eGameState = S_ROUTE2;
+                    break;
+                case 3: g_eGameState = S_ROUTE3;
+                    break;
+                }
+            }
+            mon1.setHealth(-wildDMG);
+            if (mon1.getHealth() <= 0)
+            {
+                if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+                {
+                    g_bQuitGame = true;
+                }
 
+            }
+        }
     }
-
-    //Second skill
-    if ((g_mouseEvent.mousePosition.X > 26 && g_mouseEvent.mousePosition.X < 31 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
-    {
-        //Insert attack
-    }
-
     //Third skill
     if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 14 && g_mouseEvent.mousePosition.Y == 22) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
-        //Insert attack
-    }
+        moveDecision = 2;
+        int yourDMG = mon1.getMoveDamage(moveDecision) * (mon1.getAttack() / wild.getDefence()) * 0.5;
+        int wildDMG = wild.getMoveDamage(moveDecision) * ((wild.getAttack() / mon1.getDefence()) * 0.5);
+        if (wild.getSpeed() >= mon1.getSpeed())
+        {
+            mon1.setHealth(-wildDMG);
+            if (mon1.getHealth() <= 0)
+            {
+                if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+                {
+                    g_bQuitGame = true;
+                }
 
+            }
+            wild.setHealth(-yourDMG);
+            if (wild.getHealth() <= 0)
+            {
+                mon1.levelUp(mon1);
+                switch (location)
+                {
+                case 1: g_eGameState = S_GAME;
+                    break;
+                case 2: g_eGameState = S_ROUTE2;
+                    break;
+                case 3: g_eGameState = S_ROUTE3;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            wild.setHealth(-yourDMG);
+            if (wild.getHealth() <= 0)
+            {
+                mon1.levelUp(mon1);
+                switch (location)
+                {
+                case 1: g_eGameState = S_GAME;
+                    break;
+                case 2: g_eGameState = S_ROUTE2;
+                    break;
+                case 3: g_eGameState = S_ROUTE3;
+                    break;
+                }
+            }
+            mon1.setHealth(-wildDMG);
+            if (mon1.getHealth() <= 0)
+            {
+                if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+                {
+                    g_bQuitGame = true;
+                }
+
+            }
+        }
+    }
     //Fourth skill
     if ((g_mouseEvent.mousePosition.X > 27 && g_mouseEvent.mousePosition.X < 30 && g_mouseEvent.mousePosition.Y == 22) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
-        //Insert attack
-    }
+        moveDecision = 3;
+        int yourDMG = mon1.getMoveDamage(moveDecision) * (mon1.getAttack() / wild.getDefence()) * 0.5;
+        int wildDMG = wild.getMoveDamage(moveDecision) * ((wild.getAttack() / mon1.getDefence()) * 0.5);
+        if (wild.getSpeed() >= mon1.getSpeed())
+        {
+            mon1.setHealth(-wildDMG);
+            if (mon1.getHealth() <= 0)
+            {
+                if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+                {
+                    g_bQuitGame = true;
+                }
 
+            }
+            wild.setHealth(-yourDMG);
+            if (wild.getHealth() <= 0)
+            {
+                mon1.levelUp(mon1);
+                switch (location)
+                {
+                case 1: g_eGameState = S_GAME;
+                    break;
+                case 2: g_eGameState = S_ROUTE2;
+                    break;
+                case 3: g_eGameState = S_ROUTE3;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            wild.setHealth(-yourDMG);
+            if (wild.getHealth() <= 0)
+            {
+                mon1.levelUp(mon1);
+                switch (location)
+                {
+                case 1: g_eGameState = S_GAME;
+                    break;
+                case 2: g_eGameState = S_ROUTE2;
+                    break;
+                case 3: g_eGameState = S_ROUTE3;
+                    break;
+                }
+            }
+            mon1.setHealth(-wildDMG);
+            if (mon1.getHealth() <= 0)
+            {
+                if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+                {
+                    g_bQuitGame = true;
+                }
+
+            }
+        }
+    }
 }
 
 void moveSelection()
