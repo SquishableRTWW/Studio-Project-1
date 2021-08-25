@@ -726,6 +726,7 @@ void moveCharacter()
     if (g_skKeyEvent[K_F].keyReleased)
         g_eGameState = S_MENU;
     collision();
+    detection();
 }
 
 void collision()
@@ -830,6 +831,56 @@ void collision()
             {
                 g_sChar.m_cLocation.X--;
             }
+        }
+    }
+}
+
+void detection()
+{
+    for (int i = 0; i < 8; i++)
+    {
+        switch (Enemy[i].getdirection())
+        {
+        case(1):
+            for (int j = 0; j <= Enemy[i].getrange(); j++)
+            {
+                if (g_sChar.m_cLocation.Y == Enemy[i].getY() - j && g_sChar.m_cLocation.X == Enemy[i].getX())
+                {
+                    Type = E_NPC;
+                    g_eGameState = S_INTERACT;
+                }
+            }
+            break;
+        case(2):
+            for (int j = 0; j < Enemy[i].getrange(); j++)
+            {
+                if (g_sChar.m_cLocation.Y == Enemy[i].getY() + j && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    Type = E_NPC;
+                    g_eGameState = S_INTERACT;
+                }
+            }
+            break;
+        case(3):
+            for (int j = 0; j < Enemy[i].getrange(); j++)
+            {
+                if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() - j)
+                {
+                    Type = E_NPC;
+                    g_eGameState = S_INTERACT;
+                }
+            }
+            break;
+        case(4):
+            for (int j = 0; j < Enemy[i].getrange(); j++)
+            {
+                if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() + j)
+                {
+                    Type = E_NPC;
+                    g_eGameState = S_INTERACT;
+                }
+            }
+            break;
         }
     }
 }
@@ -1020,7 +1071,8 @@ void renderMap()
     Advice[0].setposition(44, 11);
     g_Console.writeToBuffer(Advice[0].getposition(), char(2), 0x0B);
     //Hunter
-    Enemy[0].setposition(0, 16);
+    Enemy[0].setposition(5, 16);
+    Enemy[0].setDirRange(1, 5);
     g_Console.writeToBuffer(Enemy[0].getposition(), char(2), 0xC0);
     //Grasspatch test
     for (int i = 0; i < 13; i++)
