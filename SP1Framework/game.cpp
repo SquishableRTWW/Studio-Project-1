@@ -48,8 +48,8 @@ void init( void )
     jeff.choosestarter(1);
     // sets the initial state for the game (which is the start screen).
     g_eGameState = S_SPLASHSCREEN;
-    g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2;
-    g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
+    g_sChar.m_cLocation.X = 25;
+    g_sChar.m_cLocation.Y = 8;
     g_sChar.m_bActive = true;
     // sets the width, height and the font name to use in the console
     g_Console.setConsoleFont(0, 16, L"Consolas");
@@ -478,7 +478,7 @@ void moveCharacter()
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
 
-    if (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.Y > 0)
+    if (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.Y > 0 || (g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && g_eGameState != S_ROUTE2))
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.Y--;
@@ -493,7 +493,7 @@ void moveCharacter()
         //Beep(1440, 30);
         g_sChar.m_cLocation.Y++;
     }
-    if (g_skKeyEvent[K_RIGHT].keyDown && (g_sChar.m_cLocation.X != 79 || (g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16)))
+    if (g_skKeyEvent[K_RIGHT].keyDown && (g_sChar.m_cLocation.X != 79 || (g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16 && g_eGameState != S_GAME)))
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.X++;
@@ -522,9 +522,9 @@ void moveCharacter()
         g_sChar.m_cLocation.X = 79;
         g_eGameState = S_ROUTE2;
     }
-    if ((g_sChar.m_cLocation.X > 79 && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_GAME)
+    if ((g_sChar.m_cLocation.Y < 0 && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44) && g_eGameState == S_ROUTE2)
     {
-        g_sChar.m_cLocation.X = 0;
+        g_sChar.m_cLocation.X = 79;
         g_eGameState = S_ROUTE3;
     }
     if ((g_sChar.m_cLocation.X > 79 && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_ROUTE2)
@@ -532,15 +532,15 @@ void moveCharacter()
         g_sChar.m_cLocation.X = 0;
         g_eGameState = S_GAME;
     }
-    if ((g_sChar.m_cLocation.X < 0 && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_ROUTE3)
+    if ((g_sChar.m_cLocation.Y > 24 && g_sChar.m_cLocation.X >= 12 && g_sChar.m_cLocation.X < 16) && g_eGameState == S_ROUTE3)
     {
-        g_sChar.m_cLocation.X = 79;
-        g_eGameState = S_GAME;
+        g_sChar.m_cLocation.X = 0;
+        g_eGameState = S_ROUTE2;
     }
-    if ((g_sChar.m_cLocation.X >= 0 && g_sChar.m_cLocation.X < 13 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 12) ||
+    if (((g_sChar.m_cLocation.X >= 0 && g_sChar.m_cLocation.X < 13 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 12) ||
         (g_sChar.m_cLocation.X >= 61 && g_sChar.m_cLocation.X < 80 && g_sChar.m_cLocation.Y >=16 && g_sChar.m_cLocation.Y < 25) ||
         (g_sChar.m_cLocation.X >= 54 && g_sChar.m_cLocation.X < 70 && g_sChar.m_cLocation.Y >= 3 && g_sChar.m_cLocation.Y < 8) ||
-        (g_sChar.m_cLocation.X >= 20 && g_sChar.m_cLocation.X < 36 && g_sChar.m_cLocation.Y >= 16 && g_sChar.m_cLocation.Y < 21))
+        (g_sChar.m_cLocation.X >= 20 && g_sChar.m_cLocation.X < 36 && g_sChar.m_cLocation.Y >= 16 && g_sChar.m_cLocation.Y < 21)) && g_eGameState != S_ROUTE2)
     {
         switch (g_eGameState)
         {
@@ -776,16 +776,6 @@ void renderMap()
             g_Console.writeToBuffer(c, " ", colors[5]);
         }
     }
-    for (int i = 36; i < 47; i++)
-    {
-        c.X = i;
-        for (int j = 0; j < 21; j++)
-        {
-            c.Y = j;
-            colour(colors[5]);
-            g_Console.writeToBuffer(c, " ", colors[5]);
-        }
-    }
     //House.
     for (int i = 21; i < 35; i++)
     {
@@ -880,36 +870,24 @@ void renderRoute2()
             g_Console.writeToBuffer(c, " ", colors[10]);
         }
     }
-    for (int i = 12; i < 16; i++)
+    for (int i = 33; i < 44; i++)
     {
-        c.Y = i;
-        for (int j = 0; j < 80; j++)
+        c.X = i;
+        for (int j = 0; j < 25; j++)
         {
-            c.X = j;
+            c.Y = j;
             colour(colors[5]);
             g_Console.writeToBuffer(c, " ", colors[5]);
         }
     }
-
-    //Grasspatch test
-    for (int i = 0; i < 13; i++) //patch 1
+    for (int i = 44; i < 80; i++)
     {
         c.X = i;
-        for (int j = 5; j < 12; j++)
+        for (int j = 11; j < 15; j++)
         {
             c.Y = j;
-            colour(colors[1]);
-            g_Console.writeToBuffer(c, " ", colors[1]);
-        }
-    }
-    for (int i = 20; i < 36; i++) //patch 4
-    {
-        c.X = i;
-        for (int j = 16; j < 21; j++)
-        {
-            c.Y = j;
-            colour(colors[1]);
-            g_Console.writeToBuffer(c, " ", colors[1]);
+            colour(colors[5]);
+            g_Console.writeToBuffer(c, " ", colors[5]);
         }
     }
 }
@@ -933,14 +911,26 @@ void renderRoute3()
             g_Console.writeToBuffer(c, " ", colors[10]);
         }
     }
-    for (int i = 12; i < 16; i++)
+    for (int i = 33; i < 44; i++)
     {
-        c.Y = i;
-        for (int j = 0; j < 80; j++)
+        c.X = i;
+        for (int j = 0; j < 25; j++)
         {
-            c.X = j;
+            c.Y = j;
             colour(colors[5]);
             g_Console.writeToBuffer(c, " ", colors[5]);
+        }
+    }
+
+    //Grasspatch test
+    for (int i = 0; i < 13; i++) //patch 1
+    {
+        c.X = i;
+        for (int j = 5; j < 12; j++)
+        {
+            c.Y = j;
+            colour(colors[1]);
+            g_Console.writeToBuffer(c, " ", colors[1]);
         }
     }
 
