@@ -21,6 +21,8 @@ bool failedCatch;
 int location;
 int boss;
 hunter jeff;
+atax boss1;
+smeltor boss2;
 monster wild;
 NPC Test;
 NPC Nurse;
@@ -44,8 +46,7 @@ Console g_Console(80, 25, "SP1 Framework");
 //--------------------------------------------------------------
 void init( void )
 {
-    srand((unsigned)time(0));
-    atax atax; smeltor smeltor; boss = 1;
+    srand((unsigned)time(0)); boss = 1;
     isCaught = false; failedCatch = false;
     location = 1;
     // Set precision for floating point output
@@ -165,7 +166,8 @@ void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
         break;
     case S_STARTER: gameplayMouseHandler(mouseEvent);
         break;
-    case S_BOSSROUTE: gameplayMouseHandler(mouseEvent);
+    case S_ENCOUNTERBOSS: gameplayMouseHandler(mouseEvent);
+        break;
     }
     
 }
@@ -273,6 +275,18 @@ void update(double dt)
             break;
         case S_INTERACT: interactionWait();
             break;
+        case S_BOSSSPLASHSCREEN: bossSplashscreenWait();
+            break;
+        case S_ENCOUNTERBOSS:
+            if (boss == 1)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    boss1.setMove(i);
+                }
+            }
+            updateBossEncounter();
+            break;
     }
 }
 
@@ -356,7 +370,75 @@ void interactionWait()
     }
 }
 
+void bossSplashscreenWait()
+{
+    Sleep(2000);
+    g_eGameState = S_ENCOUNTERBOSS;
+}
 
+void updateBossEncounter()
+{
+    //First skill
+    if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 19 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    {
+        if (boss1.getSpeed() >= jeff.getMonster(0).getSpeed())
+        {
+            boss1.setHealth(-(jeff.getMonster(0).getMoveDamage(0)) * ((jeff.getMonster(0).getAttack() / boss1.getDefence()) * 0.5));
+            if (boss1.getHealth() <= 0)
+            {
+                jeff.getMonster(0).upKill();
+                jeff.getMonster(0).levelUp(jeff.getMonster(0));
+                switch (location)
+                {
+                case 1: g_eGameState = S_GAME;
+                    break;
+                case 2: g_eGameState = S_ROUTE2;
+                    break;
+                case 3: g_eGameState = S_ROUTE3;
+                    break;
+                }
+            }
+            jeff.getMonster(0).setHealth(-(boss1.getMoveDamage(0)) * ((boss1.getAttack() / jeff.getMonster(0).getDefence()) * 0.5));
+        }
+        else
+        {
+            jeff.getMonster(0).setHealth(-(boss1.getMoveDamage(0)) * ((boss1.getAttack() / jeff.getMonster(0).getDefence()) * 0.5));
+            boss1.setHealth(-(jeff.getMonster(0).getMoveDamage(0)) * ((jeff.getMonster(0).getAttack() / boss1.getDefence()) * 0.5));
+            if (wild.getHealth() <= 0)
+            {
+                jeff.getMonster(0).upKill();
+                jeff.getMonster(0).levelUp(jeff.getMonster(0));
+                switch (location)
+                {
+                case 1: g_eGameState = S_GAME;
+                    break;
+                case 2: g_eGameState = S_ROUTE2;
+                    break;
+                case 3: g_eGameState = S_ROUTE3;
+                    break;
+                }
+            }
+        }
+
+    }
+    //Second skill
+    if ((g_mouseEvent.mousePosition.X > 26 && g_mouseEvent.mousePosition.X < 31 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    {
+        //Insert attack
+    }
+
+    //Third skill
+    if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 14 && g_mouseEvent.mousePosition.Y == 22) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    {
+        //Insert attack
+    }
+
+    //Fourth skill
+    if ((g_mouseEvent.mousePosition.X > 27 && g_mouseEvent.mousePosition.X < 30 && g_mouseEvent.mousePosition.Y == 22) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    {
+        //Insert attack
+    }
+}
 
 void updateEncounter()
 {
@@ -461,8 +543,6 @@ void updateEncounter()
         //Insert attack
     }
 
-
-    
 }
 
 void moveSelection()
@@ -505,7 +585,7 @@ void moveCharacter()
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
 
-    if (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.Y > 0 || (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && g_eGameState == S_ROUTE2) ||(g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && g_eGameState == S_BOSSROUTE))
+    if (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.Y > 0 || (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && g_eGameState == S_ROUTE2) || (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && g_eGameState == S_BOSSROUTE))
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.Y--;
@@ -525,9 +605,9 @@ void moveCharacter()
         //Beep(1440, 30);
         g_sChar.m_cLocation.X++;
     }
-    if (g_skKeyEvent[K_Q].keyReleased)
+    if (g_skKeyEvent[K_Q].keyReleased) //NPC interaction check
     {
-        if (g_sChar.m_cLocation.X == Test.getX() + 1 && g_sChar.m_cLocation.Y == Test.getY() || g_sChar.m_cLocation.X == Test.getX() - 1 && g_sChar.m_cLocation.Y == Test.getY() || 
+        if (g_sChar.m_cLocation.X == Test.getX() + 1 && g_sChar.m_cLocation.Y == Test.getY() || g_sChar.m_cLocation.X == Test.getX() - 1 && g_sChar.m_cLocation.Y == Test.getY() ||
             g_sChar.m_cLocation.Y == Test.getY() - 1 && g_sChar.m_cLocation.X == Test.getX() || g_sChar.m_cLocation.Y == Test.getY() + 1 && g_sChar.m_cLocation.X == Test.getX())
         {
             Type = E_NPC;
@@ -549,6 +629,17 @@ void moveCharacter()
             g_eGameState = S_INTERACT;
         }
     }
+
+    //Boss encounter check:
+    if (g_eGameState == S_BOSSROUTE)
+    {
+        if ((g_sChar.m_cLocation.X >= 24 && g_sChar.m_cLocation.X < 51) && (g_sChar.m_cLocation.Y >= 18 && g_sChar.m_cLocation.Y < 22))
+        {
+            g_eGameState = S_BOSSSPLASHSCREEN;
+        }
+    }
+
+    // map travelling check
     if ((g_sChar.m_cLocation.X < 0 && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_GAME)
     {
         g_sChar.m_cLocation.X = 79;
@@ -1036,7 +1127,7 @@ void renderBossMap()
         for (int j = 18; j < 22; j++)
         {
             c.Y = j;
-            g_Console.writeToBuffer(c, "/", colors[2]);
+            g_Console.writeToBuffer(c, "/", 0x06);
         }
     }
 }
@@ -1354,7 +1445,8 @@ void renderEncounterBoss()
         name4 = jeff.getMname(3), level4 = to_string(jeff.getMlvl(3)), hp4 = to_string(jeff.getMhealth(3)), atk4 = to_string(jeff.getMattack(3)), def4 = to_string(jeff.getMdefense(3)), spd4 = to_string(jeff.getMspeed(3)),
         name5 = jeff.getMname(4), level5 = to_string(jeff.getMlvl(4)), hp5 = to_string(jeff.getMhealth(4)), atk5 = to_string(jeff.getMattack(4)), def5 = to_string(jeff.getMdefense(4)), spd5 = to_string(jeff.getMspeed(4)),
         name6 = jeff.getMname(5), level6 = to_string(jeff.getMlvl(5)), hp6 = to_string(jeff.getMhealth(5)), atk6 = to_string(jeff.getMattack(5)), def6 = to_string(jeff.getMdefense(5)), spd6 = to_string(jeff.getMspeed(5));
-    string nameWild = wild.getName(), levelWild = to_string(wild.getLevel()), hpWild = to_string(wild.getHealth()), atkWild = to_string(wild.getAttack()), defWild = to_string(wild.getDefence()), spdWild = to_string(wild.getSpeed());
+
+    string nameBoss = boss1.getName(), levelBoss = to_string(boss1.getLevel()), hpBoss = to_string(boss1.getHealth()), atkBoss = to_string(boss1.getAttack()), defBoss = to_string(boss1.getDefence()), spdBoss = to_string(boss1.getSpeed());
     const WORD colors[] = {
         0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
         0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6
@@ -1378,7 +1470,7 @@ void renderEncounterBoss()
     g_Console.writeToBuffer(c, name1, 0xC0); c.Y++; g_Console.writeToBuffer(c, level1, 0xC0); c.Y++; g_Console.writeToBuffer(c, hp1, 0xC0); c.Y = 9;
     c.X = 48;
     g_Console.writeToBuffer(c, "Ele-beast: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xC0); c.X += 11; c.Y = 9;
-    g_Console.writeToBuffer(c, nameWild, 0xC0); c.Y++; g_Console.writeToBuffer(c, levelWild, 0xC0); c.Y++; g_Console.writeToBuffer(c, hpWild, 0xC0); c.Y = 9;
+    g_Console.writeToBuffer(c, nameBoss, 0xC0); c.Y++; g_Console.writeToBuffer(c, levelBoss, 0xC0); c.Y++; g_Console.writeToBuffer(c, hpBoss, 0xC0); c.Y = 9;
     c.X = 1; c.Y = 24;
 
     for (int i = 0; i < 80; i++)

@@ -33,8 +33,8 @@ void monster::setOGStats(void)
 }
 void monster::setOGBossStats(void)
 {
-	this->health = 20;
-	this->attack = 14;
+	this->health = 50;
+	this->attack = 8;
 	this->defence = 9;
 	this->speed = 14;
 	this->level = 14;

@@ -85,6 +85,8 @@ void menuScreenWait();      // menu screen logic
 void tutorialWait();        // tutorial screen logic.
 void starterScreenWait();   // starter screen game logic
 void interactionWait();     // interaction screen logic
+void bossSplashscreenWait();//Boss splash screen logic.
+void updateBossEncounter();   //Boss encounter screen logic.
 
 void moveCharacter();       // moves the character, collision detection, physics, etc
 void collision();           //tet collision
