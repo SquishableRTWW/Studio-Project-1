@@ -21,10 +21,11 @@ bool failedCatch;
 int location;
 int boss;
 hunter jeff;
+hunter Enemy[8];
 atax boss1;
 smeltor boss2;
 monster wild;
-NPC Test;
+NPC Advice[4];
 NPC Nurse;
 SKeyEvent g_skKeyEvent[K_COUNT + 2];
 SMouseEvent g_mouseEvent;
@@ -925,25 +926,21 @@ void renderGame()
 {
     renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
-    renderNPC();
 }
 void renderGame2() //While in route 2
 {
     renderRoute2(); // render mao of route 2.
     renderCharacter();  // renders the character into the buffer
-    renderNPC();
 }
 void renderGame3()
 {
     renderRoute3(); // render map if route 3
     renderCharacter();  // renders the character into the buffer
-    renderNPC();
 }
 void renderBossRoute() //while in the boss map
 {
     renderBossMap(); // renders map of boss route
     renderCharacter();
-    renderNPC();
 }
 // -------------------------------------------------------------------------
 
@@ -1200,7 +1197,7 @@ void renderInteract()
     c.Y = g_sChar.m_cLocation.Y - 1;
     switch (Type)
     {
-    case E_NPC: g_Console.writeToBuffer(c, Test.interact(), 0x0B); break;
+    case E_NPC: g_Console.writeToBuffer(c, Advice[0].interact(), 0x0B); break;
     case E_Healer: g_Console.writeToBuffer(c, Nurse.Healquote(), 0x0B);
         for (int i = 0; i < 6; i++)
         {
@@ -1681,12 +1678,6 @@ void renderCharacter()
         charColor = 0x0A;
     }
     g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
-}
-
-void renderNPC()
-{
-    Test.setposition(50,5);
-    g_Console.writeToBuffer(Test.getposition(), (char)2, 0x0B);
 }
 
 void renderFramerate()

@@ -110,7 +110,6 @@ void renderStarterScreen(); // renders the screen for user to pick starter ele-b
 void renderInstructions();  // renders the instruction on screen for users to know
 
 void renderCharacter();     // renders the character into the buffer
-void renderNPC();
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc
 void renderToScreen();      // dump the contents of the buffer to the screen, one frame worth of game
 void renderInputEvents();   // renders the status of input events
