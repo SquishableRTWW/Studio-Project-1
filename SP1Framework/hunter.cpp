@@ -7,7 +7,9 @@ hunter::hunter(void)
 	{
 		party[i].setOGStats();
 	}
-	
+	direction = 0;
+	range = 0;
+	check = false;
 }
 
 void hunter::setname(string n)
@@ -68,6 +70,16 @@ void hunter::setDirRange(int d, int r)
 {
 	direction = d;
 	range = r;
+}
+
+void hunter::setcheck(bool c)
+{
+	check = c;
+}
+
+bool hunter::getcheck(void)
+{
+	return true;
 }
 
 int hunter::getdirection(void)

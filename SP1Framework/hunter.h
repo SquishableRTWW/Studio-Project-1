@@ -16,6 +16,7 @@ private:
 	string name;
 	monster party[6];
 	int direction, range;
+	bool check;
 public:
 	hunter(void);
 	void setname(string n);
@@ -23,6 +24,8 @@ public:
 	void choosestarter(int s);
 	void addparty(monster& monster);
 	void setDirRange(int d, int r);
+	void setcheck(bool c);
+	bool getcheck(void);
 	int getdirection(void);
 	int getrange(void);
 	monster getMonster(int m);
