@@ -1,4 +1,5 @@
 #include "NPC.h"
+#include "game.h"
 
 NPC::NPC()
 {

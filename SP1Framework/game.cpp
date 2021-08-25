@@ -12,6 +12,7 @@
 #include "atax.h"
 #include "smeltor.h"
 #include "NPC.h"
+#include "Entity.h"
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -1043,8 +1044,8 @@ void renderBossMap()
 void renderInteract()
 {
     COORD c;
-    c.X = g_sChar.m_cLocation.X - 30;
-    c.Y = g_sChar.m_cLocation.Y + 1;
+    c.X = g_sChar.m_cLocation.X - 28;
+    c.Y = g_sChar.m_cLocation.Y - 1;
     switch (Type)
     {
     case E_NPC: g_Console.writeToBuffer(c, Test.interact(), 0x0B); break;
