@@ -424,7 +424,7 @@ void updateEncounter()
                     }
                 }
                 jeff.getMonster(0).setHealth(-(wild.getMoveDamage(0)) * ((wild.getAttack() / jeff.getMonster(0).getDefence()) * 0.5));
-                whichPlayerTurn = 2;
+                
             }
             else
             {
@@ -445,6 +445,7 @@ void updateEncounter()
                     }
                 }
             }
+            whichPlayerTurn = 2;
 
         }
 
