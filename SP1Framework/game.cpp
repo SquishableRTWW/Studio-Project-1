@@ -262,6 +262,8 @@ void update(double dt)
             break;
         case S_ROUTE3: updateGame();
             break;
+        case S_BOSSROUTE: updateGame();
+            break;
         case S_INTERACT: interactionWait();
             break;
     }
@@ -496,7 +498,7 @@ void moveCharacter()
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
 
-    if (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.Y > 0 || (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && g_eGameState == S_ROUTE2))
+    if (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.Y > 0 || (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && (g_eGameState == S_ROUTE2) || g_eGameState == S_BOSSROUTE))
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.Y--;
@@ -506,7 +508,7 @@ void moveCharacter()
         //Beep(1440, 30);
         g_sChar.m_cLocation.X--;
     }
-    if (g_skKeyEvent[K_DOWN].keyDown && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 || (g_skKeyEvent[K_DOWN].keyDown && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && g_eGameState == S_ROUTE3))
+    if (g_skKeyEvent[K_DOWN].keyDown && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1 || (g_skKeyEvent[K_DOWN].keyDown && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && (g_eGameState == S_ROUTE3 || g_eGameState == S_ROUTE2)))
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.Y++;
@@ -549,6 +551,16 @@ void moveCharacter()
     {
         g_sChar.m_cLocation.X = 0;
         g_eGameState = S_GAME;
+    }
+    if ((g_sChar.m_cLocation.Y > 24 && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44) && g_eGameState == S_ROUTE2)
+    {
+        g_sChar.m_cLocation.Y = 0;
+        g_eGameState = S_BOSSROUTE;
+    }
+    if ((g_sChar.m_cLocation.Y < 0 && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44) && g_eGameState == S_BOSSROUTE)
+    {
+        g_sChar.m_cLocation.Y = 24;
+        g_eGameState = S_ROUTE2;
     }
     if ((g_sChar.m_cLocation.Y > 24 && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44) && g_eGameState == S_ROUTE3)
     {
@@ -609,7 +621,7 @@ void collision()
             g_sChar.m_cLocation.X--;
         }
     }
-    // Collision for house walls
+    // Collision for house walls and nurse NPC
     if (g_eGameState == S_GAME)
     {
         if (g_skKeyEvent[K_UP].keyDown)
@@ -694,6 +706,8 @@ void render()
         break;
     case S_ROUTE3: renderGame3();
         break;
+    case S_BOSSROUTE: renderBossRoute();
+        break;
     case S_INTERACT: 
         switch (location)
         {
@@ -765,6 +779,12 @@ void renderGame3()
 {
     renderRoute3(); // render map if route 3
     renderCharacter();  // renders the character into the buffer
+    renderNPC();
+}
+void renderBossRoute() //while in the boss map
+{
+    renderBossMap(); // renders map of boss route
+    renderCharacter();
     renderNPC();
 }
 // -------------------------------------------------------------------------
@@ -955,6 +975,37 @@ void renderRoute3()
         }
     }
 
+}
+
+void renderBossMap()
+{
+    // Set up sample colours, and output shadings
+    const WORD colors[] = {
+        0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
+        0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6
+    };
+
+    COORD c;
+    for (int i = 0; i < 80; i++)
+    {
+        c.X = i;
+        for (int j = 0; j < 25; j++)
+        {
+            c.Y = j;
+            colour(colors[10]);
+            g_Console.writeToBuffer(c, "*", 0xE0);
+        }
+    }
+    for (int i = 33; i < 44; i++)
+    {
+        c.X = i;
+        for (int j = 0; j < 25; j++)
+        {
+            c.Y = j;
+            colour(colors[5]);
+            g_Console.writeToBuffer(c, "+", 0x60);
+        }
+    }
 }
 
 void renderInteract()

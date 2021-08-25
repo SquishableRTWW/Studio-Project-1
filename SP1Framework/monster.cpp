@@ -25,7 +25,7 @@ void monster::setName(string name)
 }
 void monster::setOGStats(void)
 {
-	this->health = 10;
+	this->health = 30;
 	this->attack = 6;
 	this->defence = 3;
 	this->speed = 10;
