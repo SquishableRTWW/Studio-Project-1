@@ -1024,7 +1024,7 @@ void renderInteract()
     case E_Healer: g_Console.writeToBuffer(c, Nurse.Healquote(), 0x0B);
         for (int i = 0; i < 6; i++)
         {
-            jeff.getMonster(i).setHealth(jeff.getMonster(i).getMaxHealth())
+            jeff.getMonster(i).setHealth(jeff.getMonster(i).getMaxHealth());
         }
     }
 }
