@@ -33,7 +33,7 @@ SMouseEvent g_mouseEvent;
 // Game specific variables here
 SGameChar   g_sChar;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
-Entities Type;
+Entities Type = E_NULL;
 
 // Console object
 Console g_Console(80, 25, "SP1 Framework");
@@ -1045,8 +1045,8 @@ void detection()
             {
                 if (g_sChar.m_cLocation.Y == Enemy[i].getY() - j && g_sChar.m_cLocation.X == Enemy[i].getX())
                 {
-                    Type = E_NPC;
-                    g_eGameState = S_INTERACT;
+                    Type = E_Hunter;
+                    g_eGameState = S_ENCOUNTERSPLASHSCREEN;
                 }
             }
             break;
@@ -1055,8 +1055,8 @@ void detection()
             {
                 if (g_sChar.m_cLocation.Y == Enemy[i].getY() + j && g_sChar.m_cLocation.Y == Enemy[i].getY())
                 {
-                    Type = E_NPC;
-                    g_eGameState = S_INTERACT;
+                    Type = E_Hunter;
+                    g_eGameState = S_ENCOUNTERSPLASHSCREEN;
                 }
             }
             break;
@@ -1065,8 +1065,8 @@ void detection()
             {
                 if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() - j)
                 {
-                    Type = E_NPC;
-                    g_eGameState = S_INTERACT;
+                    Type = E_Hunter;
+                    g_eGameState = S_ENCOUNTERSPLASHSCREEN;
                 }
             }
             break;
@@ -1075,8 +1075,8 @@ void detection()
             {
                 if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() + j)
                 {
-                    Type = E_NPC;
-                    g_eGameState = S_INTERACT;
+                    Type = E_Hunter;
+                    g_eGameState = S_ENCOUNTERSPLASHSCREEN;
                 }
             }
             break;
@@ -1599,9 +1599,16 @@ void renderEncounter()
 void renderEncounterSplashScreen()
 {
     COORD c;
-    c.X = 28;
-    c.Y = 11;
-    g_Console.writeToBuffer(c, "Wild Elebeasts Appears!");
+    c.X = 27;
+    c.Y = 18;
+    if (Type == E_Hunter)
+    {
+        g_Console.writeToBuffer(c, "You have been challenged to a battle!");
+    }
+    else
+    {
+        g_Console.writeToBuffer(c, "Wild Elebeasts Appears!");
+    }
 }
 
 
