@@ -22,7 +22,7 @@ int location;
 int boss;
 hunter jeff;
 monster wild;
-NPC Test;
+NPC Advice[4];
 NPC Nurse;
 SKeyEvent g_skKeyEvent[K_COUNT + 2];
 SMouseEvent g_mouseEvent;
@@ -527,20 +527,23 @@ void moveCharacter()
     }
     if (g_skKeyEvent[K_Q].keyReleased)
     {
-        if (g_sChar.m_cLocation.X == Test.getX() + 1 && g_sChar.m_cLocation.Y == Test.getY() || g_sChar.m_cLocation.X == Test.getX() - 1 && g_sChar.m_cLocation.Y == Test.getY() || 
-            g_sChar.m_cLocation.Y == Test.getY() - 1 && g_sChar.m_cLocation.X == Test.getX() || g_sChar.m_cLocation.Y == Test.getY() + 1 && g_sChar.m_cLocation.X == Test.getX())
+        for (int i = 0; i < 4;i++ )
         {
-            Type = E_NPC;
-            switch (g_eGameState)
+            if (g_sChar.m_cLocation.X == Advice[i].getX() + 1 && g_sChar.m_cLocation.Y == Advice[i].getY() || g_sChar.m_cLocation.X == Advice[i].getX() - 1 && g_sChar.m_cLocation.Y == Advice[i].getY() ||
+                g_sChar.m_cLocation.Y == Advice[i].getY() - 1 && g_sChar.m_cLocation.X == Advice[i].getX() || g_sChar.m_cLocation.Y == Advice[i].getY() + 1 && g_sChar.m_cLocation.X == Advice[i].getX())
             {
-            case S_GAME: location = 1;
-                break;
-            case S_ROUTE2: location = 2;
-                break;
-            case S_ROUTE3: location = 3;
-                break;
+                Type = E_NPC;
+                switch (g_eGameState)
+                {
+                case S_GAME: location = 1;
+                    break;
+                case S_ROUTE2: location = 2;
+                    break;
+                case S_ROUTE3: location = 3;
+                    break;
+                }
+                g_eGameState = S_INTERACT;
             }
-            g_eGameState = S_INTERACT;
         }
         if (g_sChar.m_cLocation.X == Nurse.getX() + 1 && g_sChar.m_cLocation.Y == Nurse.getY() || g_sChar.m_cLocation.X == Nurse.getX() - 1 && g_sChar.m_cLocation.Y == Nurse.getY() ||
             g_sChar.m_cLocation.Y == Nurse.getY() - 1 && g_sChar.m_cLocation.X == Nurse.getX() || g_sChar.m_cLocation.Y == Nurse.getY() + 1 && g_sChar.m_cLocation.X == Nurse.getX())
@@ -605,32 +608,35 @@ void moveCharacter()
 
 void collision()
 {
-    if (g_skKeyEvent[K_UP].keyDown)
+    for (int i = 0; i < 4; i++)
     {
-        if (g_sChar.m_cLocation.X == Test.getX() && g_sChar.m_cLocation.Y == Test.getY())
+        if (g_skKeyEvent[K_UP].keyDown)
         {
-            g_sChar.m_cLocation.Y++;
+            if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+            {
+                g_sChar.m_cLocation.Y++;
+            }
         }
-    }
-    if (g_skKeyEvent[K_LEFT].keyDown)
-    {
-        if (g_sChar.m_cLocation.X == Test.getX() && g_sChar.m_cLocation.Y == Test.getY())
+        if (g_skKeyEvent[K_LEFT].keyDown)
         {
-            g_sChar.m_cLocation.X++;
+            if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+            {
+                g_sChar.m_cLocation.X++;
+            }
         }
-    }
-    if (g_skKeyEvent[K_DOWN].keyDown)
-    {
-        if (g_sChar.m_cLocation.X == Test.getX() && g_sChar.m_cLocation.Y == Test.getY())
+        if (g_skKeyEvent[K_DOWN].keyDown)
         {
-            g_sChar.m_cLocation.Y--;
+            if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+            {
+                g_sChar.m_cLocation.Y--;
+            }
         }
-    }
-    if (g_skKeyEvent[K_RIGHT].keyDown)
-    {
-        if (g_sChar.m_cLocation.X == Test.getX() && g_sChar.m_cLocation.Y == Test.getY())
+        if (g_skKeyEvent[K_RIGHT].keyDown)
         {
-            g_sChar.m_cLocation.X--;
+            if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+            {
+                g_sChar.m_cLocation.X--;
+            }
         }
     }
     // Collision for house walls and nurse NPC
@@ -779,25 +785,21 @@ void renderGame()
 {
     renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
-    renderNPC();
 }
 void renderGame2() //While in route 2
 {
     renderRoute2(); // render mao of route 2.
     renderCharacter();  // renders the character into the buffer
-    renderNPC();
 }
 void renderGame3()
 {
     renderRoute3(); // render map if route 3
     renderCharacter();  // renders the character into the buffer
-    renderNPC();
 }
 void renderBossRoute() //while in the boss map
 {
     renderBossMap(); // renders map of boss route
     renderCharacter();
-    renderNPC();
 }
 // -------------------------------------------------------------------------
 
@@ -861,6 +863,9 @@ void renderMap()
     //Nurse NPC to heal monster
     Nurse.setposition(29, 7);
     g_Console.writeToBuffer(Nurse.getposition(), char(4), 0x0C);
+    //NPC
+    Advice[0].setposition(44, 11);
+    g_Console.writeToBuffer(Advice[0].getposition(), char(2), 0x0A);
     //Grasspatch test
     for (int i = 0; i < 13; i++)
     {
@@ -943,6 +948,9 @@ void renderRoute2()
             g_Console.writeToBuffer(c, "+", 0x60);
         }
     }
+    //NPC
+    Advice[1].setposition(44, 15);
+    g_Console.writeToBuffer(Advice[1].getposition(), char(2), 0x0A);
 }
 
 void renderRoute3()
@@ -974,7 +982,9 @@ void renderRoute3()
             g_Console.writeToBuffer(c, "+", 0x60);
         }
     }
-
+    //NPC
+    Advice[2].setposition(13, 13);
+    g_Console.writeToBuffer(Advice[2].getposition(), char(2), 0x0A);
     //Grasspatch test
     for (int i = 0; i < 13; i++) //patch 1
     {
@@ -1048,7 +1058,7 @@ void renderInteract()
     c.Y = g_sChar.m_cLocation.Y - 1;
     switch (Type)
     {
-    case E_NPC: g_Console.writeToBuffer(c, Test.interact(), 0x0B); break;
+    case E_NPC: g_Console.writeToBuffer(c, Advice[1].interact(), 0x0B); break;
     case E_Healer: g_Console.writeToBuffer(c, Nurse.Healquote(), 0x0B);
         for (int i = 0; i < 6; i++)
         {
@@ -1528,12 +1538,6 @@ void renderCharacter()
         charColor = 0x0A;
     }
     g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
-}
-
-void renderNPC()
-{
-    Test.setposition(50,5);
-    g_Console.writeToBuffer(Test.getposition(), (char)2, 0x0B);
 }
 
 void renderFramerate()
