@@ -607,21 +607,42 @@ void moveCharacter()
     }
     if (g_skKeyEvent[K_Q].keyReleased) //NPC interaction check
     {
-        if (g_sChar.m_cLocation.X == Test.getX() + 1 && g_sChar.m_cLocation.Y == Test.getY() || g_sChar.m_cLocation.X == Test.getX() - 1 && g_sChar.m_cLocation.Y == Test.getY() ||
-            g_sChar.m_cLocation.Y == Test.getY() - 1 && g_sChar.m_cLocation.X == Test.getX() || g_sChar.m_cLocation.Y == Test.getY() + 1 && g_sChar.m_cLocation.X == Test.getX())
+        for (int i = 0; i < 4;i++ )//triggers NPC interaction
         {
-            Type = E_NPC;
-            switch (g_eGameState)
+            if (g_sChar.m_cLocation.X == Advice[i].getX() + 1 && g_sChar.m_cLocation.Y == Advice[i].getY() || g_sChar.m_cLocation.X == Advice[i].getX() - 1 && g_sChar.m_cLocation.Y == Advice[i].getY() ||
+                g_sChar.m_cLocation.Y == Advice[i].getY() - 1 && g_sChar.m_cLocation.X == Advice[i].getX() || g_sChar.m_cLocation.Y == Advice[i].getY() + 1 && g_sChar.m_cLocation.X == Advice[i].getX())
             {
-            case S_GAME: location = 1;
-                break;
-            case S_ROUTE2: location = 2;
-                break;
-            case S_ROUTE3: location = 3;
-                break;
+                Type = E_NPC;
+                switch (g_eGameState)
+                {
+                case S_GAME: location = 1;
+                    break;
+                case S_ROUTE2: location = 2;
+                    break;
+                case S_ROUTE3: location = 3;
+                    break;
+                }
+                g_eGameState = S_INTERACT;
             }
-            g_eGameState = S_INTERACT;
         }
+        for (int i = 0; i < 8; i++)///triggers HUnter battle
+        {
+            if (g_sChar.m_cLocation.X == Enemy[i].getX() + 1 && g_sChar.m_cLocation.Y == Enemy[i].getY() || g_sChar.m_cLocation.X == Enemy[i].getX() - 1 && g_sChar.m_cLocation.Y == Enemy[i].getY() ||
+                g_sChar.m_cLocation.Y == Enemy[i].getY() - 1 && g_sChar.m_cLocation.X == Enemy[i].getX() || g_sChar.m_cLocation.Y == Enemy[i].getY() + 1 && g_sChar.m_cLocation.X == Enemy[i].getX())
+            {
+                Type = E_Hunter;
+                switch (g_eGameState)
+                {
+                case S_GAME: location = 1;
+                    break;
+                case S_ROUTE2: location = 2;
+                    break;
+                case S_ROUTE3: location = 3;
+                    break;
+                }
+            }
+        }
+        //triggers Healer interctions
         if (g_sChar.m_cLocation.X == Nurse.getX() + 1 && g_sChar.m_cLocation.Y == Nurse.getY() || g_sChar.m_cLocation.X == Nurse.getX() - 1 && g_sChar.m_cLocation.Y == Nurse.getY() ||
             g_sChar.m_cLocation.Y == Nurse.getY() - 1 && g_sChar.m_cLocation.X == Nurse.getX() || g_sChar.m_cLocation.Y == Nurse.getY() + 1 && g_sChar.m_cLocation.X == Nurse.getX())
         {
@@ -696,32 +717,66 @@ void moveCharacter()
 
 void collision()
 {
-    if (g_skKeyEvent[K_UP].keyDown)
+    for (int i = 0; i < 4; i++)//collision for NPC
     {
-        if (g_sChar.m_cLocation.X == Test.getX() && g_sChar.m_cLocation.Y == Test.getY())
+        if (g_skKeyEvent[K_UP].keyDown)
         {
-            g_sChar.m_cLocation.Y++;
+            if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+            {
+                g_sChar.m_cLocation.Y++;
+            }
+        }
+        if (g_skKeyEvent[K_LEFT].keyDown)
+        {
+            if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+            {
+                g_sChar.m_cLocation.X++;
+            }
+        }
+        if (g_skKeyEvent[K_DOWN].keyDown)
+        {
+            if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+            {
+                g_sChar.m_cLocation.Y--;
+            }
+        }
+        if (g_skKeyEvent[K_RIGHT].keyDown)
+        {
+            if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+            {
+                g_sChar.m_cLocation.X--;
+            }
         }
     }
-    if (g_skKeyEvent[K_LEFT].keyDown)
+    for (int i = 0; i < 4; i++)//collision for Enemy
     {
-        if (g_sChar.m_cLocation.X == Test.getX() && g_sChar.m_cLocation.Y == Test.getY())
+        if (g_skKeyEvent[K_UP].keyDown)
         {
-            g_sChar.m_cLocation.X++;
+            if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+            {
+                g_sChar.m_cLocation.Y++;
+            }
         }
-    }
-    if (g_skKeyEvent[K_DOWN].keyDown)
-    {
-        if (g_sChar.m_cLocation.X == Test.getX() && g_sChar.m_cLocation.Y == Test.getY())
+        if (g_skKeyEvent[K_LEFT].keyDown)
         {
-            g_sChar.m_cLocation.Y--;
+            if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+            {
+                g_sChar.m_cLocation.X++;
+            }
         }
-    }
-    if (g_skKeyEvent[K_RIGHT].keyDown)
-    {
-        if (g_sChar.m_cLocation.X == Test.getX() && g_sChar.m_cLocation.Y == Test.getY())
+        if (g_skKeyEvent[K_DOWN].keyDown)
         {
-            g_sChar.m_cLocation.X--;
+            if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+            {
+                g_sChar.m_cLocation.Y--;
+            }
+        }
+        if (g_skKeyEvent[K_RIGHT].keyDown)
+        {
+            if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+            {
+                g_sChar.m_cLocation.X--;
+            }
         }
     }
     // Collision for house walls and nurse NPC
@@ -951,7 +1006,13 @@ void renderMap()
     }
     //Nurse NPC to heal monster
     Nurse.setposition(29, 7);
-    g_Console.writeToBuffer(Nurse.getposition(), char(4), 0x0C);
+    g_Console.writeToBuffer(Nurse.getposition(), char(3), 0x0C);
+    //NPC
+    Advice[0].setposition(44, 11);
+    g_Console.writeToBuffer(Advice[0].getposition(), char(2), 0x0B);
+    //Hunter
+    Enemy[0].setposition(0, 16);
+    g_Console.writeToBuffer(Enemy[0].getposition(), char(2), 0xC0);
     //Grasspatch test
     for (int i = 0; i < 13; i++)
     {
