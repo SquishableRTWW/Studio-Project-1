@@ -391,7 +391,7 @@ void updateEncounter()
         }
     }
 
-    if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 22 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 14 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
         if (wild.getSpeed() >= jeff.getMonster(0).getSpeed())
         {
@@ -432,6 +432,24 @@ void updateEncounter()
             }
         }
 
+    }
+
+    //Second skill
+    if ((g_mouseEvent.mousePosition.X > 26 && g_mouseEvent.mousePosition.X < 31 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    {
+        //Insert attack
+    }
+
+    //Third skill
+    if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 14 && g_mouseEvent.mousePosition.Y == 22) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    {
+        //Insert attack
+    }
+
+    //Fourth skill
+    if ((g_mouseEvent.mousePosition.X > 27 && g_mouseEvent.mousePosition.X < 30 && g_mouseEvent.mousePosition.Y == 22) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    {
+        //Insert attack
     }
 
 
@@ -662,7 +680,11 @@ void render()
         break;
     case S_ENCOUNTERSPLASHSCREEN: renderEncounterSplashScreen();
         break;
-    case S_ENCOUNTER: renderEncounter();
+    case S_ENCOUNTER:renderEncounter();
+        break;
+    case S_BOSSSPLASHSCREEN: renderBossSS();
+        break;
+    case S_ENCOUNTERBOSS: renderEncounterBoss();
         break;
     case S_TUTORIAL: renderTutorial();
         break;
@@ -970,13 +992,36 @@ void renderEncounter()
             g_Console.writeToBuffer(c, " ", 0xB0);
         }
     }
-    c.X = 1; c.Y = 9;
-    g_Console.writeToBuffer(c, "Ele-beast: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xB0); c.Y = 9;
-    c.X = 11;
-    g_Console.writeToBuffer(c, name1, 0xB0); c.Y++; g_Console.writeToBuffer(c, level1, 0xB0); c.Y++; g_Console.writeToBuffer(c, hp1, 0xB0); c.Y = 9;
-    c.X = 48;
-    g_Console.writeToBuffer(c, "Ele-beast: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xB0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xB0); c.X += 11; c.Y = 9;
-    g_Console.writeToBuffer(c, nameWild, 0xB0); c.Y++; g_Console.writeToBuffer(c, levelWild, 0xB0); c.Y++; g_Console.writeToBuffer(c, hpWild, 0xB0); c.Y = 9;
+
+    //Cardview for elebeast status
+    for (int i = 5; i < 28; i++)
+    {
+        c.X = i;
+        for (int j = 7; j < 12; j++)
+        {
+            c.Y = j;
+            g_Console.writeToBuffer(c, " ", 0x60);
+        }
+    }
+
+    //Cardview for wild elebeast status
+    for (int i = 42; i < 65; i++)
+    {
+        c.X = i;
+        for (int j = 7; j < 12; j++)
+        {
+            c.Y = j;
+            g_Console.writeToBuffer(c, " ", 0x60);
+        }
+    }
+
+    c.X = 7; c.Y = 8;
+    g_Console.writeToBuffer(c, "Ele-beast: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0x60); c.Y = 8;
+    c.X = 17;
+    g_Console.writeToBuffer(c, name1, 0x60); c.Y++; g_Console.writeToBuffer(c, level1, 0x60); c.Y++; g_Console.writeToBuffer(c, hp1, 0x60); c.Y = 8;
+    c.X = 44;
+    g_Console.writeToBuffer(c, "Ele-beast: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0x60); c.X += 11; c.Y = 8;
+    g_Console.writeToBuffer(c, nameWild, 0x60); c.Y++; g_Console.writeToBuffer(c, levelWild, 0x60); c.Y++; g_Console.writeToBuffer(c, hpWild, 0x60); c.Y = 8;
     c.X = 1; c.Y = 24;
 
     for (int i = 0; i < 80; i++)
@@ -1043,9 +1088,258 @@ void renderEncounter()
 void renderEncounterSplashScreen()
 {
     COORD c;
-    c.X = g_Console.getConsoleSize().X / 2;
-    c.Y = g_Console.getConsoleSize().Y / 2;
+    c.X = 28;
+    c.Y = 11;
     g_Console.writeToBuffer(c, "Wild Elebeasts Appears!");
+}
+
+
+//Render boss splash screen
+void renderBossSS()
+{
+    COORD c;
+    c.X = 0; c.Y = 0;
+
+    //Background
+    for (int i = 0; i < 80; i++)
+    {
+        c.X = i;
+        for (int j = 0; j < 25; j++)
+        {
+            c.Y = j;
+            g_Console.writeToBuffer(c, " ", 0x00);
+        }
+    }
+    //Letter B (vertical lines)
+    for (int i = 8; i < 16; i++)
+    {
+        c.Y = i;
+        c.X = 19;
+        g_Console.writeToBuffer(c, " ", 0xC0);
+    }
+
+    for (int i = 9; i < 12; i++)
+    {
+        c.Y = i;
+        c.X = 24;
+        g_Console.writeToBuffer(c, " ", 0xC0);
+    }
+
+    for (int i = 12; i < 15; i++)
+    {
+        c.Y = i;
+        c.X = 27;
+        g_Console.writeToBuffer(c, " ", 0xC0);
+    }
+    //Letter B (horizontal lines)
+    for (int i = 20; i < 25; i++)
+    {
+        c.X = i;
+        c.Y = 8;
+        g_Console.writeToBuffer(c, " ", 0xC0);
+    }
+
+    for (int i = 20; i < 28; i++)
+    {
+        c.X = i;
+        c.Y = 11;
+        g_Console.writeToBuffer(c, " ", 0xC0);
+    }
+
+    for (int i = 20; i < 28; i++)
+    {
+        c.X = i;
+        c.Y = 15;
+        g_Console.writeToBuffer(c, " ", 0xC0);
+    }
+    
+    //For letter O
+    for (int i = 30; i < 38; i++)
+    {
+        c.X = i;
+        c.Y = 11;
+        g_Console.writeToBuffer(c, " ", 0xC0);
+    }
+    for (int i = 30; i < 38; i++)
+    {
+        c.X = i;
+        c.Y = 15;
+        g_Console.writeToBuffer(c, " ", 0xC0);
+    }
+    for (int i = 12; i < 15; i++)
+    {
+        c.Y = i;
+        c.X = 30;
+        g_Console.writeToBuffer(c, " ", 0xC0);
+    }
+
+    for (int i = 12; i < 15; i++)
+    {
+        c.Y = i;
+        c.X = 37;
+        g_Console.writeToBuffer(c, " ", 0xC0);
+    }
+
+    //For first S
+    for (int i = 40; i < 47; i++)
+    {
+        c.X = i;
+        c.Y = 11;
+        g_Console.writeToBuffer(c, " ", 0xC0);
+    }
+    for (int i = 40; i < 47; i++)
+    {
+        c.X = i;
+        c.Y = 13;
+        g_Console.writeToBuffer(c, " ", 0xC0);
+    }
+    for (int i = 40; i < 47; i++)
+    {
+        c.X = i;
+        c.Y = 15;
+        g_Console.writeToBuffer(c, " ", 0xC0);
+    }
+
+    c.X = 40, c.Y = 12; g_Console.writeToBuffer(c, " ", 0xC0);
+    c.X = 46, c.Y = 14; g_Console.writeToBuffer(c, " ", 0xC0);
+
+    //for second s
+    for (int i = 49; i < 56; i++)
+    {
+        c.X = i;
+        c.Y = 11;
+        g_Console.writeToBuffer(c, " ", 0xC0);
+    }
+    for (int i = 49; i < 56; i++)
+    {
+        c.X = i;
+        c.Y = 13;
+        g_Console.writeToBuffer(c, " ", 0xC0);
+    }
+    for (int i = 49; i < 56; i++)
+    {
+        c.X = i;
+        c.Y = 15;
+        g_Console.writeToBuffer(c, " ", 0xC0);
+    }
+
+    c.X = 49, c.Y = 12; g_Console.writeToBuffer(c, " ", 0xC0);
+    c.X = 55, c.Y = 14; g_Console.writeToBuffer(c, " ", 0xC0);
+
+    //For exclamation mark
+    for (int i = 10; i < 14; i++)
+    {
+        c.X = 58;
+        c.Y = i;
+        g_Console.writeToBuffer(c, " ", 0xC0);
+    }
+    c.X = 58; c.Y = 15; g_Console.writeToBuffer(c, " ", 0xC0);
+
+    //For exclamation mark
+    for (int i = 10; i < 14; i++)
+    {
+        c.X = 60;
+        c.Y = i;
+        g_Console.writeToBuffer(c, " ", 0xC0);
+    }
+    c.X = 60; c.Y = 15; g_Console.writeToBuffer(c, " ", 0xC0);
+
+    //For exclamation mark
+    for (int i = 10; i < 14; i++)
+    {
+        c.X = 62;
+        c.Y = i;
+        g_Console.writeToBuffer(c, " ", 0xC0);
+    }
+    c.X = 62; c.Y = 15; g_Console.writeToBuffer(c, " ", 0xC0);
+}
+
+//When encounter boss
+void renderEncounterBoss()
+{
+    string name1 = jeff.getMname(0), level1 = to_string(jeff.getMlvl(0)), hp1 = to_string(jeff.getMhealth(0)), atk1 = to_string(jeff.getMattack(0)), def1 = to_string(jeff.getMdefense(0)), spd1 = to_string(jeff.getMspeed(0)),
+        name2 = jeff.getMname(1), level2 = to_string(jeff.getMlvl(1)), hp2 = to_string(jeff.getMhealth(1)), atk2 = to_string(jeff.getMattack(1)), def2 = to_string(jeff.getMdefense(1)), spd2 = to_string(jeff.getMspeed(1)),
+        name3 = jeff.getMname(2), level3 = to_string(jeff.getMlvl(2)), hp3 = to_string(jeff.getMhealth(2)), atk3 = to_string(jeff.getMattack(2)), def3 = to_string(jeff.getMdefense(2)), spd3 = to_string(jeff.getMspeed(2)),
+        name4 = jeff.getMname(3), level4 = to_string(jeff.getMlvl(3)), hp4 = to_string(jeff.getMhealth(3)), atk4 = to_string(jeff.getMattack(3)), def4 = to_string(jeff.getMdefense(3)), spd4 = to_string(jeff.getMspeed(3)),
+        name5 = jeff.getMname(4), level5 = to_string(jeff.getMlvl(4)), hp5 = to_string(jeff.getMhealth(4)), atk5 = to_string(jeff.getMattack(4)), def5 = to_string(jeff.getMdefense(4)), spd5 = to_string(jeff.getMspeed(4)),
+        name6 = jeff.getMname(5), level6 = to_string(jeff.getMlvl(5)), hp6 = to_string(jeff.getMhealth(5)), atk6 = to_string(jeff.getMattack(5)), def6 = to_string(jeff.getMdefense(5)), spd6 = to_string(jeff.getMspeed(5));
+    string nameWild = wild.getName(), levelWild = to_string(wild.getLevel()), hpWild = to_string(wild.getHealth()), atkWild = to_string(wild.getAttack()), defWild = to_string(wild.getDefence()), spdWild = to_string(wild.getSpeed());
+    const WORD colors[] = {
+        0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
+        0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6
+    };
+
+    COORD c;
+
+    for (int i = 0; i < 80; i++)
+    {
+        c.X = i;
+        for (int j = 0; j < 16; j++)
+        {
+            c.Y = j;
+            colour(colors[11]);
+            g_Console.writeToBuffer(c, " ", 0xC0);
+        }
+    }
+    c.X = 1; c.Y = 9;
+    g_Console.writeToBuffer(c, "Ele-beast: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xC0); c.Y = 9;
+    c.X = 11;
+    g_Console.writeToBuffer(c, name1, 0xC0); c.Y++; g_Console.writeToBuffer(c, level1, 0xC0); c.Y++; g_Console.writeToBuffer(c, hp1, 0xC0); c.Y = 9;
+    c.X = 48;
+    g_Console.writeToBuffer(c, "Ele-beast: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xC0); c.X += 11; c.Y = 9;
+    g_Console.writeToBuffer(c, nameWild, 0xC0); c.Y++; g_Console.writeToBuffer(c, levelWild, 0xC0); c.Y++; g_Console.writeToBuffer(c, hpWild, 0xC0); c.Y = 9;
+    c.X = 1; c.Y = 24;
+
+    for (int i = 0; i < 80; i++)
+    {
+        c.X = i;
+        c.Y = 16;
+        g_Console.writeToBuffer(c, " ", 0x00);
+    }
+
+    for (int i = 0; i < 80; i++)
+    {
+        c.X = i;
+        for (int j = 17; j < 25; j++)
+        {
+            c.Y = j;
+            g_Console.writeToBuffer(c, " ", 0x80);
+        }
+    }
+
+    for (int i = 50; i < 51; i++)
+    {
+        c.X = i;
+        for (int j = 17; j < 25; j++)
+        {
+            c.Y = j;
+
+            g_Console.writeToBuffer(c, " ");
+        }
+    }
+    c.X = 10; c.Y = 12;
+    g_Console.writeToBuffer(c, "    .", 0xC0); c.Y += 1;
+    g_Console.writeToBuffer(c, "   (>", 0xC0); c.Y += 1;
+    g_Console.writeToBuffer(c, "~(##)", 0xC0); c.Y += 1;
+    g_Console.writeToBuffer(c, " // | ", 0XC0);
+    c.X = 50; c.Y = 12;
+    g_Console.writeToBuffer(c, ".    ", 0xC0); c.Y += 1;
+    g_Console.writeToBuffer(c, "<)   ", 0xC0); c.Y += 1;
+    g_Console.writeToBuffer(c, "(##)~", 0xC0); c.Y += 1;
+    g_Console.writeToBuffer(c, "| \\ ", 0XC0);
+
+    c.X = 10, c.Y = 19;
+    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(0));
+    c.X = 27, c.Y = 19;
+    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(1));
+    c.X = 10, c.Y = 22;
+    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(2));
+    c.X = 27, c.Y = 22;
+    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(3));
+    c.X = 10, c.Y = 10;
+
+
+
 }
 
 
