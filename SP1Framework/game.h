@@ -105,6 +105,7 @@ void renderBossMap();       // renders the boss route
 void renderMenu();          // renders the pause menu screen.
 void renderTutorial();      // renders the tutorial screen.
 void renderStarterScreen(); // renders the screen for user to pick starter ele-beast.
+void renderInstructions();  // renders the instruction on screen for users to know
 
 void renderCharacter();     // renders the character into the buffer
 void renderNPC();           // testing

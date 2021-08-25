@@ -729,6 +729,7 @@ void render()
         }
         break;
     }
+    renderInstructions();
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();
     renderToScreen();       // dump the contents of the buffer to the screen, one frame worth of game
@@ -744,6 +745,15 @@ void renderToScreen()
 {
     // Writes the buffer to the console, hence you will see what you have written
     g_Console.flushBufferToConsole();
+}
+
+void renderInstructions()
+{
+    COORD c;
+    c.X = 0; c.Y = 0; g_Console.writeToBuffer(c, "WASD for movement", 0x0F);
+    c.Y++; g_Console.writeToBuffer(c, "F for party menu", 0x0F);
+    c.Y++; g_Console.writeToBuffer(c, "ESC for exit", 0x0F);
+    c.Y++; g_Console.writeToBuffer(c, "Left click to select", 0x0F);
 }
 
 void renderSplashScreen()  // renders the splash screen
@@ -816,7 +826,7 @@ void renderMap()
         for (int j = 0; j < 25; j++)
         {
             c.Y = j;
-            g_Console.writeToBuffer(c, "*", 0xE0);
+            g_Console.writeToBuffer(c, ".", 0xE0);
         }
     }
     for (int i = 12; i < 16; i++)
@@ -826,7 +836,7 @@ void renderMap()
         {
             c.X = j;
             colour(colors[5]);
-            g_Console.writeToBuffer(c, "+", 0x60);
+            g_Console.writeToBuffer(c, " ", 0x60);
         }
     }
     //House.
@@ -869,7 +879,7 @@ void renderMap()
         {
             c.Y = j;
             colour(colors[1]);
-            g_Console.writeToBuffer(c, "&", 0xA0);
+            g_Console.writeToBuffer(c, "M", 0xA0);
         }
     }
     for (int i = 61; i < 80; i++) //patch 2
@@ -879,7 +889,7 @@ void renderMap()
         {
             c.Y = j;
             colour(colors[1]);
-            g_Console.writeToBuffer(c, "&", 0xA0);
+            g_Console.writeToBuffer(c, "M", 0xA0);
         }
     }
     for (int i = 54; i < 70; i++) //patch 3
@@ -889,7 +899,7 @@ void renderMap()
         {
             c.Y = j;
             colour(colors[1]);
-            g_Console.writeToBuffer(c, "&", 0xA0);
+            g_Console.writeToBuffer(c, "M", 0xA0);
         }
     }
     for (int i = 20; i < 36; i++) //patch 4
@@ -899,7 +909,7 @@ void renderMap()
         {
             c.Y = j;
             colour(colors[1]);
-            g_Console.writeToBuffer(c, "&", 0xA0);
+            g_Console.writeToBuffer(c, "M", 0xA0);
         }
     }
 }
@@ -920,7 +930,7 @@ void renderRoute2()
         {
             c.Y = j;
             colour(colors[10]);
-            g_Console.writeToBuffer(c, "*", 0xE0);
+            g_Console.writeToBuffer(c, ".", 0xE0);
         }
     }
     for (int i = 33; i < 44; i++)
@@ -930,7 +940,7 @@ void renderRoute2()
         {
             c.Y = j;
             colour(colors[5]);
-            g_Console.writeToBuffer(c, "+", 0x60);
+            g_Console.writeToBuffer(c, " ", 0x60);
         }
     }
     for (int i = 44; i < 80; i++)
@@ -940,7 +950,7 @@ void renderRoute2()
         {
             c.Y = j;
             colour(colors[5]);
-            g_Console.writeToBuffer(c, "+", 0x60);
+            g_Console.writeToBuffer(c, " ", 0x60);
         }
     }
 }
@@ -961,7 +971,7 @@ void renderRoute3()
         {
             c.Y = j;
             colour(colors[10]);
-            g_Console.writeToBuffer(c, "*", 0xE0);
+            g_Console.writeToBuffer(c, ".", 0xE0);
         }
     }
     for (int i = 33; i < 44; i++)
@@ -971,7 +981,7 @@ void renderRoute3()
         {
             c.Y = j;
             colour(colors[5]);
-            g_Console.writeToBuffer(c, "+", 0x60);
+            g_Console.writeToBuffer(c, " ", 0x60);
         }
     }
 
@@ -983,7 +993,7 @@ void renderRoute3()
         {
             c.Y = j;
             colour(colors[1]);
-            g_Console.writeToBuffer(c, "&", 0xA0);
+            g_Console.writeToBuffer(c, "M", 0xA0);
         }
     }
 
@@ -1005,7 +1015,7 @@ void renderBossMap()
         {
             c.Y = j;
             colour(colors[10]);
-            g_Console.writeToBuffer(c, "*", 0xE0);
+            g_Console.writeToBuffer(c, ".", 0xE0);
         }
     }
     for (int i = 33; i < 44; i++)
@@ -1014,7 +1024,7 @@ void renderBossMap()
         for (int j = 0; j < 23; j++)
         {
             c.Y = j;
-            g_Console.writeToBuffer(c, "+", 0x60);
+            g_Console.writeToBuffer(c, " ", 0x60);
         }
     }
     for (int i = 23; i < 52; i++) //Boss cave layer 1.
