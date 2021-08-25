@@ -21,6 +21,7 @@ bool failedCatch;
 int location;
 int boss;
 hunter jeff;
+hunter Enemy[8];
 monster wild;
 NPC Advice[4];
 NPC Nurse;
@@ -30,7 +31,7 @@ SMouseEvent g_mouseEvent;
 // Game specific variables here
 SGameChar   g_sChar;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
-Entities Type;
+Entities Type = E_NULL;
 
 // Console object
 Console g_Console(80, 25, "SP1 Framework");
@@ -543,6 +544,23 @@ void moveCharacter()
                     break;
                 }
                 g_eGameState = S_INTERACT;
+            }
+        }
+        for (int i = 0; i < 8; i++)
+        {
+            if (g_sChar.m_cLocation.X == Enemy[i].getX() + 1 && g_sChar.m_cLocation.Y == Enemy[i].getY() || g_sChar.m_cLocation.X == Enemy[i].getX() - 1 && g_sChar.m_cLocation.Y == Enemy[i].getY() ||
+                g_sChar.m_cLocation.Y == Enemy[i].getY() - 1 && g_sChar.m_cLocation.X == Enemy[i].getX() || g_sChar.m_cLocation.Y == Enemy[i].getY() + 1 && g_sChar.m_cLocation.X == Enemy[i].getX())
+            {
+                Type = E_Hunter;
+                switch (g_eGameState)
+                {
+                case S_GAME: location = 1;
+                    break;
+                case S_ROUTE2: location = 2;
+                    break;
+                case S_ROUTE3: location = 3;
+                    break;
+                }
             }
         }
         if (g_sChar.m_cLocation.X == Nurse.getX() + 1 && g_sChar.m_cLocation.Y == Nurse.getY() || g_sChar.m_cLocation.X == Nurse.getX() - 1 && g_sChar.m_cLocation.Y == Nurse.getY() ||
