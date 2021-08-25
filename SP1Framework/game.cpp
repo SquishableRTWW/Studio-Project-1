@@ -20,6 +20,7 @@ bool isCaught;
 bool failedCatch;
 int location;
 int boss;
+int whichPlayerTurn = 1;
 hunter jeff;
 monster wild;
 NPC Advice[4];
@@ -400,65 +401,75 @@ void updateEncounter()
         }
     }
 
-    if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 14 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    //If players turn
+    if (whichPlayerTurn == 1)
     {
-        if (wild.getSpeed() >= jeff.getMonster(0).getSpeed())
+        if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 14 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
         {
-            wild.setHealth(-(jeff.getMonster(0).getMoveDamage(0)) * ((jeff.getMonster(0).getAttack() / wild.getDefence()) * 0.5));
-            if (wild.getHealth() <= 0)
+            if (wild.getSpeed() >= jeff.getMonster(0).getSpeed())
             {
-                jeff.getMonster(0).upKill();
-                jeff.getMonster(0).levelUp(jeff.getMonster(0));
-                switch (location)
+                wild.setHealth(-(jeff.getMonster(0).getMoveDamage(0)) * ((jeff.getMonster(0).getAttack() / wild.getDefence()) * 0.5));
+                if (wild.getHealth() <= 0)
                 {
-                case 1: g_eGameState = S_GAME;
-                    break;
-                case 2: g_eGameState = S_ROUTE2;
-                    break;
-                case 3: g_eGameState = S_ROUTE3;
-                    break;
+                    jeff.getMonster(0).upKill();
+                    jeff.getMonster(0).levelUp(jeff.getMonster(0));
+                    switch (location)
+                    {
+                    case 1: g_eGameState = S_GAME;
+                        break;
+                    case 2: g_eGameState = S_ROUTE2;
+                        break;
+                    case 3: g_eGameState = S_ROUTE3;
+                        break;
+                    }
+                }
+                jeff.getMonster(0).setHealth(-(wild.getMoveDamage(0)) * ((wild.getAttack() / jeff.getMonster(0).getDefence()) * 0.5));
+                whichPlayerTurn = 2;
+            }
+            else
+            {
+                jeff.getMonster(0).setHealth(-(wild.getMoveDamage(0)) * ((wild.getAttack() / jeff.getMonster(0).getDefence()) * 0.5));
+                wild.setHealth(-(jeff.getMonster(0).getMoveDamage(0)) * ((jeff.getMonster(0).getAttack() / wild.getDefence()) * 0.5));
+                if (wild.getHealth() <= 0)
+                {
+                    jeff.getMonster(0).upKill();
+                    jeff.getMonster(0).levelUp(jeff.getMonster(0));
+                    switch (location)
+                    {
+                    case 1: g_eGameState = S_GAME;
+                        break;
+                    case 2: g_eGameState = S_ROUTE2;
+                        break;
+                    case 3: g_eGameState = S_ROUTE3;
+                        break;
+                    }
                 }
             }
-            jeff.getMonster(0).setHealth(-(wild.getMoveDamage(0))* ((wild.getAttack() / jeff.getMonster(0).getDefence()) * 0.5));
+
         }
-        else
+
+        //Second skill
+        if ((g_mouseEvent.mousePosition.X > 26 && g_mouseEvent.mousePosition.X < 31 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
         {
-            jeff.getMonster(0).setHealth(-(wild.getMoveDamage(0)) * ((wild.getAttack() / jeff.getMonster(0).getDefence()) * 0.5));
-            wild.setHealth(-(jeff.getMonster(0).getMoveDamage(0)) * ((jeff.getMonster(0).getAttack() / wild.getDefence()) * 0.5));
-            if (wild.getHealth() <= 0)
-            {
-                jeff.getMonster(0).upKill();
-                jeff.getMonster(0).levelUp(jeff.getMonster(0));
-                switch (location)
-                {
-                case 1: g_eGameState = S_GAME;
-                    break;
-                case 2: g_eGameState = S_ROUTE2;
-                    break;
-                case 3: g_eGameState = S_ROUTE3;
-                    break;
-                }
-            }
+            //Insert attack
         }
 
-    }
+        //Third skill
+        if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 14 && g_mouseEvent.mousePosition.Y == 22) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+        {
+            //Insert attack
+        }
 
-    //Second skill
-    if ((g_mouseEvent.mousePosition.X > 26 && g_mouseEvent.mousePosition.X < 31 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
-    {
-        //Insert attack
+        //Fourth skill
+        if ((g_mouseEvent.mousePosition.X > 27 && g_mouseEvent.mousePosition.X < 30 && g_mouseEvent.mousePosition.Y == 22) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+        {
+            //Insert attack
+        }
     }
-
-    //Third skill
-    if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 14 && g_mouseEvent.mousePosition.Y == 22) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    //If wild beast/boss/trainer turn
+    else if (whichPlayerTurn == 2)
     {
-        //Insert attack
-    }
-
-    //Fourth skill
-    if ((g_mouseEvent.mousePosition.X > 27 && g_mouseEvent.mousePosition.X < 30 && g_mouseEvent.mousePosition.Y == 22) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
-    {
-        //Insert attack
+        //Insert enemy turn
     }
 
 
@@ -1190,8 +1201,9 @@ void renderEncounter()
     g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(2));
     c.X = 27, c.Y = 22;
     g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(3));
-    c.X = 10, c.Y = 10;
 
+
+    c.X = 35; c.Y = 0; g_Console.writeToBuffer(c, std::to_string(whichPlayerTurn));
 
 
 }
