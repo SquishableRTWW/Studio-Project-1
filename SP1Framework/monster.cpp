@@ -4,6 +4,8 @@
 #include "azure.h"
 #include "thornhull.h"
 #include "ignis.h"
+#include "typhis.h"
+#include "vitalus.h"
 #include "smeltor.h"
 #include "atax.h"
 #include <iostream>
@@ -20,6 +22,37 @@ monster::monster(void)
 	defence = 0;
 	speed = 0;
 	kills = 0;
+}
+void monster::chooseStarter(monster& monster, int s)
+{
+	switch (s)
+	{
+	case 1:
+		monster = ignis();
+		monster.setElement("fire");
+		for (int i = 0; i < 2; i++)
+		{
+			monster.setMove(monster, i);
+		}
+		break;
+	case 2:
+		monster = typhis();
+		monster.setElement("water");
+		for (int i = 0; i < 2; i++)
+		{
+			monster.setMove(monster, i);
+		}
+		break;
+	case 3:
+		monster = vitalus();
+		monster.setElement("nature");
+		for (int i = 0; i < 2; i++)
+		{
+			monster.setMove(monster, i);
+		}
+		break;
+	}
+	monster.setLevel(5);
 }
 void monster::setName(string name)
 {
@@ -159,6 +192,7 @@ void monster::setWildMonster(monster& monster, int i)
 	case 6:
 		monster = smeltor();
 		break;
+
 	}
 }
 void monster::levelUp(monster& monster)

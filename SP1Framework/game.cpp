@@ -22,9 +22,8 @@ int location;
 int boss;
 hunter jeff;
 hunter Enemy[8];
-atax boss1;
-smeltor boss2;
 monster wild;
+monster mon1;
 NPC Advice[4];
 NPC Nurse;
 SKeyEvent g_skKeyEvent[K_COUNT + 2];
@@ -351,17 +350,17 @@ void starterScreenWait()
 {
     if ((g_mouseEvent.mousePosition.X > 21 && g_mouseEvent.mousePosition.X < 33 && g_mouseEvent.mousePosition.Y == 12) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
-        jeff.choosestarter(1);
+        mon1.chooseStarter(mon1, 1);
         g_eGameState = S_GAME;
     }
     if ((g_mouseEvent.mousePosition.X > 36 && g_mouseEvent.mousePosition.X < 50 && g_mouseEvent.mousePosition.Y == 12) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
-        jeff.choosestarter(2);
+        mon1.chooseStarter(mon1, 2);
         g_eGameState = S_GAME;
     }
     if ((g_mouseEvent.mousePosition.X > 53 && g_mouseEvent.mousePosition.X < 69 && g_mouseEvent.mousePosition.Y == 12) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
-        jeff.choosestarter(3);
+        mon1.chooseStarter(mon1, 3);
         g_eGameState = S_GAME;
     }
 }
@@ -494,8 +493,8 @@ void updateEncounter()
             failedCatch = false;
         }
     }
-    int yourDMG = jeff.getMonster(0).getMoveDamage(0)* (jeff.getMonster(0).getAttack() / wild.getDefence()) * 0.5;
-    int wildDMG = wild.getMoveDamage(0)* ((wild.getAttack() / jeff.getMonster(0).getDefence()) * 0.5);
+    int yourDMG = mon1.getMoveDamage(0)* (mon1.getAttack() / wild.getDefence()) * 0.5;
+    int wildDMG = wild.getMoveDamage(0)* ((wild.getAttack() / mon1.getDefence()) * 0.5);
     if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 14 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
         if (wild.getSpeed() >= jeff.getMonster(0).getSpeed())
@@ -515,7 +514,7 @@ void updateEncounter()
                     break;
                 }
             }
-            jeff.setMHealth(0, -wildDMG);
+            mon1.setHealth(-wildDMG);
         }
         else
         {
@@ -1221,7 +1220,7 @@ void renderInteract()
 
 void renderEncounter()
 {
-    string name1 = jeff.getMname(0), level1 = to_string(jeff.getMlvl(0)), hp1 = to_string(jeff.getMhealth(0)), atk1 = to_string(jeff.getMattack(0)), def1 = to_string(jeff.getMdefense(0)), spd1 = to_string(jeff.getMspeed(0)),
+    string name1 = mon1.getName(), level1 = to_string(mon1.getLevel()), hp1 = to_string(mon1.getHealth()), atk1 = to_string(mon1.getAttack()), def1 = to_string(mon1.getDefence()), spd1 = to_string(mon1.getSpeed()),
         name2 = jeff.getMname(1), level2 = to_string(jeff.getMlvl(1)), hp2 = to_string(jeff.getMhealth(1)), atk2 = to_string(jeff.getMattack(1)), def2 = to_string(jeff.getMdefense(1)), spd2 = to_string(jeff.getMspeed(1)),
         name3 = jeff.getMname(2), level3 = to_string(jeff.getMlvl(2)), hp3 = to_string(jeff.getMhealth(2)), atk3 = to_string(jeff.getMattack(2)), def3 = to_string(jeff.getMdefense(2)), spd3 = to_string(jeff.getMspeed(2)),
         name4 = jeff.getMname(3), level4 = to_string(jeff.getMlvl(3)), hp4 = to_string(jeff.getMhealth(3)), atk4 = to_string(jeff.getMattack(3)), def4 = to_string(jeff.getMdefense(3)), spd4 = to_string(jeff.getMspeed(3)),

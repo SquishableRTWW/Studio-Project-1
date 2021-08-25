@@ -15,6 +15,7 @@ private:
 	int kills;
 public:
 	monster(void);
+	void chooseStarter(monster& monster, int s);
 	void setName(string name);
 	void setOGStats(void);
 	void setOGBossStats(void);

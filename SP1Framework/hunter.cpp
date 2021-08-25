@@ -101,7 +101,8 @@ int hunter::getMspeed(int i)
 
 void hunter::setMHealth(int i, int j)
 {
-	getMonster(i).setHealth(j);
+	monster mon = getMonster(i);
+	mon.setHealth(j);
 }
 void hunter::setMAttack(int i, int j)
 {
