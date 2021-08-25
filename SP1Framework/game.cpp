@@ -675,7 +675,7 @@ void updateEncounter()
                 }
                 if (wild.getName() == "smeltor")
                 {
-                    g_bQuitGame = true;
+                    g_eGameState = S_GAMEOVER;
                 }
             }
             mon1.setHealth(-wildDMG);
