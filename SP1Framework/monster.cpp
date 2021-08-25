@@ -4,6 +4,8 @@
 #include "azure.h"
 #include "thornhull.h"
 #include "ignis.h"
+#include "smeltor.h"
+#include "atax.h"
 #include <iostream>
 #include <string>
 #include <random>
@@ -35,8 +37,8 @@ void monster::setOGBossStats(void)
 {
 	this->health = 50;
 	this->attack = 8;
-	this->defence = 9;
-	this->speed = 14;
+	this->defence = 4;
+	this->speed = 12;
 	this->level = 14;
 }
 void monster::setOGBoss2Stats(void)
@@ -150,6 +152,12 @@ void monster::setWildMonster(monster& monster, int i)
 		break;
 	case 4:
 		monster = lavarous();
+		break;
+	case 5:
+		monster = atax();
+		break;
+	case 6:
+		monster = smeltor();
 		break;
 	}
 }

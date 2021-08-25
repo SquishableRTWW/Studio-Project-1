@@ -8,7 +8,7 @@ atax::atax(void)
 	setOGBossStats();
 	for (int i = 0; i < getLevel(); i++)
 	{
-		setHealth(2); setAttack(2); setDefence(1); setSpeed(1);
+		setHealth(2); setAttack(1); setDefence(1); setSpeed(1);
 	}
 	for (int i = 0; i < 4; i++)
 	{

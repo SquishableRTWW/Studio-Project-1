@@ -281,9 +281,18 @@ void update(double dt)
         case S_ENCOUNTERBOSS:
             if (boss == 1)
             {
+                wild.setWildMonster(wild, 5);
                 for (int i = 0; i < 4; i++)
                 {
-                    boss1.setMove(i);
+                    wild.setMove(wild, i);
+                }
+            }
+            if (boss == 2)
+            {
+                wild.setWildMonster(wild, 6);
+                for (int i = 0; i < 4; i++)
+                {
+                    wild.setMove(wild, i);
                 }
             }
             updateBossEncounter();
@@ -380,12 +389,14 @@ void bossSplashscreenWait()
 void updateBossEncounter()
 {
     //First skill
-    if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 19 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    int yourDMG = jeff.getMonster(0).getMoveDamage(0) * (jeff.getMonster(0).getAttack() / wild.getDefence()) * 0.5;
+    int wildDMG = wild.getMoveDamage(0) * ((wild.getAttack() / jeff.getMonster(0).getDefence()) * 0.5);
+    if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 14 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
-        if (boss1.getSpeed() >= jeff.getMonster(0).getSpeed())
+        if (wild.getSpeed() >= jeff.getMonster(0).getSpeed())
         {
-            boss1.setHealth(-(jeff.getMonster(0).getMoveDamage(0)) * ((jeff.getMonster(0).getAttack() / boss1.getDefence()) * 0.5));
-            if (boss1.getHealth() <= 0)
+            wild.setHealth(-yourDMG);
+            if (wild.getHealth() <= 0)
             {
                 jeff.getMonster(0).upKill();
                 jeff.getMonster(0).levelUp(jeff.getMonster(0));
@@ -399,12 +410,12 @@ void updateBossEncounter()
                     break;
                 }
             }
-            jeff.getMonster(0).setHealth(-(boss1.getMoveDamage(0)) * ((boss1.getAttack() / jeff.getMonster(0).getDefence()) * 0.5));
+            jeff.setMHealth(0, -wildDMG);
         }
         else
         {
-            jeff.getMonster(0).setHealth(-(boss1.getMoveDamage(0)) * ((boss1.getAttack() / jeff.getMonster(0).getDefence()) * 0.5));
-            boss1.setHealth(-(jeff.getMonster(0).getMoveDamage(0)) * ((jeff.getMonster(0).getAttack() / boss1.getDefence()) * 0.5));
+            jeff.setMHealth(0, -wildDMG);
+            wild.setHealth(-yourDMG);
             if (wild.getHealth() <= 0)
             {
                 jeff.getMonster(0).upKill();
@@ -422,6 +433,7 @@ void updateBossEncounter()
         }
 
     }
+
     //Second skill
     if ((g_mouseEvent.mousePosition.X > 26 && g_mouseEvent.mousePosition.X < 31 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
@@ -482,12 +494,13 @@ void updateEncounter()
             failedCatch = false;
         }
     }
-
+    int yourDMG = jeff.getMonster(0).getMoveDamage(0)* (jeff.getMonster(0).getAttack() / wild.getDefence()) * 0.5;
+    int wildDMG = wild.getMoveDamage(0)* ((wild.getAttack() / jeff.getMonster(0).getDefence()) * 0.5);
     if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 14 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
         if (wild.getSpeed() >= jeff.getMonster(0).getSpeed())
         {
-            wild.setHealth(-(jeff.getMonster(0).getMoveDamage(0)) * ((jeff.getMonster(0).getAttack() / wild.getDefence()) * 0.5));
+            wild.setHealth(-yourDMG);
             if (wild.getHealth() <= 0)
             {
                 jeff.getMonster(0).upKill();
@@ -502,12 +515,12 @@ void updateEncounter()
                     break;
                 }
             }
-            jeff.setMHealth(0, -(wild.getMoveDamage(0))* ((wild.getAttack() / jeff.getMonster(0).getDefence()) * 0.5));
+            jeff.setMHealth(0, -wildDMG);
         }
         else
         {
-            jeff.setMHealth(0, -(wild.getMoveDamage(0)) * ((wild.getAttack() / jeff.getMonster(0).getDefence()) * 0.5));
-            wild.setHealth(-(jeff.getMonster(0).getMoveDamage(0)) * ((jeff.getMonster(0).getAttack() / wild.getDefence()) * 0.5));
+            jeff.setMHealth(0, -wildDMG);
+            wild.setHealth(-yourDMG);
             if (wild.getHealth() <= 0)
             {
                 jeff.getMonster(0).upKill();
@@ -1504,7 +1517,7 @@ void renderEncounterBoss()
         name5 = jeff.getMname(4), level5 = to_string(jeff.getMlvl(4)), hp5 = to_string(jeff.getMhealth(4)), atk5 = to_string(jeff.getMattack(4)), def5 = to_string(jeff.getMdefense(4)), spd5 = to_string(jeff.getMspeed(4)),
         name6 = jeff.getMname(5), level6 = to_string(jeff.getMlvl(5)), hp6 = to_string(jeff.getMhealth(5)), atk6 = to_string(jeff.getMattack(5)), def6 = to_string(jeff.getMdefense(5)), spd6 = to_string(jeff.getMspeed(5));
 
-    string nameBoss = boss1.getName(), levelBoss = to_string(boss1.getLevel()), hpBoss = to_string(boss1.getHealth()), atkBoss = to_string(boss1.getAttack()), defBoss = to_string(boss1.getDefence()), spdBoss = to_string(boss1.getSpeed());
+    string nameBoss = wild.getName(), levelBoss = to_string(wild.getLevel()), hpBoss = to_string(wild.getHealth()), atkBoss = to_string(wild.getAttack()), defBoss = to_string(wild.getDefence()), spdBoss = to_string(wild.getSpeed());
     const WORD colors[] = {
         0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
         0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6
