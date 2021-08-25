@@ -56,6 +56,15 @@ enum EGAMESTATES
     S_COUNT
 };
 
+enum Entities//enumeration to store the types of entities
+{
+    E_Hunter,
+    E_Healer,
+    E_NPC,
+    E_Boss,
+    E_NULL
+};
+
 // struct for the game character
 struct SGameChar
 {
