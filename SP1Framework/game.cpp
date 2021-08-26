@@ -19,10 +19,13 @@ double  g_dDeltaTime;
 bool isCaught;
 bool failedCatch;
 int location;
+int location2;
 int boss;
+int moveDecision;
 hunter jeff;
 hunter Enemy[8];
-monster wild;
+monster wild, Null;
+monster mon1, mon2, mon3, mon4, mon5, mon6;
 NPC Advice[4];
 NPC Nurse;
 SKeyEvent g_skKeyEvent[K_COUNT + 2];
@@ -45,9 +48,9 @@ Console g_Console(80, 25, "SP1 Framework");
 //--------------------------------------------------------------
 void init( void )
 {
-    srand((unsigned)time(0));
-    atax atax; smeltor smeltor; boss = 1;
-    isCaught = false; failedCatch = false;
+    srand((unsigned)time(0)); boss = 1;
+    isCaught = false; failedCatch = false; moveDecision = 0;
+    float hpBarP = mon1.getHealth() / mon1.getMaxHealth(); float hpBarW = wild.getHealth() / wild.getMaxHealth();
     location = 1;
     // Set precision for floating point output
     g_dElapsedTime = 0.0;
@@ -166,7 +169,8 @@ void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
         break;
     case S_STARTER: gameplayMouseHandler(mouseEvent);
         break;
-    case S_BOSSROUTE: gameplayMouseHandler(mouseEvent);
+    case S_ENCOUNTERBOSS: gameplayMouseHandler(mouseEvent);
+        break;
     }
     
 }
@@ -274,6 +278,31 @@ void update(double dt)
             break;
         case S_INTERACT: interactionWait();
             break;
+        case S_BOSSSPLASHSCREEN:
+            if (boss == 1)
+            {
+                wild.setWildMonster(wild, 5);
+                for (int i = 0; i < 4; i++)
+                {
+                    wild.setMove(wild, i);
+                }
+            }
+            if (boss == 2)
+            {
+                wild.setWildMonster(wild, 6);
+                for (int i = 0; i < 4; i++)
+                {
+                    wild.setMove(wild, i);
+                }
+            }
+            bossSplashscreenWait();
+            break;
+        case S_ENCOUNTERBOSS:
+            updateEncounter();
+            break;
+        case S_GAMEOVER:
+            gameOverWait();
+            break;
     }
 }
 
@@ -328,17 +357,17 @@ void starterScreenWait()
 {
     if ((g_mouseEvent.mousePosition.X > 21 && g_mouseEvent.mousePosition.X < 33 && g_mouseEvent.mousePosition.Y == 12) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
-        jeff.choosestarter(1);
+        mon1.chooseStarter(mon1, 1);
         g_eGameState = S_GAME;
     }
     if ((g_mouseEvent.mousePosition.X > 36 && g_mouseEvent.mousePosition.X < 50 && g_mouseEvent.mousePosition.Y == 12) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
-        jeff.choosestarter(2);
+        mon1.chooseStarter(mon1, 2);
         g_eGameState = S_GAME;
     }
     if ((g_mouseEvent.mousePosition.X > 53 && g_mouseEvent.mousePosition.X < 69 && g_mouseEvent.mousePosition.Y == 12) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
-        jeff.choosestarter(3);
+        mon1.chooseStarter(mon1, 3);
         g_eGameState = S_GAME;
     }
 }
@@ -357,6 +386,17 @@ void interactionWait()
     }
 }
 
+void bossSplashscreenWait()
+{
+    Sleep(2000);
+    g_eGameState = S_ENCOUNTERBOSS;
+}
+
+void gameOverWait()
+{
+    Sleep(2000);
+    g_bQuitGame = true;
+}
 
 
 void updateEncounter()
@@ -378,10 +418,31 @@ void updateEncounter()
     {
         COORD c;
         c.X = 1; c.Y = 24;
+        int yourDMG = mon1.getMoveDamage(0) * (mon1.getAttack() / wild.getDefence()) * 0.5;
+        int wildDMG = wild.getMoveDamage(0) * ((wild.getAttack() / mon1.getDefence()) * 0.5);
         int caught = (rand() % 5) + 0;
         if (caught == 0)
         {
-            jeff.addparty(wild);
+            if (mon2.getName() == "NULL")
+            {
+                mon2 = wild;
+            }
+            else if (mon2.getName() != "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+            {
+                mon3 = wild;
+            }
+            else if (mon3.getName() != "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+            {
+                mon4 = wild;
+            }
+            else if (mon4.getName() != "NULL" && mon5.getName() != "NULL" && mon6.getName() == "NULL")
+            {
+                mon5 = wild;
+            }
+            else if (mon5.getName() != "NULL" && mon2.getName() != "NULL" && mon3.getName() != "NULL" && mon4.getName() != "NULL" && mon5.getName() != "NULL")
+            {
+                mon6 = wild;
+            }
             isCaught = true;
             switch (location)
             {
@@ -396,20 +457,36 @@ void updateEncounter()
         }
         else
         {
+            mon1.setHealth(-wildDMG);
             failedCatch = true;
             failedCatch = false;
         }
     }
-
+    //First skill
     if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 14 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
-        if (wild.getSpeed() >= jeff.getMonster(0).getSpeed())
+        moveDecision = 0;
+        int yourDMG = mon1.getMoveDamage(moveDecision) * (mon1.getAttack() / wild.getDefence()) * 0.5;
+        int wildDMG = wild.getMoveDamage(moveDecision) * ((wild.getAttack() / mon1.getDefence()) * 0.5);
+        if (wild.getSpeed() >= mon1.getSpeed())
         {
-            wild.setHealth(-(jeff.getMonster(0).getMoveDamage(0)) * ((jeff.getMonster(0).getAttack() / wild.getDefence()) * 0.5));
+            mon1.setHealth(-wildDMG);
+            if (mon1.getHealth() <= 0)
+            {
+                if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+                {
+                    g_eGameState = S_GAMEOVER;
+                }
+                else
+                {
+                    mon1 = mon2;
+                    mon2 = mon3; mon3 = mon4; mon4 = mon5; mon5 = mon6; mon6 = Null;
+                }
+            }
+            wild.setHealth(-yourDMG);
             if (wild.getHealth() <= 0)
             {
-                jeff.getMonster(0).upKill();
-                jeff.getMonster(0).levelUp(jeff.getMonster(0));
+                mon1.levelUp(mon1);
                 switch (location)
                 {
                 case 1: g_eGameState = S_GAME;
@@ -419,17 +496,22 @@ void updateEncounter()
                 case 3: g_eGameState = S_ROUTE3;
                     break;
                 }
+                if (wild.getName() == "atax")
+                {
+                    boss++;
+                }
+                if (wild.getName() == "smeltor")
+                {
+                    g_eGameState = S_GAMEOVER;
+                }
             }
-            jeff.getMonster(0).setHealth(-(wild.getMoveDamage(0))* ((wild.getAttack() / jeff.getMonster(0).getDefence()) * 0.5));
         }
         else
         {
-            jeff.getMonster(0).setHealth(-(wild.getMoveDamage(0)) * ((wild.getAttack() / jeff.getMonster(0).getDefence()) * 0.5));
-            wild.setHealth(-(jeff.getMonster(0).getMoveDamage(0)) * ((jeff.getMonster(0).getAttack() / wild.getDefence()) * 0.5));
+            wild.setHealth(-yourDMG);
             if (wild.getHealth() <= 0)
             {
-                jeff.getMonster(0).upKill();
-                jeff.getMonster(0).levelUp(jeff.getMonster(0));
+                mon1.levelUp(mon1);
                 switch (location)
                 {
                 case 1: g_eGameState = S_GAME;
@@ -439,31 +521,251 @@ void updateEncounter()
                 case 3: g_eGameState = S_ROUTE3;
                     break;
                 }
+                if (wild.getName() == "atax")
+                {
+                    boss++;
+                }
+                if (wild.getName() == "smeltor")
+                {
+                    g_eGameState = S_GAMEOVER;
+                }
+            }
+            mon1.setHealth(-wildDMG);
+            if (mon1.getHealth() <= 0)
+            {
+                if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+                {
+                    g_eGameState = S_GAMEOVER;
+                }
+
             }
         }
-
     }
-
     //Second skill
     if ((g_mouseEvent.mousePosition.X > 26 && g_mouseEvent.mousePosition.X < 31 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
-        //Insert attack
-    }
+        moveDecision = 1;
+        int yourDMG = mon1.getMoveDamage(moveDecision) * (mon1.getAttack() / wild.getDefence()) * 0.5;
+        int wildDMG = wild.getMoveDamage(moveDecision) * ((wild.getAttack() / mon1.getDefence()) * 0.5);
+        if (wild.getSpeed() >= mon1.getSpeed())
+        {
+            mon1.setHealth(-wildDMG);
+            if (mon1.getHealth() <= 0)
+            {
+                if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+                {
+                    g_eGameState = S_GAMEOVER;
+                }
 
+            }
+            wild.setHealth(-yourDMG);
+            if (wild.getHealth() <= 0)
+            {
+                mon1.levelUp(mon1);
+                switch (location)
+                {
+                case 1: g_eGameState = S_GAME;
+                    break;
+                case 2: g_eGameState = S_ROUTE2;
+                    break;
+                case 3: g_eGameState = S_ROUTE3;
+                    break;
+                }
+                if (wild.getName() == "atax")
+                {
+                    boss++;
+                }
+                if (wild.getName() == "smeltor")
+                {
+                    g_eGameState = S_GAMEOVER;
+                }
+            }
+        }
+        else
+        {
+            wild.setHealth(-yourDMG);
+            if (wild.getHealth() <= 0)
+            {
+                mon1.levelUp(mon1);
+                switch (location)
+                {
+                case 1: g_eGameState = S_GAME;
+                    break;
+                case 2: g_eGameState = S_ROUTE2;
+                    break;
+                case 3: g_eGameState = S_ROUTE3;
+                    break;
+                }
+                if (wild.getName() == "atax")
+                {
+                    boss++;
+                }
+                if (wild.getName() == "smeltor")
+                {
+                    g_eGameState = S_GAMEOVER;
+                }
+            }
+            mon1.setHealth(-wildDMG);
+            if (mon1.getHealth() <= 0)
+            {
+                if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+                {
+                    g_eGameState = S_GAMEOVER;
+                }
+
+            }
+        }
+    }
     //Third skill
     if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 14 && g_mouseEvent.mousePosition.Y == 22) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
-        //Insert attack
-    }
+        moveDecision = 2;
+        int yourDMG = mon1.getMoveDamage(moveDecision) * (mon1.getAttack() / wild.getDefence()) * 0.5;
+        int wildDMG = wild.getMoveDamage(moveDecision) * ((wild.getAttack() / mon1.getDefence()) * 0.5);
+        if (wild.getSpeed() >= mon1.getSpeed())
+        {
+            mon1.setHealth(-wildDMG);
+            if (mon1.getHealth() <= 0)
+            {
+                if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+                {
+                    g_eGameState = S_GAMEOVER;
+                }
 
+            }
+            wild.setHealth(-yourDMG);
+            if (wild.getHealth() <= 0)
+            {
+                mon1.levelUp(mon1);
+                switch (location)
+                {
+                case 1: g_eGameState = S_GAME;
+                    break;
+                case 2: g_eGameState = S_ROUTE2;
+                    break;
+                case 3: g_eGameState = S_ROUTE3;
+                    break;
+                }
+                if (wild.getName() == "atax")
+                {
+                    boss++;
+                }
+                if (wild.getName() == "smeltor")
+                {
+                    g_eGameState = S_GAMEOVER;
+                }
+            }
+        }
+        else
+        {
+            wild.setHealth(-yourDMG);
+            if (wild.getHealth() <= 0)
+            {
+                mon1.levelUp(mon1);
+                switch (location)
+                {
+                case 1: g_eGameState = S_GAME;
+                    break;
+                case 2: g_eGameState = S_ROUTE2;
+                    break;
+                case 3: g_eGameState = S_ROUTE3;
+                    break;
+                }
+                if (wild.getName() == "atax")
+                {
+                    boss++;
+                }
+                if (wild.getName() == "smeltor")
+                {
+                    g_eGameState = S_GAMEOVER;
+                }
+            }
+            mon1.setHealth(-wildDMG);
+            if (mon1.getHealth() <= 0)
+            {
+                if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+                {
+                    g_eGameState = S_GAMEOVER;
+                }
+
+            }
+        }
+    }
     //Fourth skill
     if ((g_mouseEvent.mousePosition.X > 27 && g_mouseEvent.mousePosition.X < 30 && g_mouseEvent.mousePosition.Y == 22) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
-        //Insert attack
+        moveDecision = 3;
+        int yourDMG = mon1.getMoveDamage(moveDecision) * (mon1.getAttack() / wild.getDefence()) * 0.5;
+        int wildDMG = wild.getMoveDamage(moveDecision) * ((wild.getAttack() / mon1.getDefence()) * 0.5);
+        if (wild.getSpeed() >= mon1.getSpeed())
+        {
+            mon1.setHealth(-wildDMG);
+            if (mon1.getHealth() <= 0)
+            {
+                if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+                {
+                    g_eGameState = S_GAMEOVER;
+                }
+
+            }
+            wild.setHealth(-yourDMG);
+            if (wild.getHealth() <= 0)
+            {
+                mon1.levelUp(mon1);
+                switch (location)
+                {
+                case 1: g_eGameState = S_GAME;
+                    break;
+                case 2: g_eGameState = S_ROUTE2;
+                    break;
+                case 3: g_eGameState = S_ROUTE3;
+                    break;
+                }
+                if (wild.getName() == "atax")
+                {
+                    boss++;
+                }
+                if (wild.getName() == "smeltor")
+                {
+                    g_eGameState = S_GAMEOVER;
+                }
+            }
+        }
+        else
+        {
+            wild.setHealth(-yourDMG);
+            if (wild.getHealth() <= 0)
+            {
+                mon1.levelUp(mon1);
+                switch (location)
+                {
+                case 1: g_eGameState = S_GAME;
+                    break;
+                case 2: g_eGameState = S_ROUTE2;
+                    break;
+                case 3: g_eGameState = S_ROUTE3;
+                    break;
+                }
+                if (wild.getName() == "atax")
+                {
+                    boss++;
+                }
+                if (wild.getName() == "smeltor")
+                {
+                    g_eGameState = S_GAMEOVER;
+                }
+            }
+            mon1.setHealth(-wildDMG);
+            if (mon1.getHealth() <= 0)
+            {
+                if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+                {
+                    g_eGameState = S_GAMEOVER;
+                }
+
+            }
+        }
     }
-
-
-    
 }
 
 void moveSelection()
@@ -506,7 +808,7 @@ void moveCharacter()
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
 
-    if (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.Y > 0 || (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && g_eGameState == S_ROUTE2) ||(g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && g_eGameState == S_BOSSROUTE))
+    if (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.Y > 0 || (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && g_eGameState == S_ROUTE2) || (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && g_eGameState == S_BOSSROUTE))
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.Y--;
@@ -526,9 +828,9 @@ void moveCharacter()
         //Beep(1440, 30);
         g_sChar.m_cLocation.X++;
     }
-    if (g_skKeyEvent[K_Q].keyReleased)
+    if (g_skKeyEvent[K_Q].keyReleased) //NPC interaction check
     {
-        for (int i = 0; i < 4;i++ )
+        for (int i = 0; i < 4;i++ )//triggers NPC interaction
         {
             if (g_sChar.m_cLocation.X == Advice[i].getX() + 1 && g_sChar.m_cLocation.Y == Advice[i].getY() || g_sChar.m_cLocation.X == Advice[i].getX() - 1 && g_sChar.m_cLocation.Y == Advice[i].getY() ||
                 g_sChar.m_cLocation.Y == Advice[i].getY() - 1 && g_sChar.m_cLocation.X == Advice[i].getX() || g_sChar.m_cLocation.Y == Advice[i].getY() + 1 && g_sChar.m_cLocation.X == Advice[i].getX())
@@ -542,11 +844,13 @@ void moveCharacter()
                     break;
                 case S_ROUTE3: location = 3;
                     break;
+                case S_BOSSROUTE: location = 4;
+                    break;
                 }
                 g_eGameState = S_INTERACT;
             }
         }
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 8; i++)///triggers HUnter battle
         {
             if (g_sChar.m_cLocation.X == Enemy[i].getX() + 1 && g_sChar.m_cLocation.Y == Enemy[i].getY() || g_sChar.m_cLocation.X == Enemy[i].getX() - 1 && g_sChar.m_cLocation.Y == Enemy[i].getY() ||
                 g_sChar.m_cLocation.Y == Enemy[i].getY() - 1 && g_sChar.m_cLocation.X == Enemy[i].getX() || g_sChar.m_cLocation.Y == Enemy[i].getY() + 1 && g_sChar.m_cLocation.X == Enemy[i].getX())
@@ -563,6 +867,7 @@ void moveCharacter()
                 }
             }
         }
+        //triggers Healer interctions
         if (g_sChar.m_cLocation.X == Nurse.getX() + 1 && g_sChar.m_cLocation.Y == Nurse.getY() || g_sChar.m_cLocation.X == Nurse.getX() - 1 && g_sChar.m_cLocation.Y == Nurse.getY() ||
             g_sChar.m_cLocation.Y == Nurse.getY() - 1 && g_sChar.m_cLocation.X == Nurse.getX() || g_sChar.m_cLocation.Y == Nurse.getY() + 1 && g_sChar.m_cLocation.X == Nurse.getX())
         {
@@ -570,6 +875,17 @@ void moveCharacter()
             g_eGameState = S_INTERACT;
         }
     }
+
+    //Boss encounter check:
+    if (g_eGameState == S_BOSSROUTE)
+    {
+        if ((g_sChar.m_cLocation.X >= 24 && g_sChar.m_cLocation.X < 51) && (g_sChar.m_cLocation.Y >= 18 && g_sChar.m_cLocation.Y < 22))
+        {
+            g_eGameState = S_BOSSSPLASHSCREEN;
+        }
+    }
+
+    // map travelling check
     if ((g_sChar.m_cLocation.X < 0 && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_GAME)
     {
         g_sChar.m_cLocation.X = 79;
@@ -609,7 +925,7 @@ void moveCharacter()
         {
         case S_GAME: location = 1;
             break;
-        case S_ROUTE2: location =2;
+        case S_ROUTE2: location = 2;
             break;
         case S_ROUTE3: location = 3;
             break;
@@ -622,40 +938,238 @@ void moveCharacter()
     if (g_skKeyEvent[K_F].keyReleased)
         g_eGameState = S_MENU;
     collision();
+    detection();
 }
 
 void collision()
 {
-    for (int i = 0; i < 4; i++)
+    switch (location2)
     {
-        if (g_skKeyEvent[K_UP].keyDown)
+    case 1:
+        for (int i = 0; i < 4; i++)//collision for NPC
         {
-            if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+            if (g_skKeyEvent[K_UP].keyDown)
             {
-                g_sChar.m_cLocation.Y++;
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.Y++;
+                }
+            }
+            if (g_skKeyEvent[K_LEFT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.X++;
+                }
+            }
+            if (g_skKeyEvent[K_DOWN].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.Y--;
+                }
+            }
+            if (g_skKeyEvent[K_RIGHT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.X--;
+                }
             }
         }
-        if (g_skKeyEvent[K_LEFT].keyDown)
+        for (int i = 0; i < 4; i++)//collision for Enemy
         {
-            if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+            if (g_skKeyEvent[K_UP].keyDown)
             {
-                g_sChar.m_cLocation.X++;
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.Y++;
+                }
+            }
+            if (g_skKeyEvent[K_LEFT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.X++;
+                }
+            }
+            if (g_skKeyEvent[K_DOWN].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.Y--;
+                }
+            }
+            if (g_skKeyEvent[K_RIGHT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.X--;
+                }
             }
         }
-        if (g_skKeyEvent[K_DOWN].keyDown)
+        break;
+    case 2:
+        for (int i = 1; i < 4; i++)//collision for NPC
         {
-            if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+            if (g_skKeyEvent[K_UP].keyDown)
             {
-                g_sChar.m_cLocation.Y--;
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.Y++;
+                }
+            }
+            if (g_skKeyEvent[K_LEFT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.X++;
+                }
+            }
+            if (g_skKeyEvent[K_DOWN].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.Y--;
+                }
+            }
+            if (g_skKeyEvent[K_RIGHT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.X--;
+                }
             }
         }
-        if (g_skKeyEvent[K_RIGHT].keyDown)
+        for (int i = 1; i < 4; i++)//collision for Enemy
         {
-            if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+            if (g_skKeyEvent[K_UP].keyDown)
             {
-                g_sChar.m_cLocation.X--;
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.Y++;
+                }
+            }
+            if (g_skKeyEvent[K_LEFT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.X++;
+                }
+            }
+            if (g_skKeyEvent[K_DOWN].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.Y--;
+                }
+            }
+            if (g_skKeyEvent[K_RIGHT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.X--;
+                }
             }
         }
+        break;
+    case 3:
+        for (int i = 0; i < 4; i++)//collision for NPC
+        {
+            if (g_skKeyEvent[K_UP].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.Y++;
+                }
+            }
+            if (g_skKeyEvent[K_LEFT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.X++;
+                }
+            }
+            if (g_skKeyEvent[K_DOWN].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.Y--;
+                }
+            }
+            if (g_skKeyEvent[K_RIGHT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.X--;
+                }
+            }
+        }
+        for (int i = 0; i < 4; i++)//collision for Enemy
+        {
+            if (g_skKeyEvent[K_UP].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.Y++;
+                }
+            }
+            if (g_skKeyEvent[K_LEFT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.X++;
+                }
+            }
+            if (g_skKeyEvent[K_DOWN].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.Y--;
+                }
+            }
+            if (g_skKeyEvent[K_RIGHT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.X--;
+                }
+            }
+        }
+        break;
+    case 4:
+        for (int i = 0; i < 4; i++)//collision for NPC
+        {
+            if (g_skKeyEvent[K_UP].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.Y++;
+                }
+            }
+            if (g_skKeyEvent[K_LEFT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.X++;
+                }
+            }
+            if (g_skKeyEvent[K_DOWN].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.Y--;
+                }
+            }
+            if (g_skKeyEvent[K_RIGHT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.X--;
+                }
+            }
+        }
+        break;
     }
     // Collision for house walls and nurse NPC
     if (g_eGameState == S_GAME)
@@ -699,6 +1213,178 @@ void collision()
     }
 }
 
+void detection()
+{
+    switch (location2)
+    {
+    case S_GAME:
+        for (int i = 0; i < 8; i++)
+        {
+            if (Enemy[i].getcheck() == false)
+            {
+                switch (Enemy[i].getdirection())
+                {
+                case(1):
+                    for (int j = 0; j <= Enemy[i].getrange(); j++)
+                    {
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() - j && g_sChar.m_cLocation.X == Enemy[i].getX())
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
+                    }
+                    break;
+                case(2):
+                    for (int j = 0; j < Enemy[i].getrange(); j++)
+                    {
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() + j && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
+                    }
+                    break;
+                case(3):
+                    for (int j = 0; j < Enemy[i].getrange(); j++)
+                    {
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() - j)
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
+                    }
+                    break;
+                case(4):
+                    for (int j = 0; j < Enemy[i].getrange(); j++)
+                    {
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() + j)
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        break;
+    case S_ROUTE2:
+        for (int i = 1; i < 8; i++)
+        {
+            if (Enemy[i].getcheck() == false)
+            {
+                switch (Enemy[i].getdirection())
+                {
+                case(1):
+                    for (int j = 0; j <= Enemy[i].getrange(); j++)
+                    {
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() - j && g_sChar.m_cLocation.X == Enemy[i].getX())
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
+                    }
+                    break;
+                case(2):
+                    for (int j = 0; j < Enemy[i].getrange(); j++)
+                    {
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() + j && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
+                    }
+                    break;
+                case(3):
+                    for (int j = 0; j < Enemy[i].getrange(); j++)
+                    {
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() - j)
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
+                    }
+                    break;
+                case(4):
+                    for (int j = 0; j < Enemy[i].getrange(); j++)
+                    {
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() + j)
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        break;
+    case S_ROUTE3:
+        for (int i = 0; i < 8; i++)
+        {
+            if (Enemy[i].getcheck() == false)
+            {
+                switch (Enemy[i].getdirection())
+                {
+                case(1):
+                    for (int j = 0; j <= Enemy[i].getrange(); j++)
+                    {
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() - j && g_sChar.m_cLocation.X == Enemy[i].getX())
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
+                    }
+                    break;
+                case(2):
+                    for (int j = 0; j < Enemy[i].getrange(); j++)
+                    {
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() + j && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
+                    }
+                    break;
+                case(3):
+                    for (int j = 0; j < Enemy[i].getrange(); j++)
+                    {
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() - j)
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
+                    }
+                    break;
+                case(4):
+                    for (int j = 0; j < Enemy[i].getrange(); j++)
+                    {
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() + j)
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        break;
+    }
+}
+
 void processUserInput()
 {
     // quits the game if player hits the escape key
@@ -724,7 +1410,7 @@ void render()
         break;
     case S_GAME: renderGame();
         break;
-    case S_MENU: renderMenu();
+    case S_MENU: renderMenu(); renderInstructions();
         break;
     case S_ENCOUNTERSPLASHSCREEN: renderEncounterSplashScreen();
         break;
@@ -752,10 +1438,22 @@ void render()
         case 3: renderGame3(); renderInteract(); break;
         }
         break;
+    case S_GAMEOVER: renderGameOver();
+        break;
     }
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();
     renderToScreen();       // dump the contents of the buffer to the screen, one frame worth of game
+}
+
+void renderInstructions()
+{
+    COORD c;
+    c.X = 0; c.Y = 19; g_Console.writeToBuffer(c, "WASD for movement", 0x0F);
+    c.Y++; g_Console.writeToBuffer(c, "F for party menu", 0x0F);
+    c.Y++; g_Console.writeToBuffer(c, "ESC for exit", 0x0F);
+    c.Y++; g_Console.writeToBuffer(c, "Left click to select attacks and encounter decisions", 0x0F);
+    c.Y++; g_Console.writeToBuffer(c, "Press Q near NPCs to talk to them");
 }
 
 void clearScreen()
@@ -819,6 +1517,10 @@ void renderBossRoute() //while in the boss map
     renderBossMap(); // renders map of boss route
     renderCharacter();
 }
+void renderGameOver()
+{
+    renderGameOverScreen();
+}
 // -------------------------------------------------------------------------
 
 void renderMap()
@@ -880,10 +1582,15 @@ void renderMap()
     }
     //Nurse NPC to heal monster
     Nurse.setposition(29, 7);
-    g_Console.writeToBuffer(Nurse.getposition(), char(4), 0x0C);
+    g_Console.writeToBuffer(Nurse.getposition(), char(3), 0x0C);
     //NPC
     Advice[0].setposition(44, 11);
-    g_Console.writeToBuffer(Advice[0].getposition(), char(2), 0x0A);
+    g_Console.writeToBuffer(Advice[0].getposition(), char(2), 0x0B);
+    //Hunter
+    Enemy[0].setposition(5, 16);
+    Enemy[0].setDirRange(1, 5);
+    g_Console.writeToBuffer(Enemy[0].getposition(), char(2), 0xC0);
+    location2 = 1;
     //Grasspatch test
     for (int i = 0; i < 13; i++)
     {
@@ -966,9 +1673,7 @@ void renderRoute2()
             g_Console.writeToBuffer(c, "+", 0x60);
         }
     }
-    //NPC
-    Advice[1].setposition(44, 15);
-    g_Console.writeToBuffer(Advice[1].getposition(), char(2), 0x0A);
+    location2 = 2;
 }
 
 void renderRoute3()
@@ -1000,9 +1705,7 @@ void renderRoute3()
             g_Console.writeToBuffer(c, "+", 0x60);
         }
     }
-    //NPC
-    Advice[2].setposition(13, 13);
-    g_Console.writeToBuffer(Advice[2].getposition(), char(2), 0x0A);
+    location2 = 3;
     //Grasspatch test
     for (int i = 0; i < 13; i++) //patch 1
     {
@@ -1064,9 +1767,10 @@ void renderBossMap()
         for (int j = 18; j < 22; j++)
         {
             c.Y = j;
-            g_Console.writeToBuffer(c, "/", colors[2]);
+            g_Console.writeToBuffer(c, "/", 0x06);
         }
     }
+    location2 = 4;
 }
 
 void renderInteract()
@@ -1076,23 +1780,21 @@ void renderInteract()
     c.Y = g_sChar.m_cLocation.Y - 1;
     switch (Type)
     {
-    case E_NPC: g_Console.writeToBuffer(c, Advice[1].interact(), 0x0B); break;
+    case E_NPC: g_Console.writeToBuffer(c, Advice[0].interact(), 0x0B); break;
     case E_Healer: g_Console.writeToBuffer(c, Nurse.Healquote(), 0x0B);
-        for (int i = 0; i < 6; i++)
-        {
-            jeff.getMonster(i).setHealth(jeff.getMonster(i).getMaxHealth());
-        }
+            mon1.setHealth(mon1.getMaxHealth() - mon1.getHealth());
+            break;
     }
 }
 
 void renderEncounter()
 {
-    string name1 = jeff.getMname(0), level1 = to_string(jeff.getMlvl(0)), hp1 = to_string(jeff.getMhealth(0)), atk1 = to_string(jeff.getMattack(0)), def1 = to_string(jeff.getMdefense(0)), spd1 = to_string(jeff.getMspeed(0)),
-        name2 = jeff.getMname(1), level2 = to_string(jeff.getMlvl(1)), hp2 = to_string(jeff.getMhealth(1)), atk2 = to_string(jeff.getMattack(1)), def2 = to_string(jeff.getMdefense(1)), spd2 = to_string(jeff.getMspeed(1)),
-        name3 = jeff.getMname(2), level3 = to_string(jeff.getMlvl(2)), hp3 = to_string(jeff.getMhealth(2)), atk3 = to_string(jeff.getMattack(2)), def3 = to_string(jeff.getMdefense(2)), spd3 = to_string(jeff.getMspeed(2)),
-        name4 = jeff.getMname(3), level4 = to_string(jeff.getMlvl(3)), hp4 = to_string(jeff.getMhealth(3)), atk4 = to_string(jeff.getMattack(3)), def4 = to_string(jeff.getMdefense(3)), spd4 = to_string(jeff.getMspeed(3)),
-        name5 = jeff.getMname(4), level5 = to_string(jeff.getMlvl(4)), hp5 = to_string(jeff.getMhealth(4)), atk5 = to_string(jeff.getMattack(4)), def5 = to_string(jeff.getMdefense(4)), spd5 = to_string(jeff.getMspeed(4)),
-        name6 = jeff.getMname(5), level6 = to_string(jeff.getMlvl(5)), hp6 = to_string(jeff.getMhealth(5)), atk6 = to_string(jeff.getMattack(5)), def6 = to_string(jeff.getMdefense(5)), spd6 = to_string(jeff.getMspeed(5));
+    string name1 = mon1.getName(), level1 = to_string(mon1.getLevel()), hp1 = to_string(mon1.getHealth()), atk1 = to_string(mon1.getAttack()), def1 = to_string(mon1.getDefence()), spd1 = to_string(mon1.getSpeed()),
+        name2 = mon2.getName(), level2 = to_string(mon2.getLevel()), hp2 = to_string(mon2.getHealth()), atk2 = to_string(mon2.getAttack()), def2 = to_string(mon2.getDefence()), spd2 = to_string(mon2.getSpeed()),
+        name3 = mon3.getName(), level3 = to_string(mon3.getLevel()), hp3 = to_string(mon3.getHealth()), atk3 = to_string(mon3.getAttack()), def3 = to_string(mon3.getDefence()), spd3 = to_string(mon3.getSpeed()),
+        name4 = mon4.getName(), level4 = to_string(mon4.getLevel()), hp4 = to_string(mon4.getHealth()), atk4 = to_string(mon4.getAttack()), def4 = to_string(mon4.getDefence()), spd4 = to_string(mon4.getSpeed()),
+        name5 = mon5.getName(), level5 = to_string(mon5.getLevel()), hp5 = to_string(mon5.getHealth()), atk5 = to_string(mon5.getAttack()), def5 = to_string(mon5.getDefence()), spd5 = to_string(mon5.getSpeed()),
+        name6 = mon6.getName(), level6 = to_string(mon6.getLevel()), hp6 = to_string(mon6.getHealth()), atk6 = to_string(mon6.getAttack()), def6 = to_string(mon6.getDefence()), spd6 = to_string(mon6.getSpeed());
     string nameWild = wild.getName(), levelWild = to_string(wild.getLevel()), hpWild = to_string(wild.getHealth()), atkWild = to_string(wild.getAttack()), defWild = to_string(wild.getDefence()), spdWild = to_string(wild.getSpeed());
     const WORD colors[] = {
         0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
@@ -1135,11 +1837,21 @@ void renderEncounter()
     }
 
     c.X = 7; c.Y = 8;
-    g_Console.writeToBuffer(c, "Ele-beast: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0x60); c.Y = 8;
+    g_Console.writeToBuffer(c, "Ele-beast: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0x60); c.Y++; c.X--;
+    for (float i = 0; i < mon1.getHealth() / 2; i++) //health bar test
+    {
+        g_Console.writeToBuffer(c, " ", 0xA0); c.X++;
+    }
+    c.Y = 8;
     c.X = 17;
     g_Console.writeToBuffer(c, name1, 0x60); c.Y++; g_Console.writeToBuffer(c, level1, 0x60); c.Y++; g_Console.writeToBuffer(c, hp1, 0x60); c.Y = 8;
     c.X = 44;
-    g_Console.writeToBuffer(c, "Ele-beast: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0x60); c.X += 11; c.Y = 8;
+    g_Console.writeToBuffer(c, "Ele-beast: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0x60); c.Y++; c.X--;
+    for (float i = 0; i < wild.getHealth() / 2; i++) //health bar test
+    {
+        g_Console.writeToBuffer(c, " ", 0xA0); c.X++;
+    }
+    c.X = 54; c.Y = 8;
     g_Console.writeToBuffer(c, nameWild, 0x60); c.Y++; g_Console.writeToBuffer(c, levelWild, 0x60); c.Y++; g_Console.writeToBuffer(c, hpWild, 0x60); c.Y = 8;
     c.X = 1; c.Y = 24;
 
@@ -1191,13 +1903,13 @@ void renderEncounter()
     g_Console.writeToBuffer(c, "| \\ ", 0XB0);
 
     c.X = 10, c.Y = 19;
-    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(0));
+    g_Console.writeToBuffer(c, mon1.getMove(0));
     c.X = 27, c.Y = 19;
-    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(1));
+    g_Console.writeToBuffer(c, mon1.getMove(1));
     c.X = 10, c.Y = 22;
-    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(2));
+    g_Console.writeToBuffer(c, mon1.getMove(2));
     c.X = 27, c.Y = 22;
-    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(3));
+    g_Console.writeToBuffer(c, mon1.getMove(3));
     c.X = 10, c.Y = 10;
 
 
@@ -1207,9 +1919,16 @@ void renderEncounter()
 void renderEncounterSplashScreen()
 {
     COORD c;
-    c.X = 28;
-    c.Y = 11;
-    g_Console.writeToBuffer(c, "Wild Elebeasts Appears!");
+    c.X = 27;
+    c.Y = 18;
+    if (Type == E_Hunter)
+    {
+        g_Console.writeToBuffer(c, "You have been challenged to a battle!");
+    }
+    else
+    {
+        g_Console.writeToBuffer(c, "Wild Elebeasts Appears!");
+    }
 }
 
 
@@ -1376,13 +2095,14 @@ void renderBossSS()
 //When encounter boss
 void renderEncounterBoss()
 {
-    string name1 = jeff.getMname(0), level1 = to_string(jeff.getMlvl(0)), hp1 = to_string(jeff.getMhealth(0)), atk1 = to_string(jeff.getMattack(0)), def1 = to_string(jeff.getMdefense(0)), spd1 = to_string(jeff.getMspeed(0)),
-        name2 = jeff.getMname(1), level2 = to_string(jeff.getMlvl(1)), hp2 = to_string(jeff.getMhealth(1)), atk2 = to_string(jeff.getMattack(1)), def2 = to_string(jeff.getMdefense(1)), spd2 = to_string(jeff.getMspeed(1)),
-        name3 = jeff.getMname(2), level3 = to_string(jeff.getMlvl(2)), hp3 = to_string(jeff.getMhealth(2)), atk3 = to_string(jeff.getMattack(2)), def3 = to_string(jeff.getMdefense(2)), spd3 = to_string(jeff.getMspeed(2)),
-        name4 = jeff.getMname(3), level4 = to_string(jeff.getMlvl(3)), hp4 = to_string(jeff.getMhealth(3)), atk4 = to_string(jeff.getMattack(3)), def4 = to_string(jeff.getMdefense(3)), spd4 = to_string(jeff.getMspeed(3)),
-        name5 = jeff.getMname(4), level5 = to_string(jeff.getMlvl(4)), hp5 = to_string(jeff.getMhealth(4)), atk5 = to_string(jeff.getMattack(4)), def5 = to_string(jeff.getMdefense(4)), spd5 = to_string(jeff.getMspeed(4)),
-        name6 = jeff.getMname(5), level6 = to_string(jeff.getMlvl(5)), hp6 = to_string(jeff.getMhealth(5)), atk6 = to_string(jeff.getMattack(5)), def6 = to_string(jeff.getMdefense(5)), spd6 = to_string(jeff.getMspeed(5));
-    string nameWild = wild.getName(), levelWild = to_string(wild.getLevel()), hpWild = to_string(wild.getHealth()), atkWild = to_string(wild.getAttack()), defWild = to_string(wild.getDefence()), spdWild = to_string(wild.getSpeed());
+    string name1 = mon1.getName(), level1 = to_string(mon1.getLevel()), hp1 = to_string(mon1.getHealth()), atk1 = to_string(mon1.getAttack()), def1 = to_string(mon1.getDefence()), spd1 = to_string(mon1.getSpeed()),
+        name2 = mon2.getName(), level2 = to_string(mon2.getLevel()), hp2 = to_string(mon2.getHealth()), atk2 = to_string(mon2.getAttack()), def2 = to_string(mon2.getDefence()), spd2 = to_string(mon2.getSpeed()),
+        name3 = mon3.getName(), level3 = to_string(mon3.getLevel()), hp3 = to_string(mon3.getHealth()), atk3 = to_string(mon3.getAttack()), def3 = to_string(mon3.getDefence()), spd3 = to_string(mon3.getSpeed()),
+        name4 = mon4.getName(), level4 = to_string(mon4.getLevel()), hp4 = to_string(mon4.getHealth()), atk4 = to_string(mon4.getAttack()), def4 = to_string(mon4.getDefence()), spd4 = to_string(mon4.getSpeed()),
+        name5 = mon5.getName(), level5 = to_string(mon5.getLevel()), hp5 = to_string(mon5.getHealth()), atk5 = to_string(mon5.getAttack()), def5 = to_string(mon5.getDefence()), spd5 = to_string(mon5.getSpeed()),
+        name6 = mon6.getName(), level6 = to_string(mon6.getLevel()), hp6 = to_string(mon6.getHealth()), atk6 = to_string(mon6.getAttack()), def6 = to_string(mon6.getDefence()), spd6 = to_string(mon6.getSpeed());
+
+    string nameBoss = wild.getName(), levelBoss = to_string(wild.getLevel()), hpBoss = to_string(wild.getHealth()), atkBoss = to_string(wild.getAttack()), defBoss = to_string(wild.getDefence()), spdBoss = to_string(wild.getSpeed());
     const WORD colors[] = {
         0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
         0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6
@@ -1400,13 +2120,23 @@ void renderEncounterBoss()
             g_Console.writeToBuffer(c, " ", 0xC0);
         }
     }
-    c.X = 1; c.Y = 9;
-    g_Console.writeToBuffer(c, "Ele-beast: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xC0); c.Y = 9;
+    c.X = 1; c.Y = 8;
+    g_Console.writeToBuffer(c, "Ele-beast: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xC0); c.Y++; c.X--;
+    for (float i = 0; i < mon1.getHealth() / 2; i++) //health bar test
+    {
+        g_Console.writeToBuffer(c, " ", 0xA0); c.X++;
+    }
+    c.Y = 8;
     c.X = 11;
-    g_Console.writeToBuffer(c, name1, 0xC0); c.Y++; g_Console.writeToBuffer(c, level1, 0xC0); c.Y++; g_Console.writeToBuffer(c, hp1, 0xC0); c.Y = 9;
+    g_Console.writeToBuffer(c, name1, 0xC0); c.Y++; g_Console.writeToBuffer(c, level1, 0xC0); c.Y++; g_Console.writeToBuffer(c, hp1, 0xC0); c.Y = 8;
     c.X = 48;
-    g_Console.writeToBuffer(c, "Ele-beast: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xC0); c.X += 11; c.Y = 9;
-    g_Console.writeToBuffer(c, nameWild, 0xC0); c.Y++; g_Console.writeToBuffer(c, levelWild, 0xC0); c.Y++; g_Console.writeToBuffer(c, hpWild, 0xC0); c.Y = 9;
+    g_Console.writeToBuffer(c, "Ele-beast: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xC0); c.Y++; c.X -= 20;
+    for (float i = 0; i < wild.getHealth() / 2; i++) //health bar test
+    {
+        g_Console.writeToBuffer(c, " ", 0xA0); c.X++;
+    }
+    c.X = 59; c.Y = 8;
+    g_Console.writeToBuffer(c, nameBoss, 0xC0); c.Y++; g_Console.writeToBuffer(c, levelBoss, 0xC0); c.Y++; g_Console.writeToBuffer(c, hpBoss, 0xC0); c.Y = 9;
     c.X = 1; c.Y = 24;
 
     for (int i = 0; i < 80; i++)
@@ -1448,13 +2178,13 @@ void renderEncounterBoss()
     g_Console.writeToBuffer(c, "| \\ ", 0XC0);
 
     c.X = 10, c.Y = 19;
-    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(0));
+    g_Console.writeToBuffer(c, mon1.getMove(0));
     c.X = 27, c.Y = 19;
-    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(1));
+    g_Console.writeToBuffer(c, mon1.getMove(1));
     c.X = 10, c.Y = 22;
-    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(2));
+    g_Console.writeToBuffer(c, mon1.getMove(2));
     c.X = 27, c.Y = 22;
-    g_Console.writeToBuffer(c, jeff.getMonster(0).getMove(3));
+    g_Console.writeToBuffer(c, mon1.getMove(3));
     c.X = 10, c.Y = 10;
 
 
@@ -1464,12 +2194,12 @@ void renderEncounterBoss()
 
 void renderMenu()
 {
-    string name1 = jeff.getMname(0), level1 = to_string(jeff.getMlvl(0)), hp1 = to_string(jeff.getMhealth(0)), atk1 = to_string(jeff.getMattack(0)), def1 = to_string(jeff.getMdefense(0)), spd1 = to_string(jeff.getMspeed(0)),
-        name2 = jeff.getMname(1), level2 = to_string(jeff.getMlvl(1)), hp2 = to_string(jeff.getMhealth(1)), atk2 = to_string(jeff.getMattack(1)), def2 = to_string(jeff.getMdefense(1)), spd2 = to_string(jeff.getMspeed(1)),
-        name3 = jeff.getMname(2), level3 = to_string(jeff.getMlvl(2)), hp3 = to_string(jeff.getMhealth(2)), atk3 = to_string(jeff.getMattack(2)), def3 = to_string(jeff.getMdefense(2)), spd3 = to_string(jeff.getMspeed(2)),
-        name4 = jeff.getMname(3), level4 = to_string(jeff.getMlvl(3)), hp4 = to_string(jeff.getMhealth(3)), atk4 = to_string(jeff.getMattack(3)), def4 = to_string(jeff.getMdefense(3)), spd4 = to_string(jeff.getMspeed(3)),
-        name5 = jeff.getMname(4), level5 = to_string(jeff.getMlvl(4)), hp5 = to_string(jeff.getMhealth(4)), atk5 = to_string(jeff.getMattack(4)), def5 = to_string(jeff.getMdefense(4)), spd5 = to_string(jeff.getMspeed(4)),
-        name6 = jeff.getMname(5), level6 = to_string(jeff.getMlvl(5)), hp6 = to_string(jeff.getMhealth(5)), atk6 = to_string(jeff.getMattack(5)), def6 = to_string(jeff.getMdefense(5)), spd6 = to_string(jeff.getMspeed(5));
+    string name1 = mon1.getName(), level1 = to_string(mon1.getLevel()), hp1 = to_string(mon1.getHealth()), atk1 = to_string(mon1.getAttack()), def1 = to_string(mon1.getDefence()), spd1 = to_string(mon1.getSpeed()),
+        name2 = mon2.getName(), level2 = to_string(mon2.getLevel()), hp2 = to_string(mon2.getHealth()), atk2 = to_string(mon2.getAttack()), def2 = to_string(mon2.getDefence()), spd2 = to_string(mon2.getSpeed()),
+        name3 = mon3.getName(), level3 = to_string(mon3.getLevel()), hp3 = to_string(mon3.getHealth()), atk3 = to_string(mon3.getAttack()), def3 = to_string(mon3.getDefence()), spd3 = to_string(mon3.getSpeed()),
+        name4 = mon4.getName(), level4 = to_string(mon4.getLevel()), hp4 = to_string(mon4.getHealth()), atk4 = to_string(mon4.getAttack()), def4 = to_string(mon4.getDefence()), spd4 = to_string(mon4.getSpeed()),
+        name5 = mon5.getName(), level5 = to_string(mon5.getLevel()), hp5 = to_string(mon5.getHealth()), atk5 = to_string(mon5.getAttack()), def5 = to_string(mon5.getDefence()), spd5 = to_string(mon5.getSpeed()),
+        name6 = mon6.getName(), level6 = to_string(mon6.getLevel()), hp6 = to_string(mon6.getHealth()), atk6 = to_string(mon6.getAttack()), def6 = to_string(mon6.getDefence()), spd6 = to_string(mon6.getSpeed());
     COORD c;
     for (int i = 0; i < 25; i++)
     {
@@ -1523,13 +2253,13 @@ void renderTutorial()
             g_Console.writeToBuffer(c, " ", 0xB0);
         }
     }
-    c.X = 0; c.Y = 13; 
+    c.X = 0; c.Y = 5; 
     g_Console.writeToBuffer(c, "Welcome to the world of ele-beasts! Adventure and challenges await during your ", 0xB0); c.Y++;
     g_Console.writeToBuffer(c, "journey. When you start, you will be prompted to select a starting ele-beast to", 0xB0); c.Y++;
     g_Console.writeToBuffer(c, "accompany you in your travels. Fight and catch other ele-beasts to make yours ", 0xB0); c.Y++;
-    g_Console.writeToBuffer(c, "stronger, and defeat the two mysterious ele-beast in your home town area to", 0xB0); c.Y++;
-    g_Console.writeToBuffer(c, "free yourself and explore the rest of the world.", 0xB0); c.Y++;
-    c.X = 19; c.Y = 21; g_Console.writeToBuffer(c, "Press [ENTER] to start your adventure!", 0xB0);
+    g_Console.writeToBuffer(c, "stronger, and defeat the two mysterious ele-beast in cave near your home to", 0xB0); c.Y++;
+    g_Console.writeToBuffer(c, "free yourself and explore the rest of the world.", 0xB0); c.Y += 3;
+    c.X = 19; c.Y = 18; g_Console.writeToBuffer(c, "Press [ENTER] to start your adventure!", 0xB0);
 }
 
 void renderStarterScreen()
@@ -1556,6 +2286,22 @@ void renderCharacter()
         charColor = 0x0A;
     }
     g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
+}
+
+void renderGameOverScreen()
+{
+    COORD c;
+    for (int i = 0; i < 80; i++)
+    {
+        c.X = i;
+        for (int j = 0; j < 25; j++)
+        {
+            c.Y = j;
+            g_Console.writeToBuffer(c, ".", 0x0F);
+        }
+    }
+    c.X = 40; c.Y = 12;
+    g_Console.writeToBuffer(c, "Game over...", 0x0F);
 }
 
 void renderFramerate()
