@@ -1396,6 +1396,7 @@ void detection()
                             Type = E_Hunter;
                             g_eGameState = S_ENCOUNTERSPLASHSCREEN;
                             Enemy[i].setcheck(true);
+
                         }
                     }
                     break;
