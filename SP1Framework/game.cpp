@@ -1234,7 +1234,7 @@ void detection()
 {
     switch (location2)
     {
-    case S_GAME:
+    case 1:
         for (int i = 0; i < 8; i++)
         {
             if (Enemy[i].getcheck() == false)
@@ -1289,7 +1289,7 @@ void detection()
             }
         }
         break;
-    case S_ROUTE2:
+    case 2:
         for (int i = 1; i < 8; i++)
         {
             if (Enemy[i].getcheck() == false)
@@ -1344,7 +1344,7 @@ void detection()
             }
         }
         break;
-    case S_ROUTE3:
+    case 3:
         for (int i = 0; i < 8; i++)
         {
             if (Enemy[i].getcheck() == false)
