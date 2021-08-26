@@ -10,6 +10,7 @@ NPC::NPC(void)
 	Advice[4] = { "Water can defeat Fire easily." };
 	Advice[5] = { "Earth is good against Fire but is weak to Water." };
 	Healwords = "your Ele-beasts look beat up let me heal them for you";
+	Warn = "The boss is ahead turn back now if you are not ready";
 }
 
 std::string NPC::interact(void)
@@ -20,6 +21,11 @@ std::string NPC::interact(void)
 std::string NPC::Healquote(void)
 {
 	return Healwords;
+}
+
+std::string NPC::warning(void)
+{
+	return Warn;
 }
 
 NPC::~NPC()

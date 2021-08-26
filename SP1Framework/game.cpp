@@ -19,6 +19,7 @@ double  g_dDeltaTime;
 bool isCaught;
 bool failedCatch;
 bool isHunter;
+bool warn;
 int location;
 int location2;
 int boss;
@@ -391,6 +392,8 @@ void interactionWait()
     case 2: g_eGameState = S_ROUTE2;
         break;
     case 3: g_eGameState = S_ROUTE3;
+        break;
+    case 4: g_eGameState = S_BOSSROUTE;
         break;
     }
 }
@@ -894,6 +897,7 @@ void moveCharacter()
                 case S_ROUTE3: location = 3;
                     break;
                 case S_BOSSROUTE: location = 4;
+                    Type = E_Boss;
                     break;
                 }
                 g_eGameState = S_INTERACT;
@@ -913,7 +917,10 @@ void moveCharacter()
                     break;
                 case S_ROUTE3: location = 3;
                     break;
+                case S_BOSSROUTE:location = 4;
+                    break;
                 }
+                g_eGameState = S_ENCOUNTERSPLASHSCREEN;
             }
         }
         //triggers Healer interctions
@@ -1187,7 +1194,7 @@ void collision()
         }
         break;
     case 4://collision rout 4
-        for (int i = 3; i < 8; i++)//collision for NPC
+        for (int i = 3; i < 4; i++)//collision for NPC
         {
             if (g_skKeyEvent[K_UP].keyDown)
             {
@@ -1316,7 +1323,7 @@ void detection()
                     }
                     break;
                 case(2)://detects horizontally
-                    for (int j = 0; j < Enemy[i].getrange(); j++)
+                    for (int j = 0; j <= Enemy[i].getrange(); j++)
                     {
                         if (g_sChar.m_cLocation.Y == Enemy[i].getY() && (g_sChar.m_cLocation.X == Enemy[i].getX() - j || g_sChar.m_cLocation.X == Enemy[i].getX() + j))
                         {
@@ -1349,7 +1356,7 @@ void detection()
                     }
                     break;
                 case(2)://detects horizontally
-                    for (int j = 0; j < Enemy[i].getrange(); j++)
+                    for (int j = 0; j <= Enemy[i].getrange(); j++)
                     {
                         if (g_sChar.m_cLocation.Y == Enemy[i].getY() && (g_sChar.m_cLocation.X == Enemy[i].getX() - j || g_sChar.m_cLocation.X == Enemy[i].getX() + j))
                         {
@@ -1382,7 +1389,7 @@ void detection()
                     }
                     break;
                 case(2)://detects horizontally
-                    for (int j = 0; j < Enemy[i].getrange(); j++)
+                    for (int j = 0; j <= Enemy[i].getrange(); j++)
                     {
                         if (g_sChar.m_cLocation.Y == Enemy[i].getY() && (g_sChar.m_cLocation.X == Enemy[i].getX() - j || g_sChar.m_cLocation.X == Enemy[i].getX() + j))
                         {
@@ -1415,7 +1422,7 @@ void detection()
                     }
                     break;
                 case(2)://detects horizontally
-                    for (int j = 0; j < Enemy[i].getrange(); j++)
+                    for (int j = 0; j <= Enemy[i].getrange(); j++)
                     {
                         if (g_sChar.m_cLocation.Y == Enemy[i].getY() && (g_sChar.m_cLocation.X == Enemy[i].getX() - j || g_sChar.m_cLocation.X == Enemy[i].getX() + j))
                         {
@@ -1429,6 +1436,19 @@ void detection()
             }
         }
         break;
+    }
+    if (g_eGameState == S_BOSSROUTE)
+    {
+        if (g_sChar.m_cLocation.Y == Advice[3].getY())
+        {
+            if (warn == false)
+            {
+                Type = E_Boss;
+                location = 4;
+                g_eGameState = S_INTERACT;
+                warn = true;
+            }
+        }
     }
 }
 
@@ -1483,6 +1503,7 @@ void render()
         case 1: renderGame(); renderInteract(); break;
         case 2: renderGame2(); renderInteract(); break;
         case 3: renderGame3(); renderInteract(); break;
+        case 4: renderBossMap(); renderInteract(); break;
         }
         break;
     case S_GAMEOVER: renderGameOver();
@@ -1637,7 +1658,7 @@ void renderMap()
     Enemy[0].setDirRange(1, 4);
     g_Console.writeToBuffer(Enemy[0].getposition(), char(2), 0xC0);
     Enemy[1].setposition(59, 11);
-    Enemy[1].setDirRange(2, 4);
+    Enemy[1].setDirRange(1, 4);
     g_Console.writeToBuffer(Enemy[1].getposition(), char(2), 0xC0);
     location2 = 1;
     //Grasspatch test
@@ -1819,6 +1840,9 @@ void renderBossMap()
             g_Console.writeToBuffer(c, "/", 0x06);
         }
     }
+    //NPC
+    Advice[3].setposition(47, 13);
+    g_Console.writeToBuffer(Advice[3].getposition(), char(2), 0x0B);
     location2 = 4;
 }
 
@@ -1833,6 +1857,7 @@ void renderInteract()
     case E_Healer: g_Console.writeToBuffer(c, Nurse.Healquote(), 0x0B);
             mon1.setHealth(mon1.getMaxHealth() - mon1.getHealth());
             break;
+    case E_Boss: g_Console.writeToBuffer(c, Advice[3].warning(), 0x0B); break;
     }
 }
 
