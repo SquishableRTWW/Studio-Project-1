@@ -79,7 +79,7 @@ void hunter::setcheck(bool c)
 
 bool hunter::getcheck(void)
 {
-	return true;
+	return check;
 }
 
 int hunter::getdirection(void)
