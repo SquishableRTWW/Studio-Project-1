@@ -372,17 +372,17 @@ void tutorialWait()
 
 void starterScreenWait()
 {
-    if ((g_mouseEvent.mousePosition.X > 21 && g_mouseEvent.mousePosition.X < 33 && g_mouseEvent.mousePosition.Y == 12) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    if ((g_mouseEvent.mousePosition.X > 21 && g_mouseEvent.mousePosition.X < 30 && g_mouseEvent.mousePosition.Y > 11 && g_mouseEvent.mousePosition.Y < 18) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
         mon1.chooseStarter(mon1, 1);
         g_eGameState = S_GAME;
     }
-    if ((g_mouseEvent.mousePosition.X > 36 && g_mouseEvent.mousePosition.X < 50 && g_mouseEvent.mousePosition.Y == 12) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    if ((g_mouseEvent.mousePosition.X > 36 && g_mouseEvent.mousePosition.X < 58 && g_mouseEvent.mousePosition.Y > 11 && g_mouseEvent.mousePosition.Y < 18) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
         mon1.chooseStarter(mon1, 2);
         g_eGameState = S_GAME;
     }
-    if ((g_mouseEvent.mousePosition.X > 53 && g_mouseEvent.mousePosition.X < 69 && g_mouseEvent.mousePosition.Y == 12) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    if ((g_mouseEvent.mousePosition.X > 53 && g_mouseEvent.mousePosition.X < 66 && g_mouseEvent.mousePosition.Y > 11 && g_mouseEvent.mousePosition.Y < 18) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
         mon1.chooseStarter(mon1, 3);
         g_eGameState = S_GAME;
@@ -2459,8 +2459,13 @@ void renderStarterScreen()
             g_Console.writeToBuffer(c, " ", 0xC0);
         }
     }
-    c.X = 12; c.Y = 10; g_Console.writeToBuffer(c, "Please choose your starting ele-beast (Left click to choose): ", 0xC0); c.X += 7;
-    c.Y += 2; g_Console.writeToBuffer(c, "1: ignis(fire) ", 0xC0); c.X += 15; g_Console.writeToBuffer(c, "2: typhis(water) ", 0xC0); c.X += 17; g_Console.writeToBuffer(c, "3: vitalus(nature)", 0xC0);
+    c.X = 10; c.Y = 10; g_Console.writeToBuffer(c, "Please choose your starting ele-beast (Left click to choose): ", 0xC0); c.X += 7;
+    c.Y += 2; g_Console.writeToBuffer(c, "1: ignis(fire) ", 0xC0); c.X += 15; g_Console.writeToBuffer(c, "2: typhis(water) ", 0xC0); c.X += 17; g_Console.writeToBuffer(c, "3: vitalus(nature)", 0xC0); c.X -= 26;
+    c.Y += 1; g_Console.writeToBuffer(c, "-----            -----            -----", 0xC0); c.X -= 1;
+    c.Y += 1; g_Console.writeToBuffer(c, "/     \\          /     \\          /     \\ ", 0xC0); c.X -= 1;
+    c.Y += 1; g_Console.writeToBuffer(c, " |--0--|          |--0--|          |--0--| ", 0xC0);
+    c.Y += 1; g_Console.writeToBuffer(c, " \\     /          \\     /          \\     / ", 0xC0); c.X += 1;
+    c.Y += 1; g_Console.writeToBuffer(c, " -----            -----            -----", 0xC0);
 }
 
 void renderCharacter()
