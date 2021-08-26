@@ -1402,67 +1402,6 @@ void detection()
     }
 }
 
-void detection()
-{
-    for (int i = 0; i < 8; i++)
-    {
-        if (Enemy[i].getcheck() == false)
-        {
-            switch (Enemy[i].getdirection())
-            {
-            case(1):
-                for (int j = 0; j <= Enemy[i].getrange(); j++)
-                {
-                    if (g_sChar.m_cLocation.Y == Enemy[i].getY() - j && g_sChar.m_cLocation.X == Enemy[i].getX())
-                    {
-                        Type = E_Hunter;
-                        g_eGameState = S_ENCOUNTERSPLASHSCREEN;
-                        Enemy[i].setcheck(true);
-                        isHunter = true;
-                    }
-                }
-                break;
-            case(2):
-                for (int j = 0; j < Enemy[i].getrange(); j++)
-                {
-                    if (g_sChar.m_cLocation.Y == Enemy[i].getY() + j && g_sChar.m_cLocation.Y == Enemy[i].getY())
-                    {
-                        Type = E_Hunter;
-                        g_eGameState = S_ENCOUNTERSPLASHSCREEN;
-                        Enemy[i].setcheck(true);
-                        isHunter = true;
-                    }
-                }
-                break;
-            case(3):
-                for (int j = 0; j < Enemy[i].getrange(); j++)
-                {
-                    if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() - j)
-                    {
-                        Type = E_Hunter;
-                        g_eGameState = S_ENCOUNTERSPLASHSCREEN;
-                        Enemy[i].setcheck(true);
-                        isHunter = true;
-                    }
-                }
-                break;
-            case(4):
-                for (int j = 0; j < Enemy[i].getrange(); j++)
-                {
-                    if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() + j)
-                    {
-                        Type = E_Hunter;
-                        g_eGameState = S_ENCOUNTERSPLASHSCREEN;
-                        Enemy[i].setcheck(true);
-                        isHunter = true;
-                    }
-                }
-                break;
-            }
-        }
-    }
-}
-
 void processUserInput()
 {
     // quits the game if player hits the escape key
