@@ -21,6 +21,7 @@ bool failedCatch;
 int location;
 int boss;
 int moveDecision;
+int hpBarP; int hpBarW;
 hunter jeff;
 hunter Enemy[8];
 monster wild, Null;
@@ -49,6 +50,7 @@ void init( void )
 {
     srand((unsigned)time(0)); boss = 1;
     isCaught = false; failedCatch = false; moveDecision = 0;
+    float hpBarP = mon1.getHealth() / mon1.getMaxHealth(); float hpBarW = wild.getHealth() / wild.getMaxHealth();
     location = 1;
     // Set precision for floating point output
     g_dElapsedTime = 0.0;
@@ -473,7 +475,7 @@ void updateEncounter()
             {
                 if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
                 {
-                    g_bQuitGame = true;
+                    g_eGameState = S_GAMEOVER;
                 }
                 else
                 {
@@ -500,7 +502,7 @@ void updateEncounter()
                 }
                 if (wild.getName() == "smeltor")
                 {
-                    g_bQuitGame = true;
+                    g_eGameState = S_GAMEOVER;
                 }
             }
         }
@@ -525,7 +527,7 @@ void updateEncounter()
                 }
                 if (wild.getName() == "smeltor")
                 {
-                    g_bQuitGame = true;
+                    g_eGameState = S_GAMEOVER;
                 }
             }
             mon1.setHealth(-wildDMG);
@@ -533,7 +535,7 @@ void updateEncounter()
             {
                 if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
                 {
-                    g_bQuitGame = true;
+                    g_eGameState = S_GAMEOVER;
                 }
 
             }
@@ -552,7 +554,7 @@ void updateEncounter()
             {
                 if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
                 {
-                    g_bQuitGame = true;
+                    g_eGameState = S_GAMEOVER;
                 }
 
             }
@@ -575,7 +577,7 @@ void updateEncounter()
                 }
                 if (wild.getName() == "smeltor")
                 {
-                    g_bQuitGame = true;
+                    g_eGameState = S_GAMEOVER;
                 }
             }
         }
@@ -600,7 +602,7 @@ void updateEncounter()
                 }
                 if (wild.getName() == "smeltor")
                 {
-                    g_bQuitGame = true;
+                    g_eGameState = S_GAMEOVER;
                 }
             }
             mon1.setHealth(-wildDMG);
@@ -608,7 +610,7 @@ void updateEncounter()
             {
                 if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
                 {
-                    g_bQuitGame = true;
+                    g_eGameState = S_GAMEOVER;
                 }
 
             }
@@ -627,7 +629,7 @@ void updateEncounter()
             {
                 if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
                 {
-                    g_bQuitGame = true;
+                    g_eGameState = S_GAMEOVER;
                 }
 
             }
@@ -650,7 +652,7 @@ void updateEncounter()
                 }
                 if (wild.getName() == "smeltor")
                 {
-                    g_bQuitGame = true;
+                    g_eGameState = S_GAMEOVER;
                 }
             }
         }
@@ -1125,7 +1127,7 @@ void render()
         break;
     case S_GAME: renderGame();
         break;
-    case S_MENU: renderMenu();
+    case S_MENU: renderMenu(); renderInstructions();
         break;
     case S_ENCOUNTERSPLASHSCREEN: renderEncounterSplashScreen();
         break;
@@ -1156,7 +1158,6 @@ void render()
     case S_GAMEOVER: renderGameOver();
         break;
     }
-    renderInstructions();
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();
     renderToScreen();       // dump the contents of the buffer to the screen, one frame worth of game
@@ -1165,10 +1166,11 @@ void render()
 void renderInstructions()
 {
     COORD c;
-    c.X = 0; c.Y = 0; g_Console.writeToBuffer(c, "WASD for movement", 0x0F);
+    c.X = 0; c.Y = 19; g_Console.writeToBuffer(c, "WASD for movement", 0x0F);
     c.Y++; g_Console.writeToBuffer(c, "F for party menu", 0x0F);
     c.Y++; g_Console.writeToBuffer(c, "ESC for exit", 0x0F);
-    c.Y++; g_Console.writeToBuffer(c, "Left click to select", 0x0F);
+    c.Y++; g_Console.writeToBuffer(c, "Left click to select attacks and encounter decisions", 0x0F);
+    c.Y++; g_Console.writeToBuffer(c, "Press Q near NPCs to talk to them");
 }
 
 void clearScreen()
@@ -1549,11 +1551,21 @@ void renderEncounter()
     }
 
     c.X = 7; c.Y = 8;
-    g_Console.writeToBuffer(c, "Ele-beast: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0x60); c.Y = 8;
+    g_Console.writeToBuffer(c, "Ele-beast: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0x60); c.Y++; c.X--;
+    for (float i = 0; i < mon1.getHealth() / 2; i++) //health bar test
+    {
+        g_Console.writeToBuffer(c, " ", 0xA0); c.X++;
+    }
+    c.Y = 8;
     c.X = 17;
     g_Console.writeToBuffer(c, name1, 0x60); c.Y++; g_Console.writeToBuffer(c, level1, 0x60); c.Y++; g_Console.writeToBuffer(c, hp1, 0x60); c.Y = 8;
     c.X = 44;
-    g_Console.writeToBuffer(c, "Ele-beast: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0x60); c.X += 11; c.Y = 8;
+    g_Console.writeToBuffer(c, "Ele-beast: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0x60); c.Y++; c.X--;
+    for (float i = 0; i < wild.getHealth() / 2; i++) //health bar test
+    {
+        g_Console.writeToBuffer(c, " ", 0xA0); c.X++;
+    }
+    c.X = 54; c.Y = 8;
     g_Console.writeToBuffer(c, nameWild, 0x60); c.Y++; g_Console.writeToBuffer(c, levelWild, 0x60); c.Y++; g_Console.writeToBuffer(c, hpWild, 0x60); c.Y = 8;
     c.X = 1; c.Y = 24;
 
@@ -1822,12 +1834,22 @@ void renderEncounterBoss()
             g_Console.writeToBuffer(c, " ", 0xC0);
         }
     }
-    c.X = 1; c.Y = 9;
-    g_Console.writeToBuffer(c, "Ele-beast: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xC0); c.Y = 9;
+    c.X = 1; c.Y = 8;
+    g_Console.writeToBuffer(c, "Ele-beast: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xC0); c.Y++; c.X--;
+    for (float i = 0; i < mon1.getHealth() / 2; i++) //health bar test
+    {
+        g_Console.writeToBuffer(c, " ", 0xA0); c.X++;
+    }
+    c.Y = 8;
     c.X = 11;
-    g_Console.writeToBuffer(c, name1, 0xC0); c.Y++; g_Console.writeToBuffer(c, level1, 0xC0); c.Y++; g_Console.writeToBuffer(c, hp1, 0xC0); c.Y = 9;
+    g_Console.writeToBuffer(c, name1, 0xC0); c.Y++; g_Console.writeToBuffer(c, level1, 0xC0); c.Y++; g_Console.writeToBuffer(c, hp1, 0xC0); c.Y = 8;
     c.X = 48;
-    g_Console.writeToBuffer(c, "Ele-beast: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xC0); c.X += 11; c.Y = 9;
+    g_Console.writeToBuffer(c, "Ele-beast: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xC0); c.Y++; c.X -= 20;
+    for (float i = 0; i < wild.getHealth() / 2; i++) //health bar test
+    {
+        g_Console.writeToBuffer(c, " ", 0xA0); c.X++;
+    }
+    c.X = 59; c.Y = 8;
     g_Console.writeToBuffer(c, nameBoss, 0xC0); c.Y++; g_Console.writeToBuffer(c, levelBoss, 0xC0); c.Y++; g_Console.writeToBuffer(c, hpBoss, 0xC0); c.Y = 9;
     c.X = 1; c.Y = 24;
 
