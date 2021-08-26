@@ -27,7 +27,7 @@ int moveDecision;
 int effective;
 hunter jeff;
 hunter Enemy[8];
-monster wild, Null;
+monster wild, Null, space;
 monster mon1, mon2, mon3, mon4, mon5, mon6;
 NPC Advice[4];
 NPC Nurse;
@@ -358,6 +358,10 @@ void menuScreenWait()
         }
     if (g_skKeyEvent[K_ESCAPE].keyReleased)
         g_bQuitGame = true;
+    if (g_skKeyEvent[K_Q].keyReleased)
+    {
+        space = mon1; mon1 = mon2; mon2 = mon3; mon3 = mon4; mon4 = mon5; mon5 = mon6; mon6 = space;
+    }
 }
 
 void tutorialWait()
@@ -416,7 +420,10 @@ void gameOverWait()
 
 void updateEncounter()
 {
-
+    while (mon1.getName() == "NULL")
+    {
+        space = mon1; mon1 = mon2; mon2 = mon3; mon3 = mon4; mon4 = mon5; mon5 = mon6; mon6 = space;
+    }
     if ((g_mouseEvent.mousePosition.X > 67 && g_mouseEvent.mousePosition.X < 71 && g_mouseEvent.mousePosition.Y == 20) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED && isHunter == false)
     {
         switch (location)
@@ -586,7 +593,11 @@ void updateEncounter()
                 {
                     g_eGameState = S_GAMEOVER;
                 }
-
+                else
+                {
+                    mon1 = mon2;
+                    mon2 = mon3; mon3 = mon4; mon4 = mon5; mon5 = mon6; mon6 = Null;
+                }
             }
         }
     }
@@ -605,7 +616,11 @@ void updateEncounter()
                 {
                     g_eGameState = S_GAMEOVER;
                 }
-
+                else
+                {
+                    mon1 = mon2;
+                    mon2 = mon3; mon3 = mon4; mon4 = mon5; mon5 = mon6; mon6 = Null;
+                }
             }
             wild.setAttack(1);
             if (wild.getHealth() <= 0)
@@ -675,7 +690,11 @@ void updateEncounter()
                 {
                     g_eGameState = S_GAMEOVER;
                 }
-
+                else
+                {
+                    mon1 = mon2;
+                    mon2 = mon3; mon3 = mon4; mon4 = mon5; mon5 = mon6; mon6 = Null;
+                }
             }
         }
     }
@@ -694,7 +713,11 @@ void updateEncounter()
                 {
                     g_eGameState = S_GAMEOVER;
                 }
-
+                else
+                {
+                    mon1 = mon2;
+                    mon2 = mon3; mon3 = mon4; mon4 = mon5; mon5 = mon6; mon6 = Null;
+                }
             }
             wild.setHealth(-yourDMG);
             if (wild.getHealth() <= 0)
@@ -764,7 +787,11 @@ void updateEncounter()
                 {
                     g_eGameState = S_GAMEOVER;
                 }
-
+                else
+                {
+                    mon1 = mon2;
+                    mon2 = mon3; mon3 = mon4; mon4 = mon5; mon5 = mon6; mon6 = Null;
+                }
             }
         }
     }
@@ -783,7 +810,11 @@ void updateEncounter()
                 {
                     g_eGameState = S_GAMEOVER;
                 }
-
+                else
+                {
+                    mon1 = mon2;
+                    mon2 = mon3; mon3 = mon4; mon4 = mon5; mon5 = mon6; mon6 = Null;
+                }
             }
             wild.setHealth(-yourDMG);
             if (wild.getHealth() <= 0)
@@ -853,7 +884,11 @@ void updateEncounter()
                 {
                     g_eGameState = S_GAMEOVER;
                 }
-
+                else
+                {
+                    mon1 = mon2;
+                    mon2 = mon3; mon3 = mon4; mon4 = mon5; mon5 = mon6; mon6 = Null;
+                }
             }
         }
     }
@@ -2380,6 +2415,8 @@ void renderMenu()
     g_Console.writeToBuffer(c, name6, 0xC0); c.X += 13; g_Console.writeToBuffer(c, level6, 0xC0); c.X += 6; g_Console.writeToBuffer(c, hp6, 0xC0); c.X += 7; g_Console.writeToBuffer(c, atk6, 0xC0); c.X += 7;
     g_Console.writeToBuffer(c, def6, 0xC0); c.X += 6; g_Console.writeToBuffer(c, spd6, 0xC0); c.X = 1;
     c.Y += 3; c.X += 28;
+    g_Console.writeToBuffer(c, "Press Q to rotate your team's party position!", 0xC0);
+    c.Y++;
     g_Console.writeToBuffer(c, "Press F to EXIT PAUSE MENU.", 0xC0);
     c.Y++;
     g_Console.writeToBuffer(c, "Press 'ESC' to EXIT THE GAME.", 0xC0);
