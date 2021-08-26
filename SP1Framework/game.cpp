@@ -21,7 +21,6 @@ bool failedCatch;
 int location;
 int boss;
 int moveDecision;
-int hpBarP; int hpBarW;
 hunter jeff;
 hunter Enemy[8];
 monster wild, Null;
@@ -1967,13 +1966,13 @@ void renderTutorial()
             g_Console.writeToBuffer(c, " ", 0xB0);
         }
     }
-    c.X = 0; c.Y = 13; 
+    c.X = 0; c.Y = 5; 
     g_Console.writeToBuffer(c, "Welcome to the world of ele-beasts! Adventure and challenges await during your ", 0xB0); c.Y++;
     g_Console.writeToBuffer(c, "journey. When you start, you will be prompted to select a starting ele-beast to", 0xB0); c.Y++;
     g_Console.writeToBuffer(c, "accompany you in your travels. Fight and catch other ele-beasts to make yours ", 0xB0); c.Y++;
-    g_Console.writeToBuffer(c, "stronger, and defeat the two mysterious ele-beast in your home town area to", 0xB0); c.Y++;
-    g_Console.writeToBuffer(c, "free yourself and explore the rest of the world.", 0xB0); c.Y++;
-    c.X = 19; c.Y = 21; g_Console.writeToBuffer(c, "Press [ENTER] to start your adventure!", 0xB0);
+    g_Console.writeToBuffer(c, "stronger, and defeat the two mysterious ele-beast in cave near your home to", 0xB0); c.Y++;
+    g_Console.writeToBuffer(c, "free yourself and explore the rest of the world.", 0xB0); c.Y += 3;
+    c.X = 19; c.Y = 18; g_Console.writeToBuffer(c, "Press [ENTER] to start your adventure!", 0xB0);
 }
 
 void renderStarterScreen()
