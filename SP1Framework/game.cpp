@@ -2064,6 +2064,7 @@ void renderEncounterSplashScreen()
     if (Type == E_Hunter)
     {
         g_Console.writeToBuffer(c, "You have been challenged to a battle!");
+        Type = E_NULL;
     }
     else
     {
