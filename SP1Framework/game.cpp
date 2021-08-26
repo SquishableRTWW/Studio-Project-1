@@ -495,6 +495,10 @@ void updateEncounter()
             if (wild.getHealth() <= 0)
             {
                 mon1.levelUp(mon1);
+                if (g_eGameState == S_ENCOUNTERBOSS)
+                {
+                    g_eGameState = S_BOSSROUTE;
+                }
                 switch (location)
                 {
                 case 1: g_eGameState = S_GAME;
@@ -521,6 +525,10 @@ void updateEncounter()
             if (wild.getHealth() <= 0)
             {
                 mon1.levelUp(mon1);
+                if (g_eGameState == S_ENCOUNTERBOSS)
+                {
+                    g_eGameState = S_BOSSROUTE;
+                }
                 switch (location)
                 {
                 case 1: g_eGameState = S_GAME;
@@ -572,6 +580,10 @@ void updateEncounter()
             if (wild.getHealth() <= 0)
             {
                 mon1.levelUp(mon1);
+                if (g_eGameState == S_ENCOUNTERBOSS)
+                {
+                    g_eGameState = S_BOSSROUTE;
+                }
                 switch (location)
                 {
                 case 1: g_eGameState = S_GAME;
@@ -598,6 +610,10 @@ void updateEncounter()
             if (wild.getHealth() <= 0)
             {
                 mon1.levelUp(mon1);
+                if (g_eGameState == S_ENCOUNTERBOSS)
+                {
+                    g_eGameState = S_BOSSROUTE;
+                }
                 switch (location)
                 {
                 case 1: g_eGameState = S_GAME;
@@ -649,6 +665,10 @@ void updateEncounter()
             if (wild.getHealth() <= 0)
             {
                 mon1.levelUp(mon1);
+                if (g_eGameState == S_ENCOUNTERBOSS)
+                {
+                    g_eGameState = S_BOSSROUTE;
+                }
                 switch (location)
                 {
                 case 1: g_eGameState = S_GAME;
@@ -675,6 +695,10 @@ void updateEncounter()
             if (wild.getHealth() <= 0)
             {
                 mon1.levelUp(mon1);
+                if (g_eGameState == S_ENCOUNTERBOSS)
+                {
+                    g_eGameState = S_BOSSROUTE;
+                }
                 switch (location)
                 {
                 case 1: g_eGameState = S_GAME;
@@ -726,6 +750,10 @@ void updateEncounter()
             if (wild.getHealth() <= 0)
             {
                 mon1.levelUp(mon1);
+                if (g_eGameState == S_ENCOUNTERBOSS)
+                {
+                    g_eGameState = S_BOSSROUTE;
+                }
                 switch (location)
                 {
                 case 1: g_eGameState = S_GAME;
@@ -752,6 +780,10 @@ void updateEncounter()
             if (wild.getHealth() <= 0)
             {
                 mon1.levelUp(mon1);
+                if (g_eGameState == S_ENCOUNTERBOSS)
+                {
+                    g_eGameState = S_BOSSROUTE;
+                }
                 switch (location)
                 {
                 case 1: g_eGameState = S_GAME;
@@ -1548,7 +1580,7 @@ void renderEncounter()
     }
 
     //Cardview for elebeast status
-    for (int i = 5; i < 28; i++)
+    for (int i = 1; i < 28; i++)
     {
         c.X = i;
         for (int j = 7; j < 12; j++)
@@ -1570,7 +1602,7 @@ void renderEncounter()
     }
 
     c.X = 7; c.Y = 8;
-    g_Console.writeToBuffer(c, "Ele-beast: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0x60); c.Y++; c.X--;
+    g_Console.writeToBuffer(c, "Ele-beast: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0x60); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0x60); c.Y++; c.X -= 6;
     for (float i = 0; i < mon1.getHealth() / 2; i++) //health bar test
     {
         g_Console.writeToBuffer(c, " ", 0xA0); c.X++;
@@ -1854,7 +1886,7 @@ void renderEncounterBoss()
         }
     }
     c.X = 1; c.Y = 8;
-    g_Console.writeToBuffer(c, "Ele-beast: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xC0); c.Y++; c.X--;
+    g_Console.writeToBuffer(c, "Ele-beast: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xC0); c.Y++; c.X++;
     for (float i = 0; i < mon1.getHealth() / 2; i++) //health bar test
     {
         g_Console.writeToBuffer(c, " ", 0xA0); c.X++;
@@ -1863,7 +1895,7 @@ void renderEncounterBoss()
     c.X = 11;
     g_Console.writeToBuffer(c, name1, 0xC0); c.Y++; g_Console.writeToBuffer(c, level1, 0xC0); c.Y++; g_Console.writeToBuffer(c, hp1, 0xC0); c.Y = 8;
     c.X = 48;
-    g_Console.writeToBuffer(c, "Ele-beast: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xC0); c.Y++; c.X -= 20;
+    g_Console.writeToBuffer(c, "Ele-beast: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "Level: ", 0xC0); c.Y++; g_Console.writeToBuffer(c, "HP: ", 0xC0); c.Y++; c.X -= 8;
     for (float i = 0; i < wild.getHealth() / 2; i++) //health bar test
     {
         g_Console.writeToBuffer(c, " ", 0xA0); c.X++;
