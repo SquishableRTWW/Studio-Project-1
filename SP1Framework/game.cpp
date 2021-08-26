@@ -450,7 +450,7 @@ void updateEncounter()
             {
                 mon4 = wild;
             }
-            else if (mon4.getName() != "NULL" && mon5.getName() != "NULL" && mon6.getName() == "NULL")
+            else if (mon4.getName() != "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
             {
                 mon5 = wild;
             }
