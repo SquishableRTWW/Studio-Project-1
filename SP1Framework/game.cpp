@@ -18,6 +18,7 @@ double  g_dElapsedTime;
 double  g_dDeltaTime;
 bool isCaught;
 bool failedCatch;
+bool isHunter;
 int location;
 int boss;
 int moveDecision;
@@ -48,7 +49,7 @@ Console g_Console(80, 25, "SP1 Framework");
 void init( void )
 {
     srand((unsigned)time(0)); boss = 1;
-    isCaught = false; failedCatch = false; moveDecision = 0;
+    isCaught = false; failedCatch = false; moveDecision = 0; isHunter = false;
     float hpBarP = mon1.getHealth() / mon1.getMaxHealth(); float hpBarW = wild.getHealth() / wild.getMaxHealth();
     location = 1;
     // Set precision for floating point output
@@ -257,6 +258,14 @@ void update(double dt)
         case S_MENU: menuScreenWait(); //game logic for menu screen
             break;
         case S_ENCOUNTERSPLASHSCREEN: wild.setWildMonster(wild, (rand() % 4) + 1); 
+            if (isHunter == true)
+            {
+                wild.setLevel(9); 
+                for (int i = 0; i < 3; i++)
+                {
+                    wild.setMove(wild, i);
+                }
+            }
             for (int i = 0; i < 2; i++)
             {
                 wild.setMove(wild, i);
@@ -401,7 +410,7 @@ void gameOverWait()
 void updateEncounter()
 {
 
-    if ((g_mouseEvent.mousePosition.X > 67 && g_mouseEvent.mousePosition.X < 71 && g_mouseEvent.mousePosition.Y == 20) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    if ((g_mouseEvent.mousePosition.X > 67 && g_mouseEvent.mousePosition.X < 71 && g_mouseEvent.mousePosition.Y == 20) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED && isHunter == false)
     {
         switch (location)
         {
@@ -503,6 +512,7 @@ void updateEncounter()
                 {
                     g_eGameState = S_GAMEOVER;
                 }
+                isHunter = false;
             }
         }
         else
@@ -528,6 +538,7 @@ void updateEncounter()
                 {
                     g_eGameState = S_GAMEOVER;
                 }
+                isHunter = false;
             }
             mon1.setHealth(-wildDMG);
             if (mon1.getHealth() <= 0)
@@ -578,6 +589,7 @@ void updateEncounter()
                 {
                     g_eGameState = S_GAMEOVER;
                 }
+                isHunter = false;
             }
         }
         else
@@ -603,6 +615,7 @@ void updateEncounter()
                 {
                     g_eGameState = S_GAMEOVER;
                 }
+                isHunter = false;
             }
             mon1.setHealth(-wildDMG);
             if (mon1.getHealth() <= 0)
@@ -653,6 +666,7 @@ void updateEncounter()
                 {
                     g_eGameState = S_GAMEOVER;
                 }
+                isHunter = false;
             }
         }
         else
@@ -678,6 +692,7 @@ void updateEncounter()
                 {
                     g_eGameState = S_GAMEOVER;
                 }
+                isHunter = false;
             }
             mon1.setHealth(-wildDMG);
             if (mon1.getHealth() <= 0)
@@ -728,6 +743,7 @@ void updateEncounter()
                 {
                     g_eGameState = S_GAMEOVER;
                 }
+                isHunter = false;
             }
         }
         else
@@ -753,6 +769,7 @@ void updateEncounter()
                 {
                     g_eGameState = S_GAMEOVER;
                 }
+                isHunter = false;
             }
             mon1.setHealth(-wildDMG);
             if (mon1.getHealth() <= 0)
@@ -1060,6 +1077,7 @@ void detection()
                         Type = E_Hunter;
                         g_eGameState = S_ENCOUNTERSPLASHSCREEN;
                         Enemy[i].setcheck(true);
+                        isHunter = true;
                     }
                 }
                 break;
@@ -1071,6 +1089,7 @@ void detection()
                         Type = E_Hunter;
                         g_eGameState = S_ENCOUNTERSPLASHSCREEN;
                         Enemy[i].setcheck(true);
+                        isHunter = true;
                     }
                 }
                 break;
@@ -1082,6 +1101,7 @@ void detection()
                         Type = E_Hunter;
                         g_eGameState = S_ENCOUNTERSPLASHSCREEN;
                         Enemy[i].setcheck(true);
+                        isHunter = true;
                     }
                 }
                 break;
@@ -1093,6 +1113,7 @@ void detection()
                         Type = E_Hunter;
                         g_eGameState = S_ENCOUNTERSPLASHSCREEN;
                         Enemy[i].setcheck(true);
+                        isHunter = true;
                     }
                 }
                 break;
