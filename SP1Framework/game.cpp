@@ -468,8 +468,18 @@ void updateEncounter()
         else
         {
             mon1.setHealth(-wildDMG);
-            failedCatch = true;
-            failedCatch = false;
+            if (mon1.getHealth() <= 0)
+            {
+                if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+                {
+                    g_eGameState = S_GAMEOVER;
+                }
+                else
+                {
+                    mon1 = mon2;
+                    mon2 = mon3; mon3 = mon4; mon4 = mon5; mon5 = mon6; mon6 = Null;
+                }
+            }
         }
     }
     if ((mon1.getElement() == "fire" && wild.getElement() == "water") && (mon1.getElement() == "water" && wild.getElement() == "nature") &&
@@ -487,7 +497,7 @@ void updateEncounter()
         effective = 2;
     }
     //First skill
-    if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 14 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 17 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
         moveDecision = 0;
         int yourDMG = mon1.getMoveDamage(moveDecision) * (mon1.getAttack() / wild.getDefence() * 0.25 * effective);
@@ -576,14 +586,14 @@ void updateEncounter()
         }
     }
     //Second skill
-    if ((g_mouseEvent.mousePosition.X > 26 && g_mouseEvent.mousePosition.X < 31 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    if ((g_mouseEvent.mousePosition.X > 26 && g_mouseEvent.mousePosition.X < 34 && g_mouseEvent.mousePosition.Y == 19) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
         moveDecision = 1;
         int yourDMG = mon1.getMoveDamage(moveDecision) * (mon1.getAttack() / wild.getDefence()) * 0.5;
         int wildDMG = wild.getMoveDamage(moveDecision) * ((wild.getAttack() / mon1.getDefence()) * 0.5);
         if (wild.getSpeed() >= mon1.getSpeed())
         {
-            mon1.setHealth(-wildDMG);
+            mon1.setAttack(1);
             if (mon1.getHealth() <= 0)
             {
                 if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
@@ -592,7 +602,7 @@ void updateEncounter()
                 }
 
             }
-            wild.setHealth(-yourDMG);
+            wild.setAttack(1);
             if (wild.getHealth() <= 0)
             {
                 mon1.levelUp(mon1);
@@ -622,7 +632,7 @@ void updateEncounter()
         }
         else
         {
-            wild.setHealth(-yourDMG);
+            wild.setAttack(1);
             if (wild.getHealth() <= 0)
             {
                 mon1.levelUp(mon1);
@@ -649,7 +659,7 @@ void updateEncounter()
                 }
                 isHunter = false;
             }
-            mon1.setHealth(-wildDMG);
+            mon1.setAttack(1);
             if (mon1.getHealth() <= 0)
             {
                 if (mon2.getName() == "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
@@ -661,7 +671,7 @@ void updateEncounter()
         }
     }
     //Third skill
-    if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 14 && g_mouseEvent.mousePosition.Y == 22) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    if ((g_mouseEvent.mousePosition.X > 9 && g_mouseEvent.mousePosition.X < 17 && g_mouseEvent.mousePosition.Y == 22) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
         moveDecision = 2;
         int yourDMG = mon1.getMoveDamage(moveDecision) * (mon1.getAttack() / wild.getDefence() * 0.25 * effective);
@@ -746,7 +756,7 @@ void updateEncounter()
         }
     }
     //Fourth skill
-    if ((g_mouseEvent.mousePosition.X > 27 && g_mouseEvent.mousePosition.X < 30 && g_mouseEvent.mousePosition.Y == 22) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+    if ((g_mouseEvent.mousePosition.X > 27 && g_mouseEvent.mousePosition.X < 37 && g_mouseEvent.mousePosition.Y == 22) && g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED)
     {
         moveDecision = 3;
         int yourDMG = mon1.getMoveDamage(moveDecision) * (mon1.getAttack() / wild.getDefence() * 0.25 * effective);
