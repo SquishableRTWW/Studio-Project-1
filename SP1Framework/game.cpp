@@ -1014,7 +1014,23 @@ void moveCharacter()
     if (((g_sChar.m_cLocation.X >= 0 && g_sChar.m_cLocation.X < 13 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 12) ||
         (g_sChar.m_cLocation.X >= 61 && g_sChar.m_cLocation.X < 80 && g_sChar.m_cLocation.Y >=16 && g_sChar.m_cLocation.Y < 25) ||
         (g_sChar.m_cLocation.X >= 54 && g_sChar.m_cLocation.X < 70 && g_sChar.m_cLocation.Y >= 3 && g_sChar.m_cLocation.Y < 8) ||
-        (g_sChar.m_cLocation.X >= 20 && g_sChar.m_cLocation.X < 36 && g_sChar.m_cLocation.Y >= 16 && g_sChar.m_cLocation.Y < 21)) && g_eGameState != S_ROUTE2)
+        (g_sChar.m_cLocation.X >= 20 && g_sChar.m_cLocation.X < 36 && g_sChar.m_cLocation.Y >= 16 && g_sChar.m_cLocation.Y < 21)) && g_eGameState != S_ROUTE2 && g_eGameState == S_GAME)
+    {
+        switch (g_eGameState)
+        {
+        case S_GAME: location = 1;
+            break;
+        case S_ROUTE2: location = 2;
+            break;
+        case S_ROUTE3: location = 3;
+            break;
+        }
+        if (rand() % 100 == 1)
+        {
+            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+        }
+    }
+    if ((g_sChar.m_cLocation.X >= 0 && g_sChar.m_cLocation.X < 13 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 12) && g_eGameState != S_ROUTE2 && g_eGameState == S_ROUTE3)
     {
         switch (g_eGameState)
         {
