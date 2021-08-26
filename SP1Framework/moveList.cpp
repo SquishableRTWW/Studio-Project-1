@@ -9,7 +9,7 @@ moveList::moveList(void)
 	{
 		moves[i] = "None";
 	}
-	damage[0] = 10; damage[1] = 0; damage[2] = 20; damage[3] = 40;
+	damage[0] = 5; damage[1] = 0; damage[2] = 10; damage[3] = 25;
 }
 void moveList::setMoveWithName(string move,int position)
 {

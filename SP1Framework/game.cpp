@@ -353,6 +353,8 @@ void menuScreenWait()
             break;
         case 3: g_eGameState = S_ROUTE3;
             break;
+        case 4: g_eGameState = S_BOSSROUTE;
+            break;
         }
     if (g_skKeyEvent[K_ESCAPE].keyReleased)
         g_bQuitGame = true;
@@ -524,10 +526,6 @@ void updateEncounter()
             if (wild.getHealth() <= 0)
             {
                 mon1.levelUp(mon1);
-                if (g_eGameState == S_ENCOUNTERBOSS)
-                {
-                    g_eGameState = S_BOSSROUTE;
-                }
                 switch (location)
                 {
                 case 1: g_eGameState = S_GAME;
@@ -535,6 +533,8 @@ void updateEncounter()
                 case 2: g_eGameState = S_ROUTE2;
                     break;
                 case 3: g_eGameState = S_ROUTE3;
+                    break;
+                case 4: g_eGameState = S_BOSSROUTE; g_sChar.m_cLocation.Y = 17;
                     break;
                 }
                 if (wild.getName() == "atax")
@@ -565,6 +565,8 @@ void updateEncounter()
                 case 2: g_eGameState = S_ROUTE2;
                     break;
                 case 3: g_eGameState = S_ROUTE3;
+                    break;
+                case 4: g_eGameState = S_BOSSROUTE; g_sChar.m_cLocation.Y = 17;
                     break;
                 }
                 if (wild.getName() == "atax")
@@ -621,6 +623,8 @@ void updateEncounter()
                     break;
                 case 3: g_eGameState = S_ROUTE3;
                     break;
+                case 4: g_eGameState = S_BOSSROUTE; g_sChar.m_cLocation.Y = 17;
+                    break;
                 }
                 if (wild.getName() == "atax")
                 {
@@ -650,6 +654,8 @@ void updateEncounter()
                 case 2: g_eGameState = S_ROUTE2;
                     break;
                 case 3: g_eGameState = S_ROUTE3;
+                    break;
+                case 4: g_eGameState = S_BOSSROUTE; g_sChar.m_cLocation.Y = 17;
                     break;
                 }
                 if (wild.getName() == "atax")
@@ -706,6 +712,8 @@ void updateEncounter()
                     break;
                 case 3: g_eGameState = S_ROUTE3;
                     break;
+                case 4: g_eGameState = S_BOSSROUTE; g_sChar.m_cLocation.Y = 17;
+                    break;
                 }
                 if (wild.getName() == "atax")
                 {
@@ -735,6 +743,8 @@ void updateEncounter()
                 case 2: g_eGameState = S_ROUTE2;
                     break;
                 case 3: g_eGameState = S_ROUTE3;
+                    break;
+                case 4: g_eGameState = S_BOSSROUTE; g_sChar.m_cLocation.Y = 17;
                     break;
                 }
                 if (wild.getName() == "atax")
@@ -791,6 +801,8 @@ void updateEncounter()
                     break;
                 case 3: g_eGameState = S_ROUTE3;
                     break;
+                case 4: g_eGameState = S_BOSSROUTE; g_sChar.m_cLocation.Y = 17;
+                    break;
                 }
                 if (wild.getName() == "atax")
                 {
@@ -820,6 +832,8 @@ void updateEncounter()
                 case 2: g_eGameState = S_ROUTE2;
                     break;
                 case 3: g_eGameState = S_ROUTE3;
+                    break;
+                case 4: g_eGameState = S_BOSSROUTE; g_sChar.m_cLocation.Y = 17;
                     break;
                 }
                 if (wild.getName() == "atax")
@@ -1018,6 +1032,17 @@ void moveCharacter()
     }
     if (g_skKeyEvent[K_F].keyReleased)
         g_eGameState = S_MENU;
+        switch (g_eGameState)
+        {
+        case S_GAME: location = 1;
+            break;
+        case S_ROUTE2: location = 2;
+            break;
+        case S_ROUTE3: location = 3;
+            break;
+        case S_BOSSROUTE:location = 4;
+            break;
+    }
     collision();
     detection();
 }
