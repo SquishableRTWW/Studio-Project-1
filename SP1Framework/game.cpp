@@ -934,7 +934,7 @@ void moveCharacter()
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
 
-    if (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.Y > 0 || (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && g_eGameState == S_ROUTE2) || (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && g_eGameState == S_BOSSROUTE))
+    if (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.Y > 0 || (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && g_eGameState != S_ROUTE2) || (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44 && (g_eGameState == S_BOSSROUTE || g_eGameState == S_ROUTE3)))
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.Y--;
@@ -1021,11 +1021,6 @@ void moveCharacter()
         g_sChar.m_cLocation.X = 79;
         g_eGameState = S_ROUTE2;
     }
-    if ((g_sChar.m_cLocation.Y < 0 && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44) && g_eGameState == S_ROUTE2)
-    {
-        g_sChar.m_cLocation.Y = 24;
-        g_eGameState = S_ROUTE3;
-    }
     if ((g_sChar.m_cLocation.X > 79 && g_sChar.m_cLocation.Y >= 12 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_ROUTE2)
     {
         g_sChar.m_cLocation.X = 0;
@@ -1034,9 +1029,9 @@ void moveCharacter()
     if ((g_sChar.m_cLocation.Y > 24 && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44) && g_eGameState == S_ROUTE2)
     {
         g_sChar.m_cLocation.Y = 0;
-        g_eGameState = S_BOSSROUTE;
+        g_eGameState = S_ROUTE3;
     }
-    if ((g_sChar.m_cLocation.Y < 0 && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44) && g_eGameState == S_BOSSROUTE)
+    if ((g_sChar.m_cLocation.Y < 0 && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44) && g_eGameState == S_ROUTE3)
     {
         g_sChar.m_cLocation.Y = 24;
         g_eGameState = S_ROUTE2;
@@ -1044,7 +1039,12 @@ void moveCharacter()
     if ((g_sChar.m_cLocation.Y > 24 && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44) && g_eGameState == S_ROUTE3)
     {
         g_sChar.m_cLocation.Y = 0;
-        g_eGameState = S_ROUTE2;
+        g_eGameState = S_BOSSROUTE;
+    }
+    if ((g_sChar.m_cLocation.Y < 0 && g_sChar.m_cLocation.X >= 33 && g_sChar.m_cLocation.X < 44) && g_eGameState == S_BOSSROUTE)
+    {
+        g_sChar.m_cLocation.Y = 24;
+        g_eGameState = S_ROUTE3;
     }
     if (((g_sChar.m_cLocation.X >= 0 && g_sChar.m_cLocation.X < 13 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 12) ||
         (g_sChar.m_cLocation.X >= 61 && g_sChar.m_cLocation.X < 80 && g_sChar.m_cLocation.Y >=16 && g_sChar.m_cLocation.Y < 25) ||
@@ -1066,6 +1066,22 @@ void moveCharacter()
         }
     }
     if ((g_sChar.m_cLocation.X >= 0 && g_sChar.m_cLocation.X < 13 && g_sChar.m_cLocation.Y > 4 && g_sChar.m_cLocation.Y < 12) && g_eGameState != S_ROUTE2 && g_eGameState == S_ROUTE3)
+    {
+        switch (g_eGameState)
+        {
+        case S_GAME: location = 1;
+            break;
+        case S_ROUTE2: location = 2;
+            break;
+        case S_ROUTE3: location = 3;
+            break;
+        }
+        if (rand() % 100 == 1)
+        {
+            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+        }
+    }
+    if ((g_sChar.m_cLocation.X >= 20 && g_sChar.m_cLocation.X < 34 && g_sChar.m_cLocation.Y >= 11 && g_sChar.m_cLocation.Y < 16) && g_eGameState == S_ROUTE2)
     {
         switch (g_eGameState)
         {
@@ -1830,7 +1846,7 @@ void renderRoute2()
     for (int i = 33; i < 44; i++)
     {
         c.X = i;
-        for (int j = 0; j < 25; j++)
+        for (int j = 11; j < 25; j++)
         {
             c.Y = j;
             colour(colors[5]);
@@ -1840,11 +1856,20 @@ void renderRoute2()
     for (int i = 44; i < 80; i++)
     {
         c.X = i;
-        for (int j = 11; j < 15; j++)
+        for (int j = 12; j < 16; j++)
         {
             c.Y = j;
             colour(colors[5]);
             g_Console.writeToBuffer(c, " ", 0x60);
+        }
+    }
+    for (int i = 20; i < 33; i++) //grass patch
+    {
+        c.X = i;
+        for (int j = 11; j < 16; j++)
+        {
+            c.Y = j;
+            g_Console.writeToBuffer(c, "w", 0xA0);
         }
     }
     location2 = 2;
