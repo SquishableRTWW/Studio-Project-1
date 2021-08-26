@@ -1157,7 +1157,6 @@ void render()
     case S_GAMEOVER: renderGameOver();
         break;
     }
-    renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();
     renderToScreen();       // dump the contents of the buffer to the screen, one frame worth of game
 }
