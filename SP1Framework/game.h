@@ -81,7 +81,7 @@ void shutdown    ( void );      // do clean up, free memory
 
 void splashScreenWait();    // waits for time to pass in splash screen
 void updateGame();          // gameplay logic
-void updateEncounter();
+void updateEncounter();     // combat logic
 void menuScreenWait();      // menu screen logic
 void tutorialWait();        // tutorial screen logic.
 void starterScreenWait();   // starter screen game logic
@@ -90,9 +90,9 @@ void bossSplashscreenWait();//Boss splash screen logic.
 void gameOverWait();
 
 void moveCharacter();       // moves the character, collision detection, physics, etc
-void collision();           //tet collision
-void detection();
-void moveSelection();
+void collision();           // collision check for buildings and npc
+void detection();           // detection check for hunters
+void moveSelection();       // checks which moves the user selects
 void processUserInput();    // checks if you should change states or do something else with the game, e.g. pause, exit
 void clearScreen();         // clears the current screen and draw from scratch 
 
