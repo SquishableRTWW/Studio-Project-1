@@ -449,15 +449,15 @@ void updateEncounter()
             {
                 mon2 = wild;
             }
-            else if (mon2.getName() != "NULL" && mon3.getName() == "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+            else if (mon2.getName() != "NULL" && mon3.getName() == "NULL")
             {
                 mon3 = wild;
             }
-            else if (mon3.getName() != "NULL" && mon4.getName() == "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+            else if (mon3.getName() != "NULL" && mon4.getName() == "NULL")
             {
                 mon4 = wild;
             }
-            else if (mon4.getName() != "NULL" && mon5.getName() == "NULL" && mon6.getName() == "NULL")
+            else if (mon4.getName() != "NULL" && mon5.getName() == "NULL")
             {
                 mon5 = wild;
             }
