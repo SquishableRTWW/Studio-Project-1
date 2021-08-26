@@ -1116,10 +1116,10 @@ void moveCharacter()
 
 void collision()
 {
-    switch (g_eGameState)
+    switch (location2)
     {
-    case S_GAME://collision start map
-        for (int i = 0; i < 1; i++)//collision for NPC
+    case 1://collision start map
+        for (int i = 0; i < 4; i++)//collision for NPC
         {
             if (g_skKeyEvent[K_UP].keyDown)
             {
@@ -1150,71 +1150,7 @@ void collision()
                 }
             }
         }
-        for (int i = 0; i < 2; i++)//collision for Enemy
-        {
-            if (g_skKeyEvent[K_UP].keyDown)
-            {
-                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
-                {
-                    g_sChar.m_cLocation.Y++;
-                }
-            }
-            if (g_skKeyEvent[K_LEFT].keyDown)
-            {
-                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
-                {
-                    g_sChar.m_cLocation.X++;
-                }
-            }
-            if (g_skKeyEvent[K_DOWN].keyDown)
-            {
-                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
-                {
-                    g_sChar.m_cLocation.Y--;
-                }
-            }
-            if (g_skKeyEvent[K_RIGHT].keyDown)
-            {
-                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
-                {
-                    g_sChar.m_cLocation.X--;
-                }
-            }
-        }
-        break;
-    case S_ROUTE2://collision route 2
-        for (int i = 1; i < 2; i++)//collision for NPC
-        {
-            if (g_skKeyEvent[K_UP].keyDown)
-            {
-                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
-                {
-                    g_sChar.m_cLocation.Y++;
-                }
-            }
-            if (g_skKeyEvent[K_LEFT].keyDown)
-            {
-                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
-                {
-                    g_sChar.m_cLocation.X++;
-                }
-            }
-            if (g_skKeyEvent[K_DOWN].keyDown)
-            {
-                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
-                {
-                    g_sChar.m_cLocation.Y--;
-                }
-            }
-            if (g_skKeyEvent[K_RIGHT].keyDown)
-            {
-                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
-                {
-                    g_sChar.m_cLocation.X--;
-                }
-            }
-        }
-        for (int i = 2; i < 4; i++)//collision for Enemy
+        for (int i = 0; i < 8; i++)//collision for Enemy
         {
             if (g_skKeyEvent[K_UP].keyDown)
             {
@@ -1246,8 +1182,8 @@ void collision()
             }
         }
         break;
-    case S_ROUTE3://collision route 3
-        for (int i = 2; i < 3; i++)//collision for NPC
+    case 2://collision route 2
+        for (int i = 1; i < 4; i++)//collision for NPC
         {
             if (g_skKeyEvent[K_UP].keyDown)
             {
@@ -1278,7 +1214,7 @@ void collision()
                 }
             }
         }
-        for (int i = 4; i < 6; i++)//collision for Enemy
+        for (int i = 2; i < 8; i++)//collision for Enemy
         {
             if (g_skKeyEvent[K_UP].keyDown)
             {
@@ -1310,7 +1246,71 @@ void collision()
             }
         }
         break;
-    case S_BOSSROUTE://collision rout 4
+    case 3://collision route 3
+        for (int i = 2; i < 4; i++)//collision for NPC
+        {
+            if (g_skKeyEvent[K_UP].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.Y++;
+                }
+            }
+            if (g_skKeyEvent[K_LEFT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.X++;
+                }
+            }
+            if (g_skKeyEvent[K_DOWN].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.Y--;
+                }
+            }
+            if (g_skKeyEvent[K_RIGHT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.X--;
+                }
+            }
+        }
+        for (int i = 4; i < 8; i++)//collision for Enemy
+        {
+            if (g_skKeyEvent[K_UP].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.Y++;
+                }
+            }
+            if (g_skKeyEvent[K_LEFT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.X++;
+                }
+            }
+            if (g_skKeyEvent[K_DOWN].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.Y--;
+                }
+            }
+            if (g_skKeyEvent[K_RIGHT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.X--;
+                }
+            }
+        }
+        break;
+    case 4://collision rout 4
         for (int i = 3; i < 4; i++)//collision for NPC
         {
             if (g_skKeyEvent[K_UP].keyDown)
@@ -1419,10 +1419,10 @@ void collision()
 
 void detection()
 {
-    switch (g_eGameState)
+    switch (location2)
     {
-    case S_GAME://detect main map
-        for (int i = 0; i < 2; i++)
+    case 1://detect main map
+        for (int i = 0; i < 8; i++)
         {
             if (Enemy[i].getcheck() == false)
             {
@@ -1457,8 +1457,8 @@ void detection()
             }
         }
         break;
-    case S_ROUTE2://detect route 2
-        for (int i = 2; i < 4; i++)
+    case 2://detect route 2
+        for (int i = 2; i < 8; i++)
         {
             if (Enemy[i].getcheck() == false)
             {
@@ -1490,8 +1490,8 @@ void detection()
             }
         }
         break;
-    case S_ROUTE3://detect route 3
-        for (int i = 4; i < 6; i++)
+    case 3://detect route 3
+        for (int i = 4; i < 8; i++)
         {
             if (Enemy[i].getcheck() == false)
             {
@@ -1523,7 +1523,7 @@ void detection()
             }
         }
         break;
-    case S_BOSSROUTE://detect bossmap
+    case 4://detect bossmap
         for (int i = 6; i < 8; i++)
         {
             if (Enemy[i].getcheck() == false)
@@ -1872,16 +1872,6 @@ void renderRoute2()
             g_Console.writeToBuffer(c, "w", 0xA0);
         }
     }
-    //NPC
-    Advice[1].setposition(32, 17);
-    g_Console.writeToBuffer(Advice[1].getposition(), char(2), 0x0B);
-    //Hunters
-    Enemy[2].setposition(49, 11);
-    Enemy[2].setDirRange(1, 6);
-    g_Console.writeToBuffer(Enemy[2].getposition(), char(2), 0xC0);
-    Enemy[3].setposition(32, 21);
-    Enemy[3].setDirRange(2, 8);
-    g_Console.writeToBuffer(Enemy[3].getposition(), char(2), 0xC0);
     location2 = 2;
 }
 
@@ -1926,16 +1916,7 @@ void renderRoute3()
             g_Console.writeToBuffer(c, "w", 0xA0);
         }
     }
-    //NPC
-    Advice[2].setposition(29, 7);
-    g_Console.writeToBuffer(Advice[2].getposition(), char(2), 0x0B);
-    //Hunters
-    Enemy[4].setposition(44, 14);
-    Enemy[4].setDirRange(2, 8);
-    g_Console.writeToBuffer(Enemy[4].getposition(), char(2), 0xC0);
-    Enemy[5].setposition(38, 23);
-    Enemy[5].setDirRange(2, 8);
-    g_Console.writeToBuffer(Enemy[5].getposition(), char(2), 0xC0);
+
 }
 
 void renderBossMap()
@@ -1991,8 +1972,6 @@ void renderBossMap()
     //NPC
     Advice[3].setposition(47, 13);
     g_Console.writeToBuffer(Advice[3].getposition(), char(2), 0x0B);
-    //Hunter
-
     location2 = 4;
 }
 
