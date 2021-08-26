@@ -20,6 +20,7 @@ bool isCaught;
 bool failedCatch;
 bool isHunter;
 int location;
+int location2;
 int boss;
 int moveDecision;
 hunter jeff;
@@ -892,6 +893,8 @@ void moveCharacter()
                     break;
                 case S_ROUTE3: location = 3;
                     break;
+                case S_BOSSROUTE: location = 4;
+                    break;
                 }
                 g_eGameState = S_INTERACT;
             }
@@ -971,7 +974,7 @@ void moveCharacter()
         {
         case S_GAME: location = 1;
             break;
-        case S_ROUTE2: location =2;
+        case S_ROUTE2: location = 2;
             break;
         case S_ROUTE3: location = 3;
             break;
@@ -989,67 +992,233 @@ void moveCharacter()
 
 void collision()
 {
-    for (int i = 0; i < 4; i++)//collision for NPC
+    switch (location2)
     {
-        if (g_skKeyEvent[K_UP].keyDown)
+    case 1:
+        for (int i = 0; i < 4; i++)//collision for NPC
         {
-            if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+            if (g_skKeyEvent[K_UP].keyDown)
             {
-                g_sChar.m_cLocation.Y++;
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.Y++;
+                }
+            }
+            if (g_skKeyEvent[K_LEFT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.X++;
+                }
+            }
+            if (g_skKeyEvent[K_DOWN].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.Y--;
+                }
+            }
+            if (g_skKeyEvent[K_RIGHT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.X--;
+                }
             }
         }
-        if (g_skKeyEvent[K_LEFT].keyDown)
+        for (int i = 0; i < 4; i++)//collision for Enemy
         {
-            if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+            if (g_skKeyEvent[K_UP].keyDown)
             {
-                g_sChar.m_cLocation.X++;
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.Y++;
+                }
+            }
+            if (g_skKeyEvent[K_LEFT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.X++;
+                }
+            }
+            if (g_skKeyEvent[K_DOWN].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.Y--;
+                }
+            }
+            if (g_skKeyEvent[K_RIGHT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.X--;
+                }
             }
         }
-        if (g_skKeyEvent[K_DOWN].keyDown)
+        break;
+    case 2:
+        for (int i = 1; i < 4; i++)//collision for NPC
         {
-            if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+            if (g_skKeyEvent[K_UP].keyDown)
             {
-                g_sChar.m_cLocation.Y--;
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.Y++;
+                }
+            }
+            if (g_skKeyEvent[K_LEFT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.X++;
+                }
+            }
+            if (g_skKeyEvent[K_DOWN].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.Y--;
+                }
+            }
+            if (g_skKeyEvent[K_RIGHT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.X--;
+                }
             }
         }
-        if (g_skKeyEvent[K_RIGHT].keyDown)
+        for (int i = 1; i < 4; i++)//collision for Enemy
         {
-            if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+            if (g_skKeyEvent[K_UP].keyDown)
             {
-                g_sChar.m_cLocation.X--;
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.Y++;
+                }
+            }
+            if (g_skKeyEvent[K_LEFT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.X++;
+                }
+            }
+            if (g_skKeyEvent[K_DOWN].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.Y--;
+                }
+            }
+            if (g_skKeyEvent[K_RIGHT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.X--;
+                }
             }
         }
-    }
-    for (int i = 0; i < 4; i++)//collision for Enemy
-    {
-        if (g_skKeyEvent[K_UP].keyDown)
+        break;
+    case 3:
+        for (int i = 0; i < 4; i++)//collision for NPC
         {
-            if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+            if (g_skKeyEvent[K_UP].keyDown)
             {
-                g_sChar.m_cLocation.Y++;
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.Y++;
+                }
+            }
+            if (g_skKeyEvent[K_LEFT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.X++;
+                }
+            }
+            if (g_skKeyEvent[K_DOWN].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.Y--;
+                }
+            }
+            if (g_skKeyEvent[K_RIGHT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.X--;
+                }
             }
         }
-        if (g_skKeyEvent[K_LEFT].keyDown)
+        for (int i = 0; i < 4; i++)//collision for Enemy
         {
-            if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+            if (g_skKeyEvent[K_UP].keyDown)
             {
-                g_sChar.m_cLocation.X++;
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.Y++;
+                }
+            }
+            if (g_skKeyEvent[K_LEFT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.X++;
+                }
+            }
+            if (g_skKeyEvent[K_DOWN].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.Y--;
+                }
+            }
+            if (g_skKeyEvent[K_RIGHT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                {
+                    g_sChar.m_cLocation.X--;
+                }
             }
         }
-        if (g_skKeyEvent[K_DOWN].keyDown)
+        break;
+    case 4:
+        for (int i = 0; i < 4; i++)//collision for NPC
         {
-            if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
+            if (g_skKeyEvent[K_UP].keyDown)
             {
-                g_sChar.m_cLocation.Y--;
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.Y++;
+                }
+            }
+            if (g_skKeyEvent[K_LEFT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.X++;
+                }
+            }
+            if (g_skKeyEvent[K_DOWN].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.Y--;
+                }
+            }
+            if (g_skKeyEvent[K_RIGHT].keyDown)
+            {
+                if (g_sChar.m_cLocation.X == Advice[i].getX() && g_sChar.m_cLocation.Y == Advice[i].getY())
+                {
+                    g_sChar.m_cLocation.X--;
+                }
             }
         }
-        if (g_skKeyEvent[K_RIGHT].keyDown)
-        {
-            if (g_sChar.m_cLocation.X == Enemy[i].getX() && g_sChar.m_cLocation.Y == Enemy[i].getY())
-            {
-                g_sChar.m_cLocation.X--;
-            }
-        }
+        break;
     }
     // Collision for house walls and nurse NPC
     if (g_eGameState == S_GAME)
@@ -1095,62 +1264,173 @@ void collision()
 
 void detection()
 {
-    for (int i = 0; i < 8; i++)
+    switch (location2)
     {
-        if (Enemy[i].getcheck() == false)
+    case 1:
+        for (int i = 0; i < 8; i++)
         {
-            switch (Enemy[i].getdirection())
+            if (Enemy[i].getcheck() == false)
             {
-            case(1):
-                for (int j = 0; j <= Enemy[i].getrange(); j++)
+                switch (Enemy[i].getdirection())
                 {
-                    if (g_sChar.m_cLocation.Y == Enemy[i].getY() - j && g_sChar.m_cLocation.X == Enemy[i].getX())
+                case(1):
+                    for (int j = 0; j <= Enemy[i].getrange(); j++)
                     {
-                        Type = E_Hunter;
-                        g_eGameState = S_ENCOUNTERSPLASHSCREEN;
-                        Enemy[i].setcheck(true);
-                        isHunter = true;
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() - j && g_sChar.m_cLocation.X == Enemy[i].getX())
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
                     }
-                }
-                break;
-            case(2):
-                for (int j = 0; j < Enemy[i].getrange(); j++)
-                {
-                    if (g_sChar.m_cLocation.Y == Enemy[i].getY() + j && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                    break;
+                case(2):
+                    for (int j = 0; j < Enemy[i].getrange(); j++)
                     {
-                        Type = E_Hunter;
-                        g_eGameState = S_ENCOUNTERSPLASHSCREEN;
-                        Enemy[i].setcheck(true);
-                        isHunter = true;
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() + j && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
                     }
-                }
-                break;
-            case(3):
-                for (int j = 0; j < Enemy[i].getrange(); j++)
-                {
-                    if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() - j)
+                    break;
+                case(3):
+                    for (int j = 0; j < Enemy[i].getrange(); j++)
                     {
-                        Type = E_Hunter;
-                        g_eGameState = S_ENCOUNTERSPLASHSCREEN;
-                        Enemy[i].setcheck(true);
-                        isHunter = true;
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() - j)
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
                     }
-                }
-                break;
-            case(4):
-                for (int j = 0; j < Enemy[i].getrange(); j++)
-                {
-                    if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() + j)
+                    break;
+                case(4):
+                    for (int j = 0; j < Enemy[i].getrange(); j++)
                     {
-                        Type = E_Hunter;
-                        g_eGameState = S_ENCOUNTERSPLASHSCREEN;
-                        Enemy[i].setcheck(true);
-                        isHunter = true;
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() + j)
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
                     }
+                    break;
                 }
-                break;
             }
         }
+        break;
+    case 2:
+        for (int i = 1; i < 8; i++)
+        {
+            if (Enemy[i].getcheck() == false)
+            {
+                switch (Enemy[i].getdirection())
+                {
+                case(1):
+                    for (int j = 0; j <= Enemy[i].getrange(); j++)
+                    {
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() - j && g_sChar.m_cLocation.X == Enemy[i].getX())
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
+                    }
+                    break;
+                case(2):
+                    for (int j = 0; j < Enemy[i].getrange(); j++)
+                    {
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() + j && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
+                    }
+                    break;
+                case(3):
+                    for (int j = 0; j < Enemy[i].getrange(); j++)
+                    {
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() - j)
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
+                    }
+                    break;
+                case(4):
+                    for (int j = 0; j < Enemy[i].getrange(); j++)
+                    {
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() + j)
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        break;
+    case 3:
+        for (int i = 0; i < 8; i++)
+        {
+            if (Enemy[i].getcheck() == false)
+            {
+                switch (Enemy[i].getdirection())
+                {
+                case(1):
+                    for (int j = 0; j <= Enemy[i].getrange(); j++)
+                    {
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() - j && g_sChar.m_cLocation.X == Enemy[i].getX())
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
+                    }
+                    break;
+                case(2):
+                    for (int j = 0; j < Enemy[i].getrange(); j++)
+                    {
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() + j && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
+                    }
+                    break;
+                case(3):
+                    for (int j = 0; j < Enemy[i].getrange(); j++)
+                    {
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() - j)
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
+                    }
+                    break;
+                case(4):
+                    for (int j = 0; j < Enemy[i].getrange(); j++)
+                    {
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() + j)
+                        {
+                            Type = E_Hunter;
+                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
+                            Enemy[i].setcheck(true);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        break;
     }
 }
 
@@ -1358,6 +1638,7 @@ void renderMap()
     Enemy[0].setposition(5, 16);
     Enemy[0].setDirRange(1, 5);
     g_Console.writeToBuffer(Enemy[0].getposition(), char(2), 0xC0);
+    location2 = 1;
     //Grasspatch test
     for (int i = 0; i < 13; i++)
     {
@@ -1440,6 +1721,7 @@ void renderRoute2()
             g_Console.writeToBuffer(c, "+", 0x60);
         }
     }
+    location2 = 2;
 }
 
 void renderRoute3()
@@ -1471,7 +1753,7 @@ void renderRoute3()
             g_Console.writeToBuffer(c, "+", 0x60);
         }
     }
-
+    location2 = 3;
     //Grasspatch test
     for (int i = 0; i < 13; i++) //patch 1
     {
@@ -1536,6 +1818,7 @@ void renderBossMap()
             g_Console.writeToBuffer(c, "/", 0x06);
         }
     }
+    location2 = 4;
 }
 
 void renderInteract()
