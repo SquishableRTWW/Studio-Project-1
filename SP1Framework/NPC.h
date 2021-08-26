@@ -5,7 +5,7 @@
 class NPC :public Entity
 {
 private:
-	std::string Advice[6];
+	std::string Advice[7];
 	std::string Healwords;
 	std::string Warn;
 public:

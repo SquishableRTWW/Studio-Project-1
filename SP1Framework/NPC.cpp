@@ -9,6 +9,7 @@ NPC::NPC(void)
 	Advice[3] = { "Nature is strong against Water." };
 	Advice[4] = { "Water can defeat Fire easily." };
 	Advice[5] = { "Earth is good against Fire but is weak to Water." };
+	Advice[6] = { "The second attack increases your beasts attack" };
 	Healwords = "your Ele-beasts look beat up let me heal them for you";
 	Warn = "The boss is ahead turn back now if you are not ready";
 }
