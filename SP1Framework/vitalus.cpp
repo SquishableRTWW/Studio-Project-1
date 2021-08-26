@@ -5,7 +5,7 @@ vitalus::vitalus(void)
 {
 	element = "nature";
 	setName("vitalus");
-	setLevel(5);
+	setLevel(30);
 	setKills();
 	setOGStats();
 	for (int i = 0; i < getLevel(); i++)
