@@ -1960,6 +1960,11 @@ void renderInteract()
     case E_NPC: g_Console.writeToBuffer(c, Advice[0].interact(), 0x0B); break;
     case E_Healer: g_Console.writeToBuffer(c, Nurse.Healquote(), 0x0B);
             mon1.setHealth(mon1.getMaxHealth() - mon1.getHealth());
+            mon2.setHealth(mon2.getMaxHealth() - mon2.getHealth());
+            mon3.setHealth(mon3.getMaxHealth() - mon3.getHealth());
+            mon4.setHealth(mon4.getMaxHealth() - mon4.getHealth());
+            mon5.setHealth(mon5.getMaxHealth() - mon5.getHealth());
+            mon6.setHealth(mon6.getMaxHealth() - mon6.getHealth());
             break;
     case E_Boss: g_Console.writeToBuffer(c, Advice[3].warning(), 0x0B); break;
     }
