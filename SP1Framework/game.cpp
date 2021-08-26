@@ -1681,7 +1681,7 @@ void renderMap()
         {
             c.X = j;
             colour(colors[5]);
-            g_Console.writeToBuffer(c, "+", 0x60);
+            g_Console.writeToBuffer(c, " ", 0x60);
         }
     }
     //House.
@@ -1735,7 +1735,7 @@ void renderMap()
         {
             c.Y = j;
             colour(colors[1]);
-            g_Console.writeToBuffer(c, "&", 0xA0);
+            g_Console.writeToBuffer(c, "w", 0xA0);
         }
     }
     for (int i = 61; i < 80; i++) //patch 2
@@ -1745,7 +1745,7 @@ void renderMap()
         {
             c.Y = j;
             colour(colors[1]);
-            g_Console.writeToBuffer(c, "&", 0xA0);
+            g_Console.writeToBuffer(c, "w", 0xA0);
         }
     }
     for (int i = 54; i < 70; i++) //patch 3
@@ -1755,7 +1755,7 @@ void renderMap()
         {
             c.Y = j;
             colour(colors[1]);
-            g_Console.writeToBuffer(c, "&", 0xA0);
+            g_Console.writeToBuffer(c, "w", 0xA0);
         }
     }
     for (int i = 20; i < 36; i++) //patch 4
@@ -1765,7 +1765,7 @@ void renderMap()
         {
             c.Y = j;
             colour(colors[1]);
-            g_Console.writeToBuffer(c, "&", 0xA0);
+            g_Console.writeToBuffer(c, "w", 0xA0);
         }
     }
 }
@@ -1796,7 +1796,7 @@ void renderRoute2()
         {
             c.Y = j;
             colour(colors[5]);
-            g_Console.writeToBuffer(c, "+", 0x60);
+            g_Console.writeToBuffer(c, " ", 0x60);
         }
     }
     for (int i = 44; i < 80; i++)
@@ -1806,7 +1806,7 @@ void renderRoute2()
         {
             c.Y = j;
             colour(colors[5]);
-            g_Console.writeToBuffer(c, "+", 0x60);
+            g_Console.writeToBuffer(c, " ", 0x60);
         }
     }
     location2 = 2;
@@ -1838,7 +1838,7 @@ void renderRoute3()
         {
             c.Y = j;
             colour(colors[5]);
-            g_Console.writeToBuffer(c, "+", 0x60);
+            g_Console.writeToBuffer(c, " ", 0x60);
         }
     }
     location2 = 3;
@@ -1850,7 +1850,7 @@ void renderRoute3()
         {
             c.Y = j;
             colour(colors[1]);
-            g_Console.writeToBuffer(c, "&", 0xA0);
+            g_Console.writeToBuffer(c, "w", 0xA0);
         }
     }
 
@@ -1881,7 +1881,7 @@ void renderBossMap()
         for (int j = 0; j < 23; j++)
         {
             c.Y = j;
-            g_Console.writeToBuffer(c, "+", 0x60);
+            g_Console.writeToBuffer(c, " ", 0x60);
         }
     }
     for (int i = 23; i < 52; i++) //Boss cave layer 1.
