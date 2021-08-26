@@ -1297,17 +1297,17 @@ void detection()
 {
     switch (location2)
     {
-    case 1:
+    case 1://detect main map
         for (int i = 0; i < 8; i++)
         {
             if (Enemy[i].getcheck() == false)
             {
                 switch (Enemy[i].getdirection())
                 {
-                case(1)://detects up
+                case(1)://detects vertically
                     for (int j = 0; j <= Enemy[i].getrange(); j++)
                     {
-                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() - j && g_sChar.m_cLocation.X == Enemy[i].getX())
+                        if ((g_sChar.m_cLocation.Y == Enemy[i].getY() - j || g_sChar.m_cLocation.Y == Enemy[i].getY() + j) && g_sChar.m_cLocation.X == Enemy[i].getX())
                         {
                             Type = E_Hunter;
                             g_eGameState = S_ENCOUNTERSPLASHSCREEN;
@@ -1315,32 +1315,10 @@ void detection()
                         }
                     }
                     break;
-                case(2)://detects down
+                case(2)://detects horizontally
                     for (int j = 0; j < Enemy[i].getrange(); j++)
                     {
-                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() + j && g_sChar.m_cLocation.X == Enemy[i].getX())
-                        {
-                            Type = E_Hunter;
-                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
-                            Enemy[i].setcheck(true);
-                        }
-                    }
-                    break;
-                case(3)://detects left
-                    for (int j = 0; j < Enemy[i].getrange(); j++)
-                    {
-                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() - j)
-                        {
-                            Type = E_Hunter;
-                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
-                            Enemy[i].setcheck(true);
-                        }
-                    }
-                    break;
-                case(4)://detects right
-                    for (int j = 0; j < Enemy[i].getrange(); j++)
-                    {
-                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() + j)
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && (g_sChar.m_cLocation.X == Enemy[i].getX() - j || g_sChar.m_cLocation.X == Enemy[i].getX() + j))
                         {
                             Type = E_Hunter;
                             g_eGameState = S_ENCOUNTERSPLASHSCREEN;
@@ -1352,17 +1330,17 @@ void detection()
             }
         }
         break;
-    case 2:
-        for (int i = 1; i < 8; i++)
+    case 2://detect route 2
+        for (int i = 2; i < 8; i++)
         {
             if (Enemy[i].getcheck() == false)
             {
                 switch (Enemy[i].getdirection())
                 {
-                case(1):
+                case(1)://detects vertically
                     for (int j = 0; j <= Enemy[i].getrange(); j++)
                     {
-                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() - j && g_sChar.m_cLocation.X == Enemy[i].getX())
+                        if ((g_sChar.m_cLocation.Y == Enemy[i].getY() - j || g_sChar.m_cLocation.Y == Enemy[i].getY() + j) && g_sChar.m_cLocation.X == Enemy[i].getX())
                         {
                             Type = E_Hunter;
                             g_eGameState = S_ENCOUNTERSPLASHSCREEN;
@@ -1370,32 +1348,10 @@ void detection()
                         }
                     }
                     break;
-                case(2):
+                case(2)://detects horizontally
                     for (int j = 0; j < Enemy[i].getrange(); j++)
                     {
-                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() + j && g_sChar.m_cLocation.Y == Enemy[i].getY())
-                        {
-                            Type = E_Hunter;
-                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
-                            Enemy[i].setcheck(true);
-                        }
-                    }
-                    break;
-                case(3):
-                    for (int j = 0; j < Enemy[i].getrange(); j++)
-                    {
-                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() - j)
-                        {
-                            Type = E_Hunter;
-                            g_eGameState = S_ENCOUNTERSPLASHSCREEN;
-                            Enemy[i].setcheck(true);
-                        }
-                    }
-                    break;
-                case(4):
-                    for (int j = 0; j < Enemy[i].getrange(); j++)
-                    {
-                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() + j)
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && (g_sChar.m_cLocation.X == Enemy[i].getX() - j || g_sChar.m_cLocation.X == Enemy[i].getX() + j))
                         {
                             Type = E_Hunter;
                             g_eGameState = S_ENCOUNTERSPLASHSCREEN;
@@ -1407,17 +1363,17 @@ void detection()
             }
         }
         break;
-    case 3:
-        for (int i = 0; i < 8; i++)
+    case 3://detect route 3
+        for (int i = 4; i < 8; i++)
         {
             if (Enemy[i].getcheck() == false)
             {
                 switch (Enemy[i].getdirection())
                 {
-                case(1):
+                case(1)://detects vertically
                     for (int j = 0; j <= Enemy[i].getrange(); j++)
                     {
-                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() - j && g_sChar.m_cLocation.X == Enemy[i].getX())
+                        if ((g_sChar.m_cLocation.Y == Enemy[i].getY() - j || g_sChar.m_cLocation.Y == Enemy[i].getY() + j) && g_sChar.m_cLocation.X == Enemy[i].getX())
                         {
                             Type = E_Hunter;
                             g_eGameState = S_ENCOUNTERSPLASHSCREEN;
@@ -1425,10 +1381,10 @@ void detection()
                         }
                     }
                     break;
-                case(2):
+                case(2)://detects horizontally
                     for (int j = 0; j < Enemy[i].getrange(); j++)
                     {
-                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() + j && g_sChar.m_cLocation.Y == Enemy[i].getY())
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && (g_sChar.m_cLocation.X == Enemy[i].getX() - j || g_sChar.m_cLocation.X == Enemy[i].getX() + j))
                         {
                             Type = E_Hunter;
                             g_eGameState = S_ENCOUNTERSPLASHSCREEN;
@@ -1436,10 +1392,21 @@ void detection()
                         }
                     }
                     break;
-                case(3):
-                    for (int j = 0; j < Enemy[i].getrange(); j++)
+                }
+            }
+        }
+        break;
+    case 4://detect bossmap
+        for (int i = 6; i < 8; i++)
+        {
+            if (Enemy[i].getcheck() == false)
+            {
+                switch (Enemy[i].getdirection())
+                {
+                case(1)://detects vertically
+                    for (int j = 0; j <= Enemy[i].getrange(); j++)
                     {
-                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() - j)
+                        if ((g_sChar.m_cLocation.Y == Enemy[i].getY() - j || g_sChar.m_cLocation.Y == Enemy[i].getY() + j) && g_sChar.m_cLocation.X == Enemy[i].getX())
                         {
                             Type = E_Hunter;
                             g_eGameState = S_ENCOUNTERSPLASHSCREEN;
@@ -1447,10 +1414,10 @@ void detection()
                         }
                     }
                     break;
-                case(4):
+                case(2)://detects horizontally
                     for (int j = 0; j < Enemy[i].getrange(); j++)
                     {
-                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && g_sChar.m_cLocation.X == Enemy[i].getX() + j)
+                        if (g_sChar.m_cLocation.Y == Enemy[i].getY() && (g_sChar.m_cLocation.X == Enemy[i].getX() - j || g_sChar.m_cLocation.X == Enemy[i].getX() + j))
                         {
                             Type = E_Hunter;
                             g_eGameState = S_ENCOUNTERSPLASHSCREEN;
