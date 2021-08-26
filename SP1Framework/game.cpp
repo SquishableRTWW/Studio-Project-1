@@ -1629,6 +1629,7 @@ void render()
     case S_GAMEOVER: renderGameOver();
         break;
     }
+    renderInputEvents();
     renderToScreen();       // dump the contents of the buffer to the screen, one frame worth of game
 }
 
